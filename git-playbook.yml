@@ -1,0 +1,32 @@
+---
+- name: Install and configure git
+  hosts: all
+  vars:
+    git_user: Magnarox
+    git_mail: thevinc@gmx.fr
+  become: true
+  become_method: sudo
+  pre_tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    - name: Install python-apt
+      raw: apt install -y python-apt
+  tasks:
+
+    - name: Install Git
+      apt: name=git state=present
+
+    - name: Configure Git
+      git_config:
+       name: user.name
+       scope: global
+       value: "{{git_user}}"
+
+    - git_config:
+       name: user.email
+       scope: global
+       value: "{{git_mail}}"
+
+
+
+
