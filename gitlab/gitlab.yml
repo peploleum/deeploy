@@ -1,4 +1,4 @@
-version: "3.6"
+version: "2.0"
 services:
   gitlab:
     build:
@@ -6,15 +6,21 @@ services:
     restart: always
     hostname: gitlab.peploleum.com
     ports:
-    - "22:22"
-    - "8090:80"
-    - "443:443"
+    - "9022:22"
+    - "9080:80"
+    - "9443:443"
     volumes:
     - ./srv/data:/var/opt/gitlab
     - ./srv/logs:/var/log/gitlab
     - ./srv/config:/etc/gitlab
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.peploleum.com'
-#  gitlab-runner:
-#    image: gitlab/gitlab-runner:alpine
+#    environment:
+#      GITLAB_OMNIBUS_CONFIG: |
+#        external_url 'http://localhost'
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+    - ./srv/git-runner/config:/etc/gitlab-runner
+    - ./srv/git-runner/home:/home/gitlab-runner
+    - /var/run/docker.sock:/var/run/docker.sock
+
