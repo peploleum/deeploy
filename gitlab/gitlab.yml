@@ -1,0 +1,20 @@
+version: "3.6"
+services:
+  gitlab:
+    build:
+      context: ./src
+    restart: always
+    hostname: gitlab.peploleum.com
+    ports:
+    - "22:22"
+    - "8090:80"
+    - "443:443"
+    volumes:
+    - ./srv/data:/var/opt/gitlab
+    - ./srv/logs:/var/log/gitlab
+    - ./srv/config:/etc/gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.peploleum.com'
+#  gitlab-runner:
+#    image: gitlab/gitlab-runner:alpine
