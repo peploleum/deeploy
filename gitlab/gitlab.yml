@@ -21,6 +21,10 @@ services:
     restart: always
     volumes:
     - ./srv/git-runner/config:/etc/gitlab-runner
-    - ./srv/git-runner/home:/home/gitlab-runner
     - /var/run/docker.sock:/var/run/docker.sock
-
+#    environment:
+#    - CI_SERVER_URL=http://gitlab:80/
+#    - REGISTRATION_TOKEN=M_wupo5JY5E-dUh6-iPu
+#    - RUNNER_NAME=yummy_runner
+#    - RUNNER_EXECUTOR=docker
+#    - DOCKER_IMAGE=python:2.7.12-alpine
