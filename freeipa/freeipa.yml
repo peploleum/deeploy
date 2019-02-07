@@ -1,11 +1,13 @@
 version: "2.0"
 services:
   freeipa-server-container:
-    build:
-      context: ./src
+    image: peploleum/freeipa-server:latest
+#    build:
+#      context: ./srv
     #    ports:
     #    - "9022:22"
     #    - "9080:80"
     #    - "9443:443"
     volumes:
     - ./srv/data:/data
+    entrypoint: [ "/usr/sbin/init", "-U" ]
