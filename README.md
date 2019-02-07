@@ -28,4 +28,9 @@ Make sure git is set up to checkout out linux style end of lines
         docker build -f Dockerfile.centos-7 -t freeipa-server .
         
         cd freeipa
-        docker run --rm --name freeipa-server-container -ti -h server.peploleum.com -v /srv/data:/data peploleum/freeipa-server -U -r peploleum.com
+        docker run --rm --name freeipa-server-container \
+        -ti -h server.peploleum.com \
+        -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+        --tmpfs /run --tmpfs /tmp \
+        -v ./srv/data:/data peploleum/freeipa-server \
+         -U -r peploleum.com
