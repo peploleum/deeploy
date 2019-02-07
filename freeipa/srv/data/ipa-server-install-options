@@ -1,5 +1,4 @@
 --realm=peploleum.com
 --hostname=server.peploleum.com
---ds-password=admin
---admin-password=admin
---debug
+--ds-password=adminadmin
+--admin-password=adminadmin
