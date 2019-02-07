@@ -3,11 +3,12 @@ services:
   gitlab:
     build:
       context: ./src
+    container_name: gitlab 
     restart: always
     hostname: gitlab.peploleum.com
     ports:
     - "9022:22"
-    - "9080:80"
+    - "9080:9080"
     - "9443:443"
     volumes:
     - ./srv/data:/var/opt/gitlab
