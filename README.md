@@ -23,11 +23,14 @@ Deployment scripts
 
 Make sure git is set up to checkout out linux style end of lines
 
+* build a free ipa server image
+
         git clone https://github.com/freeipa/freeipa-container
         cd freeipa-container
         docker build -f Dockerfile.centos-7 -t freeipa-server .
         
-        mkdir 
+* run the installer (docker has to have ipv6 enabled)
+        
         docker run --rm --name freeipa-server-container \
         -ti -h server.peploleum.com \
         -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
