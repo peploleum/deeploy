@@ -1,4 +1,3 @@
 --realm=peploleum.com
---hostname=ipa.peploleum.com
 --ds-password=adminadmin
 --admin-password=adminadmin
