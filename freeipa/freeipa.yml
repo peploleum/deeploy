@@ -10,4 +10,3 @@ services:
     #    - "9443:443"
     volumes:
     - ./srv/data:/data
-    entrypoint: [ "/usr/sbin/init", "-U" ]
