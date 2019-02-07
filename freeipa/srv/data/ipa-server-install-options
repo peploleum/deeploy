@@ -1,3 +1,4 @@
 --realm=peploleum.com
 --ds-password=adminadmin
 --admin-password=adminadmin
+--master-password=adminadmin
