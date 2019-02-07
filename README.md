@@ -32,5 +32,5 @@ Make sure git is set up to checkout out linux style end of lines
         -ti -h server.peploleum.com \
         -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
         --tmpfs /run --tmpfs /tmp \
-        -v ./srv/data:/data peploleum/freeipa-server \
+        -v srv/data:/data peploleum/freeipa-server \
          -U -r peploleum.com
