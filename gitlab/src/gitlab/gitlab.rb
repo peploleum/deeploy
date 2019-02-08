@@ -1,5 +1,3 @@
-external_url 'http://localhost'
-
 ## GitLab configuration settings
 ##! This file is generated during initial installation and **is not** modified
 ##! during upgrades.
@@ -12,7 +10,7 @@ external_url 'http://localhost'
 ##! URL on which GitLab will be reachable.
 ##! For more details on configuring external_url see:
 ##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
-# external_url 'GENERATED_EXTERNAL_URL'
+external_url 'http://gitlab.peploleum.com:9080'
 
 ## Roles for multi-instance GitLab
 ##! The default is to have no roles enabled, which results in GitLab running as an all-in-one instance.

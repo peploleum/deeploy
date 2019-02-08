@@ -2,7 +2,7 @@ version: "2.0"
 services:
   gitlab:
     build:
-      context: ./src
+      context: ./src/gitlab
     container_name: gitlab 
     restart: always
     hostname: gitlab.peploleum.com
@@ -11,17 +11,18 @@ services:
     - "9080:9080"
     - "9443:443"
     volumes:
-    - ./srv/data:/var/opt/gitlab
-    - ./srv/logs:/var/log/gitlab
-    - ./srv/config:/etc/gitlab
+    - ./srv/gitlab/data:/var/opt/gitlab
+    - ./srv/gitlab/logs:/var/log/gitlab
+    - ./srv/gitlab/config:/etc/gitlab
 #    environment:
 #      GITLAB_OMNIBUS_CONFIG: |
 #        external_url 'http://localhost'
   gitlab-runner:
-    image: gitlab/gitlab-runner:latest
+    build:
+      context: ./src/runner
     restart: always
     volumes:
-    - ./srv/git-runner/config:/etc/gitlab-runner
+    - ./srv/gitlab-runner/config:/etc/gitlab-runner
     - /var/run/docker.sock:/var/run/docker.sock
 #    environment:
 #    - CI_SERVER_URL=http://gitlab:80/

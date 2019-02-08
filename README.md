@@ -1,19 +1,27 @@
 # deeploy
 
-## GITLAB
+## GitLab
 
-Run gitlab :
+### Prerequisites :
+* Install a docker engine  
+* Prepare your system to resolve the namespace gitlab.peploleum.com (127.0.0.1)
+
+### Run GitLab :
 
         cd gitlab
         docker-compose -f gitlab.yml up -d
 
-Use a web browser : http://ip:9080
+### Configure GitLab
+Use a web browser and connect to http://gitlab.peploleum.com:9080
 * Create a password
 * Create a login
 * Import your projects : New Project / Import project -> Github
 * If needed go on github and generate a "Personal access tokens"
 
 Your projects are in Gitlab.
+
+### Register GitLab Runner
+
 
 Deployment scripts
 (To complete)
