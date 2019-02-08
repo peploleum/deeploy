@@ -1,0 +1,17 @@
+version: "2.0"
+services:
+  gitlab-runner:
+    build:
+      context: ./src/runner
+    restart: always
+    volumes:
+    - ./srv/gitlab-runner/config:/etc/gitlab-runner
+    - /var/run/docker.sock:/var/run/docker.sock
+    command: register --non-interactive --executor "docker" --docker-image docker:latest --url "http://gitlab.peploleum.com:9080" --registration-token "76Yje4yb5k6zVyHgKipH" --description "graphy-runner" --tag-list "graphy,docker" --run-untagged --locked="false" --extra_hosts=["gitlab.peploleum.com:10.65.34.239"]
+
+#    environment:
+#    - CI_SERVER_URL=http://gitlab:80/
+#    - REGISTRATION_TOKEN=M_wupo5JY5E-dUh6-iPu
+#    - RUNNER_NAME=yummy_runner
+#    - RUNNER_EXECUTOR=docker
+#    - DOCKER_IMAGE=python:2.7.12-alpine
