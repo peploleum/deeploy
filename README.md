@@ -18,13 +18,18 @@ Use a web browser and connect to http://gitlab.peploleum.com:9080
 * Import your projects : New Project / Import project -> Github
 * If needed go on github and generate a "Personal access tokens"
 
-Your projects are in Gitlab.
+Your projects are in GitLab.
 
 ### Register GitLab Runner
+You need to register a runner for each project.  
+For a project :  
+* Get the registration token in Settings > CI/CD > Runners  
+* Run the registration script
 
+        ./register-runner.sh %containerID %projectName %gitLabIP %RegistrationToken
 
-Deployment scripts
-(To complete)
+### CI / CD sample
+(TODO)
 
 
 ## FreeIPA
