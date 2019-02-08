@@ -14,9 +14,9 @@ services:
     - ./srv/gitlab/data:/var/opt/gitlab
     - ./srv/gitlab/logs:/var/log/gitlab
     - ./srv/gitlab/config:/etc/gitlab
-#    environment:
-#      GITLAB_OMNIBUS_CONFIG: |
-#        external_url 'http://localhost'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.peploleum.com:9080'
   gitlab-runner:
     build:
       context: ./src/runner
