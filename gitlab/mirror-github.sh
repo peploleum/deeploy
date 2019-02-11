@@ -21,3 +21,6 @@ echo "git fetch -p origin" >> $file
 echo "git push --mirror" >> $file
 
 chmod a+x $file
+
+# Add to cron (check 2 minutes)
+(crontab -l ; echo "*/2 * * * * $file") 2>&1 | grep -v "no crontab" | sort | uniq | crontab -
