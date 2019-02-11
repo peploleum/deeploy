@@ -28,6 +28,20 @@ For a project :
 
         ./register-runner.sh %containerID %projectName %gitLabIP %RegistrationToken
 
+### Mirror project Github to GitLab
+For each project :
+
+* Create a bare mirrored clone of the repository
+
+        git clone --mirror https://github.com/peploleum/repository-to-mirror.git
+* Set the push location to your mirror 
+
+        cd repository-to-mirror.git
+        git remote set-url --push origin http://gitlab.peploleum.com:9080/capgemini/mirrored
+* Update the mirror
+
+        git fetch -p origin
+        git push --mirror
 ### CI / CD sample
 (TODO)
 
