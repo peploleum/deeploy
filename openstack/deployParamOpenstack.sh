@@ -37,8 +37,10 @@ openstack subnet create --network public --allocation-pool start=$3,end=$4 --dns
 neutron router-gateway-set router public
 
 # Add rules SSH and PING for Group default
-openstack security group rule create --protocol icmp default
-openstack security group rule create --protocol tcp --dst-port 22:22 default
+openstack security group create openstack
+openstack security group rule create --protocol icmp openstack
+openstack security group rule create --protocol tcp --dst-port 22:22 openstack
+openstack security group rule create --protocol tcp --dst-port 6443:6443 openstack
 
 #Create key
 openstack keypair create $9
