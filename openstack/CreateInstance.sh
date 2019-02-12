@@ -7,7 +7,7 @@ echo param 4 : Nom de la paire de cles
 echo param 5 : Nom de l\'instance
 
 #Create flavor
-openstack server create --flavor $1 --image $2 --nic net-id=$3 --security-group openstack --key-name $4 $5
+openstack server create --flavor $1 --image $2 --nic net-id=$3 --security-group openstack --key-name $4 --user-data UserData_addRepo.sh $5
 
 #Generate token instance
 openstack console url show $5
