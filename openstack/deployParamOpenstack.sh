@@ -1,13 +1,13 @@
 #!/bin/bash
 
-echo param 1 : Adresse du sous réseau prive (ex:xxx.xxx.xxx.xxx)
-echo param 2 : Adresse du sous réseau prive sans le dernier digit (ex:xxx.xxx.xxx)
+echo param 1 : Adresse du sous réseau prive \(ex:xxx.xxx.xxx.xxx\)
+echo param 2 : Adresse du sous réseau prive sans le dernier digit \(ex:xxx.xxx.xxx\)
 echo param 3 : Adresse de début du reseau public
 echo param 4 : Adresse de fin du reseau public
 echo param 5 : Adresse du serveur dns public
 echo param 6 : Adresse de la passerelle public
-echo param 7 : Adresse du sous reseau public (ex:xxx.xxx.xxx.xxx)
-echo param 8 : Digit du masquage du réseau (ex:xx)
+echo param 7 : Adresse du sous reseau public \(ex:xxx.xxx.xxx.xxx\)
+echo param 8 : Digit du masquage du réseau \(ex:xx\)
 echo param 9 : Nom de la paire de clés openstack
 
 # Access openstack
