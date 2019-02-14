@@ -32,6 +32,9 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
 sudo cat > /etc/resolv.conf << EOF
 nameserver 66.28.0.45
 nameserver 66.28.0.61
