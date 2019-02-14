@@ -7,7 +7,7 @@
 * copy the following files :
 
         admin-openrc
-        deployParamOpenstack.sh
+        DeployParamOpenstack.sh
         CreateInstance.sh
         EnrolmentNode.sh
         UserData_addRepo.sh
@@ -15,7 +15,7 @@
 
 ### DeployParameterOpenstack :
 
-Execute shell deployParamOpenstack.sh in openstack-controller.
+Execute shell DeployParamOpenstack.sh in openstack-controller.
 
 ### Create instance Openstack :
 

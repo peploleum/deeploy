@@ -3,7 +3,7 @@
 ## Kubernetes
 
 ### Prerequisites :  
-* Prepare your system to resolve the namespace réseau cap (IP du dns cap)
+* Prepare your system to resolve the namespace reseau cap (IP du dns cap)
 * copy the following files :
 
         rbac-kdd.yaml
