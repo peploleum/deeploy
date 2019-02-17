@@ -20,12 +20,12 @@
       git_config:
        name: user.name
        scope: global
-       value: "{{git_user}}"
+       value: "{{ git_user }}"
 
     - git_config:
        name: user.email
        scope: global
-       value: "{{git_mail}}"
+       value: "{{ git_mail }}"
 
 
 

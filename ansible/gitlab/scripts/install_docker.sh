@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt upgrade
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -33,4 +31,5 @@ sudo chmod a+rx /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 sudo groupadd docker
-sudo usermod -aG docker $USER
+sudo usermod -aG docker $1
+
