@@ -1,0 +1,19 @@
+---
+- name: Install and configure gitlab
+  hosts: all
+  vars:
+    remote_user: target
+    #git_mail: thevinc@gmx.fr
+  become: true
+  become_method: sudo
+  become_user: {{remote_user}}
+  pre_tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  tasks:
+
+    - name: Install docker and docker-compose
+      script: /scripts/install_docker.sh
+
+
+
