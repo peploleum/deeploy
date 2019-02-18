@@ -8,14 +8,52 @@
 
   vars:
     docker_user: target
+    gitlab_namespace: gitlab.peploleum.com
 
   pre_tasks:
     - name: Install python for Ansible
       raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    
+    - name: Install python for Apt
+      raw: apt install -y python-apt
 
   tasks:
-    - name: Install docker and docker-compose
+    - name: Install docker
       script: ./scripts/install_docker.sh {{ docker_user }}
+      args:        
+        creates: /usr/bin/docker
+
+    - name: Install git
+      apt: name=git state=present
+
+    - name: Install xclip
+      apt: name=xclip state=present
+
+    - name: Install pip
+      apt: name=python-pip state=present
+
+    - name: Install docker-compose
+      pip: name=docker-compose version=1.23.2
+
+    - name: Update hosts file
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127\.0\.0\.1'
+        line: '127.0.0.1 localhost {{ gitlab_namespace }}'
+
+    - name: Upload gitlab files
+      copy:
+        src: '../../gitlab/'
+        dest: '/home/{{ docker_user }}/gitlab/'
+        owner: '{{ docker_user }}'
+        group: '{{ docker_user }}'
+        mode: 0775
+
+    - name: Run gitlab and gitlab runner
+      docker_service:
+        project_src: '/home/{{ docker_user }}/gitlab'
+        files:
+          - 'gitlab.yml'
 
 
 

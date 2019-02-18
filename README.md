@@ -99,10 +99,6 @@ Make sure git is set up to checkout out linux style end of lines
 
         sudo apt-get install openssh-server
 
-* Install python 2
-
-        sudo apt-get install python-minimal
-
 ### Prepare deploy host
 
 * Run the script install_ansible.sh
@@ -113,5 +109,5 @@ Make sure git is set up to checkout out linux style end of lines
 
 ### Run gitlab_playbook
 
-        ansible-playbook gitlab-playbook.yml -u (ssh_user) --ask-pass
+        ansible-playbook gitlab-playbook.yml -u (ssh_user) --ask-pass --ask-become-pass
 
