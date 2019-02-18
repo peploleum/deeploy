@@ -22,6 +22,14 @@ Execute script DeployParamOpenstack.sh in openstack-controller.
 
 Execute script CreateInstance.sh in openstack-controller.
 
+        param 1 : Nom du flavor
+        param 2 : Nom de l'image
+        param 3 : ID du network
+        param 4 : Nom de la paire de cles
+        param 5 : Nom de l'instance
+
+exemple : ./CreateInstance.sh custom Ubuntu_16.04 20da2941-8676-4f4c-9c05-031ce0305eda INSIGHT docker
+
 ### Add new compute node :
 #### Prerequisites :
 * Install Ubuntu 18.04 server
@@ -40,7 +48,7 @@ Execute shell DeployComputeNode.sh in new compute node.
         
         param 1 : nom du controlleur openstack
         param 2 : ip du controlleur openstack
-        param 3 : nom de l\'interface du reseau physique du compute node
+        param 3 : nom de l'interface du reseau physique du compute node
         param 4 : ip du compute node openstack
 
 ### Enrolment new node :
