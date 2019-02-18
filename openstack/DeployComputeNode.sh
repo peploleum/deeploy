@@ -69,9 +69,9 @@ sudo sed -i '831i password = root' /etc/neutron/neutron.conf
 sudo sed -i '147i physical_interface_mappings = provider:PHYSICAL_NETWORK_INTERFACE' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
 sudo sed -i '183i enable_security_group = true' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
 sudo sed -i '184i firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
-sudo sed -i '203i enable_vxlan =true' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
-sudo sed -i '204i local_ip = IP' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
-sudo sed -i '205i l2_population = true' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+sudo sed -i '207i enable_vxlan =true' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+sudo sed -i '208i local_ip = IP' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
+sudo sed -i '209i l2_population = true' /etc/neutron/plugins/ml2/linuxbridge_agent.ini 
 
 sudo sed -i '7642i url = http://HOSTNAME_CONTROLLER:9696' /etc/nova/nova.conf
 sudo sed -i '7643i auth_url = http://HOSTNAME_CONTROLLER:5000' /etc/nova/nova.conf
