@@ -1,4 +1,9 @@
---realm=peploleum.com
+--realm=PEPLOLEUM.COM
 --ds-password=adminadmin
 --admin-password=adminadmin
---master-password=adminadmin
+--hostname=ipa.peploleum.com
+--ip-address=10.65.34.106
+--domain=peploleum.com
+--forwarder=66.28.0.45
+--forwarder=66.28.0.61
+--reverse-zone=0.17.172.in-addr.arpa.
