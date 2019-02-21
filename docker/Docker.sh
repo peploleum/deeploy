@@ -35,11 +35,7 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
-sudo cat > /etc/resolv.conf << EOF
-nameserver 66.28.0.45
-nameserver 66.28.0.61
-nameserver 127.0.1.1
-search corp.capgemini.com
-search openstacklocal
-EOF
+sudo sed -i '4i dns-search openstacklocal corp.capgemini.com' /etc/network/interfaces
+sudo sed -i '5i dns-nameservers 66.28.0.45 66.28.0.61 127.0.1.1' /etc/network/interfaces
+
 
