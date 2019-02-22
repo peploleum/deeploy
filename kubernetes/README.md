@@ -36,5 +36,5 @@ Copy in file token.tkt, result of the command :
 > comment line #dns=dnsmasq  
 > restart network manager service
 
-        systemctl network-manager restart
+        systemctl restart network-manager
 
