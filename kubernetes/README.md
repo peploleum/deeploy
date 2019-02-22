@@ -30,4 +30,11 @@ Copy in file token.tkt, result of the command :
 
         https://IP du kubernetes master:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
 
+### configure network manager on master & nodes
+
+> edit /etc/NetworkManager/NetworkManager.conf  
+> comment line #dns=dnsmasq  
+> restart network manager service
+
+        systemctl network-manager restart
 
