@@ -1,3 +1,3 @@
-FROM gitlab/gitlab-ce:latest
-COPY gitlab.rb /etc/gitlab/
+FROM ubuntu:18.04
+
 
