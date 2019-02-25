@@ -78,7 +78,7 @@ Make sure git is set up to checkout out linux style end of lines
         cd freeipa-container
         docker build -f Dockerfile.centos-7 -t freeipa-server .
         
-* run the installer (docker has to have ipv6 enabled)
+* run the installer (requires ipv6-enabled docker daemon)
         
         docker run --rm --name freeipa-server-container \
         -e IPA_SERVER_IP=10.65.34.106 -p 153:53/udp -p 153:53 \
