@@ -11,4 +11,4 @@ docker run --rm --name freeipa-server-container \
         -ti -h ipa.peploleum.com \
         -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
         --tmpfs /run --tmpfs /tmp \
-        -v $PWD/data:/data peploleum/freeipa-server -U -r PEPLOLEUM.COM
+        -v $PWD/data:/data peploleum/freeipa-server -U -r PEPLOLEUM.COM --setup-dns
