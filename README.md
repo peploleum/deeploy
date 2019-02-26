@@ -70,6 +70,8 @@ Sample : ./mirror-github.sh https://github.com/peploleum/ graphy magnarox/graphy
 
 ## FreeIPA
 
+#### Server
+
 Make sure git is set up to checkout out linux style end of lines
 
 * build a free ipa server image
@@ -81,7 +83,12 @@ Make sure git is set up to checkout out linux style end of lines
 * run the installer (requires ipv6-enabled docker daemon)
         
         cd freeipa/srv
+        ./install.sh
         ./run.sh
+
+#### Client
+
+* ubuntu dockerized client is a fail due to ip-client-install ubuntu package dependency on systemd as an init system. content of freeipa/client is useless.
 
 ## ANSIBLE
 
