@@ -7,4 +7,4 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get install -y iputils-ping &
 RUN  apt-get -y autoclean && apt-get -y autoremove && \
      apt-get -y purge $(dpkg --get-selections | grep deinstall | sed s/deinstall//g) && \
      rm -rf /var/lib/apt/lists/*
-ENTRYPOINT ["./entrypoint.sh && tail -f /dev/null"]
+ENTRYPOINT ["entrypoint.sh && tail -f /dev/null"]
