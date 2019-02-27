@@ -1,9 +1,12 @@
 #!/bin/bash
 
-sudo apt update
-sudo apt upgrade
-sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+#update apt index
+sudo apt-get update
+#allow apt to use a repository over HTTPS
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+#add Docker's offical GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+#set stable repository
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 sudo apt-get update && sudo apt-get install -y docker-ce
@@ -35,7 +38,7 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
-sudo sed -i '4i dns-search openstacklocal corp.capgemini.com' /etc/network/interfaces
-sudo sed -i '5i dns-nameservers 66.28.0.45 66.28.0.61 127.0.1.1' /etc/network/interfaces
+#sudo sed -i '4i dns-search openstacklocal corp.capgemini.com' /etc/network/interfaces
+#sudo sed -i '5i dns-nameservers 66.28.0.45 66.28.0.61 127.0.1.1' /etc/network/interfaces
 
 
