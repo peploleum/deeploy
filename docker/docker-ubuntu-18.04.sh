@@ -13,22 +13,21 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt-get update && sudo apt-get install -y docker-ce
 
 #set daemon to expose interface on 2375 and enable ipv6 routing to containers
-sudo cat > /etc/docker/daemon.json << EOF
-{
+echo '{
 "debug": true,
 "ipv6": true,
 "fixed-cidr-v6": "2001:db8:1::/64",
 "hosts": ["unix:///var/run/docker.sock", "tcp://127.0.0.1:2375"]
-}
-EOF
+}' | sudo tee -a /etc/docker/daemon.json
 
 sudo mkdir -p /etc/systemd/system/docker.service.d
 
-sudo cat > /etc/systemd/system/docker.service.d/docker.conf << EOF
+echo '
 [Service]
 ExecStart=
 ExecStart=/usr/bin/dockerd
-EOF
+' | sudo tee -a /etc/systemd/system/docker.service.d/docker.conf
+
 
 sudo systemctl daemon-reload
 sudo systemctl restart docker
