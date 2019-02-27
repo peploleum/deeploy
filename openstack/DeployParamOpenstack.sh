@@ -24,9 +24,9 @@ openstack flavor delete Extra_large
 openstack flavor delete Extra_extra_large
 openstack flavor delete Kubernetes
 
-openstack router remove subnet router private-v4
-openstack router remove subnet router private-v6
-neutron router-delete router
+openstack router remove subnet router1 private-v4
+openstack router remove subnet router1 private-v6
+neutron router-delete router1
 openstack network delete private
 openstack network delete public
 
@@ -47,15 +47,15 @@ openstack flavor create --id 4 --vcpus 16 --ram 64000 --disk 5000 Extra_extra_la
 openstack flavor create --id 5 --vcpus 4 --ram 16000 --disk 250 Kubernetes
 
 # Create all networks
-neutron router-create router
+neutron router-create router1
 openstack network create private --provider-network-type vxlan
 openstack subnet create --subnet-range $1/23 --network private --dns-nameserver 8.8.4.4 private-v4
 openstack subnet create --subnet-range fe80:$2::/64 --ip-version 6 --ipv6-ra-mode slaac --ipv6-address-mode slaac --network private --dns-nameserver 2001:4860:4860::8844 private-v6
-openstack router add subnet router private-v4
-openstack router add subnet router private-v6
+openstack router add subnet router1 private-v4
+openstack router add subnet router1 private-v6
 openstack network create --share --external --provider-physical-network provider --provider-network-type flat public
 openstack subnet create --network public --allocation-pool start=$3,end=$4 --dns-nameserver $5 --gateway $6 --subnet-range $7/$8 public
-neutron router-gateway-set router public
+neutron router-gateway-set router1 public
 
 # Add rules SSH and PING for Group default
 openstack security group create openstack
