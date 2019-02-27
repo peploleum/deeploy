@@ -4,15 +4,29 @@
 
 ### Prerequisites :  
 * Logging in openstack-controller
-* copy the following files :
-
-        admin-openrc
-        DeployParamOpenstack.sh
-        CreateInstance.sh
-        EnrolmentNode.sh
-        UserData_addRepo.sh
-        DeployComputeNode.sh
 * Verify admin-openrc
+
+### Install controller node :
+#### Prerequisites :
+* Install Ubuntu 18.04 server
+* Execute sudo apt-get update
+* Execute sudo apt-get upgrade
+
+The controller node is accessible in ssh.
+
+Execute the command :
+
+        git clone https://github.com/peploleum/deeploy.git
+        cd deeploy/openstack/
+        sudo chmod 777 deploy_controller_node.sh
+
+Execute shell deploy_controller_node.sh in controller node.
+        
+        param 1 : nom du controlleur openstack
+        param 2 : ip du controlleur openstack
+        param 3 : nom du compute node openstack
+        param 4 : ip du compute node openstack
+        param 5 : nom de l'interface du reseau physique
 
 ### Add new compute node :
 #### Prerequisites :
@@ -26,9 +40,9 @@ Execute the command :
 
         git clone https://github.com/peploleum/deeploy.git
         cd deeploy/openstack/
-        sudo chmod 777 DeployComputeNode.sh
+        sudo chmod 777 deploy_compute_node.sh
         
-Execute shell DeployComputeNode.sh in new compute node.
+Execute shell deploy_compute_node.sh in new compute node.
         
         param 1 : nom du controlleur openstack
         param 2 : ip du controlleur openstack
@@ -39,31 +53,31 @@ Execute shell DeployComputeNode.sh in new compute node.
 
 Execute the command on controller openstack:
         
-        sudo chmod 777 EnrolmentNode.sh
+        sudo chmod 777 enrolment_node.sh
 
-Execute shell EnrolmentNode.sh in openstack-controller.
+Execute shell enrolment_node.sh in openstack-controller.
 
 ### Init image data Openstack :
 
 This script initialize Network, Security Group, KeyPair, Flavor and Image.
 
-Execute script DeployParamOpenstack.sh in openstack-controller.
+Execute script deploy_param_openstack.sh in openstack-controller.
 
-        param 1 : Adresse du sous réseau prive \(ex:xxx.xxx.xxx.xxx\)
-        param 2 : Adresse du sous réseau prive sans le dernier digit \(ex:xxx:xxx:xxx\)
+        param 1 : Adresse du sous réseau prive (ex:xxx.xxx.xxx.xxx)
+        param 2 : Adresse du sous réseau prive sans le dernier digit (ex:xxx:xxx:xxx)
         param 3 : Adresse de début du reseau public
         param 4 : Adresse de fin du reseau public
         param 5 : Adresse du serveur dns public
         param 6 : Adresse de la passerelle public
-        param 7 : Adresse du sous reseau public \(ex:xxx.xxx.xxx.xxx\)
-        param 8 : Digit du masquage du réseau \(ex:xx\)
+        param 7 : Adresse du sous reseau public (ex:xxx.xxx.xxx.xxx)
+        param 8 : Digit du masquage du réseau (ex:xx)
         param 9 : Nom de la paire de clés openstack
 
 ### Create instance Openstack :
 
 This script launch a new Virtual Machine.
 
-Execute script CreateInstance.sh in openstack-controller.
+Execute script create_instance.sh in openstack-controller.
 
         param 1 : Nom du flavor
         param 2 : Nom de l'image
@@ -71,7 +85,7 @@ Execute script CreateInstance.sh in openstack-controller.
         param 4 : Nom de la paire de cles
         param 5 : Nom de l'instance
 
-example : ./CreateInstance.sh custom Ubuntu_16.04 20da2941-8676-4f4c-9c05-031ce0305eda INSIGHT docker
+example : ./create_instance.sh custom Ubuntu_16.04 20da2941-8676-4f4c-9c05-031ce0305eda INSIGHT docker
 
 ### Create new Image from ISO file
 
