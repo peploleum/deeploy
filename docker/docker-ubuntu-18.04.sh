@@ -22,11 +22,9 @@ echo '{
 
 sudo mkdir -p /etc/systemd/system/docker.service.d
 
-echo '
-[Service]
+echo '[Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd
-' | sudo tee -a /etc/systemd/system/docker.service.d/docker.conf
+ExecStart=/usr/bin/dockerd' | sudo tee -a /etc/systemd/system/docker.service.d/docker.conf
 
 
 sudo systemctl daemon-reload
@@ -40,6 +38,7 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 #add current user to docker group
 sudo groupadd docker
 sudo usermod -aG docker $USER
+#needs ssh reconnect for changes to take effect on current user
 
 #sudo sed -i '4i dns-search openstacklocal corp.capgemini.com' /etc/network/interfaces
 #sudo sed -i '5i dns-nameservers 66.28.0.45 66.28.0.61 127.0.1.1' /etc/network/interfaces
