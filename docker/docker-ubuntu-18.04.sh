@@ -1,5 +1,6 @@
 #!/bin/bash
-
+#WARNING: apt needs date synchronization with ubuntu archive servers
+#you may need to set the correct date first (e.g. sudo date 0227150219)
 #update apt index
 sudo apt-get update
 #allow apt to use a repository over HTTPS
