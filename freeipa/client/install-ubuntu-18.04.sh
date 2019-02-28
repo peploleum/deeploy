@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 #install freeipa-client package for ubuntu 18.04 and set hostname according to proper DNS
-sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get -y update
+sudo apt-get -y upgrade
 sudo hostnamectl set-hostname node-01.peploleum.com
 sudo apt-get install -y freeipa-client
 
