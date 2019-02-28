@@ -23,22 +23,24 @@ sudo ufw allow mysql
 
 sudo systemctl start mysql
 sudo systemctl enable mysql
-sudo sed -i "s/#max_connections  = 100/max_connections = 10000/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo sed -e '54,54 s/#/^/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo sed -i "s/max_connections        = 100/max_connections        = 10000/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 #Installation du client Openstack
 
 sudo apt install -y python-openstackclient
 
-#Installation d'Openstack Identité
+#Installation d'Openstack Identite
 
-sudo mysql
+
+TEMP=`sudo mysql << MyScript
 CREATE DATABASE keystone;
 GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'root';
-exit
+MyScript`
 
 sudo apt install -y keystone apache2 libapache2-mod-wsgi
-sudo sed -i "s/connection = sqlite:////var/lib/keystone/keystone.db/#connection = sqlite:////var/lib/keystone/keystone.db/g" /etc/keystone/keystone.conf
+sudo sed -e '721,721 s/^/#/' /etc/keystone/keystone.conf
 sudo sed -i '722i connection = mysql+pymysql://keystone:root@localhost/keystone' /etc/keystone/keystone.conf
 sudo sed -i '2892i provider = fernet' /etc/keystone/keystone.conf
 sudo su -s /bin/sh -c "keystone-manage db_sync" keystone
@@ -71,11 +73,11 @@ openstack token issue
 
 #Installation d'Openstack Imagerie
 
-sudo mysql
+TEMP=`sudo mysql << MyScript
 CREATE DATABASE glance;
 GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'root';
-exit
+MyScript`
 
 . admin-openrc
 openstack user create --domain default --password-prompt glance
@@ -86,8 +88,7 @@ openstack endpoint create --region RegionOne image internal http://$1:9292
 openstack endpoint create --region RegionOne image admin http://$1:9292
 
 sudo apt install -y glance
-sudo sed -i "s/connection = sqlite:////var/lib/glance/glance.sqlite/#connection = sqlite:////var/lib/glance/glance.sqlite/g" /etc/glance/glance-api.conf
-sudo sed -i "s/backend = sqlalchemy/#backend = sqlalchemy/g" /etc/glance/glance-api.conf
+sudo sed -e '1925,1926 s/^/#/' /etc/glance/glance-api.conf
 sudo sed -i '1927i connection = mysql+pymysql://glance:root@localhost/glance' /etc/glance/glance-api.conf
 sudo sed -i '2043i stores = file,http' /etc/glance/glance-api.conf
 sudo sed -i '2044i default_store = file' /etc/glance/glance-api.conf
@@ -115,7 +116,7 @@ openstack image list
 
 #Installation d'Openstack Compute
 	
-sudo mysql
+TEMP=`sudo mysql << MyScript
 CREATE DATABASE nova_api;
 CREATE DATABASE nova;
 CREATE DATABASE nova_cell0;
@@ -125,7 +126,7 @@ GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' IDENTIFIED BY 'root';
-exit
+MyScript`
 
 . admin-openrc
 openstack user create --domain default --password-prompt nova
@@ -151,13 +152,13 @@ sudo rabbitmqctl add_user openstack root
 sudo rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
 sudo sed -i '5i transport_url = rabbit://openstack:root@localhost' /etc/nova/nova.conf
-sudo sed -i "s/my_ip = <host_ipv4>/#my_ip = <host_ipv4>/g" /etc/nova/nova.conf
+sudo sed -e '1295,1295 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '1296i my_ip = IP_CONTROLLER' /etc/nova/nova.conf
 sudo sed -i '3210i auth_strategy = keystone' /etc/nova/nova.conf
-sudo sed -i "s/connection = mysql+pymysql://nova:root@localhost/nova_api/#connection = mysql+pymysql://nova:root@localhost/nova_api/g" /etc/nova/nova.conf
+sudo sed -e '3508,3508 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '3509i connection = mysql+pymysql://nova:root@localhost/nova_api' /etc/nova/nova.conf
 sudo sed -i '3679i enable = False' /etc/nova/nova.conf
-sudo sed -i "s/connection = sqlite:////var/lib/nova/nova.sqlite/#connection = sqlite:////var/lib/nova/nova.sqlite/g" /etc/nova/nova.conf
+sudo sed -e '4628,4628 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '4629i connection = mysql+pymysql://nova:root@localhost/nova' /etc/nova/nova.conf
 sudo sed -i '6133i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '6134i memcached_servers = HOSTNAME_CONTROLLER:11211' /etc/nova/nova.conf
@@ -168,7 +169,7 @@ sudo sed -i '6138i project_name = service' /etc/nova/nova.conf
 sudo sed -i '6139i username = nova' /etc/nova/nova.conf
 sudo sed -i '6140i password = root' /etc/nova/nova.conf
 sudo sed -i '7972i lock_path = /var/lib/nova/tmp' /etc/nova/nova.conf
-sudo sed -i "s/os_region_name = openstack/#os_region_name = openstack/g" /etc/nova/nova.conf
+sudo sed -e '8868,8868 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '8869i os_region_name = RegionOne' /etc/nova/nova.conf
 sudo sed -i '8870i project_domain_name = default' /etc/nova/nova.conf
 sudo sed -i '8871i project_name = service' /etc/nova/nova.conf
@@ -177,8 +178,10 @@ sudo sed -i '8873i user_domain_name = default' /etc/nova/nova.conf
 sudo sed -i '8874i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '8875i username = placement' /etc/nova/nova.conf
 sudo sed -i '8876i password = root' /etc/nova/nova.conf
-sudo sed -i "s/#discover_hosts_in_cells_interval = -1/discover_hosts_in_cells_interval = 300/g" /etc/nova/nova.conf
-sudo sed -i "s/#keymap = en-us/keymap = fr/g" /etc/nova/nova.conf
+sudo sed -e '9536,9536 s/#/^/' /etc/nova/nova.conf
+sudo sed -i "s/discover_hosts_in_cells_interval = -1/discover_hosts_in_cells_interval = 300/g" /etc/nova/nova.conf
+sudo sed -e '9870,9870 s/#/^/' /etc/nova/nova.conf
+sudo sed -i "s/keymap = en-us/keymap = fr/g" /etc/nova/nova.conf
 sudo sed -i '10352i enabled = true' /etc/nova/nova.conf
 sudo sed -i '10353i server_listen = 0.0.0.0' /etc/nova/nova.conf
 sudo sed -i '10354i server_proxyclient_address = HOSTNAME_COMPUTE_NODE' /etc/nova/nova.conf
@@ -203,11 +206,11 @@ sudo nova-status upgrade check
 
 #Installation d'Openstack network
 
-sudo mysql
+TEMP=`sudo mysql << MyScript
 CREATE DATABASE neutron;
 GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'root';
-exit
+MyScript`
 
 . admin-openrc
 openstack user create --domain default --password-prompt neutron
@@ -224,7 +227,7 @@ sudo sed -i '5i rpc_backend = rabbit' /etc/neutron/neutron.conf
 sudo sed -i '6i auth_strategy = keystone' /etc/neutron/neutron.conf
 sudo sed -i '7i notify_nova_on_port_status_changes = true' /etc/neutron/neutron.conf
 sudo sed -i '8i notify_nova_on_port_data_changes = true' /etc/neutron/neutron.conf
-sudo sed -i "s/connection = sqlite:////var/lib/neutron/neutron.sqlite/#connection = sqlite:////var/lib/neutron/neutron.sqlite/g" /etc/neutron/neutron.conf
+sudo sed -e '711,711 s/^/#/' /etc/neutron/neutron.conf
 sudo sed -i '712i connection = mysql+pymysql://neutron:root@localhost/neutron' /etc/neutron/neutron.conf
 sudo sed -i '827i auth_uri = http://HOSTNAME_CONTROLLER:5000' /etc/neutron/neutron.conf
 sudo sed -i '828i auth_url = http://HOSTNAME_CONTROLLER:5000' /etc/neutron/neutron.conf
@@ -296,8 +299,8 @@ openstack network agent list
 sudo apt install -y openstack-dashboard
 sudo sed -i "s/\"data-processing\": 1.1,/#\"data-processing\": 1.1,/g"  /etc/openstack-dashboard/local_settings.py
 sudo sed -i "s/\"compute\": 2,/#\"compute\": 2,/g"  /etc/openstack-dashboard/local_settings.py
-sudo sed -i "s/#OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = False/OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = False/g"  /etc/openstack-dashboard/local_settings.py
-sudo sed -i "s/#OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'default'/OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'default'/g"  /etc/openstack-dashboard/local_settings.py
+sudo sed -e '76,76 s/#/^/' /etc/openstack-dashboard/local_settings.py
+sudo sed -e '98,98 s/#/^/' /etc/openstack-dashboard/local_settings.py
 sudo sed -i "s/'LOCATION': '127.0.0.1:11211',/'LOCATION': 'HOSTNAME_CONTROLLER:11211',/g"  /etc/openstack-dashboard/local_settings.py
 sudo sed -i '197i OPENSTACK_HOST = "HOSTNAME_CONTROLLER"' /etc/openstack-dashboard/local_settings.py
 sudo sed -i '198i OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST' /etc/openstack-dashboard/local_settings.py
