@@ -6,7 +6,7 @@ echo param 3 : nom du compute node openstack
 echo param 4 : ip du compute node openstack
 echo param 5 : nom de l\'interface du reseau physique
 
-sudo sed -i "s/::1            localhost6.localdomain6 localhost6/#::1            localhost6.localdomain6 localhost6/g" /etc/hosts
+sudo sed -e '2,2 s/^/#/' /etc/hosts
 sudo sed -i '3i IP_CONTROLLER	HOSTNAME_CONTROLLER' /etc/hosts
 sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/hosts
 sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/hosts
