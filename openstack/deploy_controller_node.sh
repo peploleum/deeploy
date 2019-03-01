@@ -6,8 +6,12 @@ echo param 3 : nom du compute node openstack
 echo param 4 : ip du compute node openstack
 echo param 5 : nom de l\'interface du reseau physique
 
+#Remplacement du fichier hosts
+#Mise en commentaire de la ligne 2
 sudo sed -i '2,2 s/^/#/' /etc/hosts
+#Ajout du token
 sudo sed -i '3i IP_CONTROLLER	HOSTNAME_CONTROLLER' /etc/hosts
+#remplacement des tokens
 sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/hosts
 sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/hosts
 sudo sed -i '4i IP_COMPUTE	HOSTNAME_COMPUTE' /etc/hosts
@@ -32,13 +36,14 @@ sudo apt install -y python-openstackclient
 
 #Installation d'Openstack Identite
 
-
+#Création de la database keystone dans mysql et ajout des privileges
 TEMP=`sudo mysql << MyScript
 CREATE DATABASE keystone;
 GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'root';
 MyScript`
 
+#Installation et paramétrage de keystone
 sudo apt install -y keystone apache2 libapache2-mod-wsgi
 sudo sed -i '721,721 s/^/#/' /etc/keystone/keystone.conf
 sudo sed -i '722i connection = mysql+pymysql://keystone:root@localhost/keystone' /etc/keystone/keystone.conf
@@ -50,6 +55,7 @@ sudo keystone-manage bootstrap --bootstrap-password root --bootstrap-admin-url h
 sudo sed -i '70i ServerName localhost' /etc/apache2/apache2.conf	
 sudo service apache2 restart
 
+#Export des variables d'authentification
 export OS_PROJECT_DOMAIN_NAME=default
 export OS_USER_DOMAIN_NAME=default
 export OS_PROJECT_NAME=admin
@@ -58,6 +64,7 @@ export OS_PASSWORD=root
 export OS_AUTH_URL=http://$1:5000/v3
 export OS_IDENTITY_API_VERSION=3
 
+#Création des projets et des utilisateurs sur ces projets
 openstack domain create --description "domaine" exemple
 openstack project create --domain default --description "Service projet" service
 openstack project create --domain default --description "Demo projet" demo
@@ -65,6 +72,7 @@ openstack user create --domain default --password-prompt demo
 openstack role create user
 openstack role add --project demo --user demo user
 	
+ #Validation de l'installation du composant d'authentification
 unset OS_AUTH_URL OS_PASSWORD
 openstack --os-auth-url http://$1:5000/v3 --os-default-domain-id default --os-project-domain-name default --os-user-domain-name default --os-project-name admin --os-username admin token issue
 openstack --os-auth-url http://$1:5000/v3 --os-default-domain-id default --os-project-domain-name default --os-user-domain-name default --os-project-name demo --os-username demo token issue
@@ -74,12 +82,14 @@ openstack token issue
 
 #Installation d'Openstack Imagerie
 
+#Création de la database glance dans mysql et ajout des privileges
 TEMP=`sudo mysql << MyScript
 CREATE DATABASE glance;
 GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'root';
 MyScript`
 
+#Ajout de l'utilisateur et du role et des points de terminaison sur les 3 projets
 . admin-openrc
 openstack user create --domain default --password-prompt glance
 openstack role add --project service --user glance admin
@@ -88,7 +98,9 @@ openstack endpoint create --region RegionOne image public http://$1:9292
 openstack endpoint create --region RegionOne image internal http://$1:9292
 openstack endpoint create --region RegionOne image admin http://$1:9292
 
+#Installation et ajout des lignes avec ou sans tokens dans la conf glance
 sudo apt install -y glance
+#Mise en commentaire des lignes 1925 et 1926
 sudo sed -i '1925,1926 s/^/#/' /etc/glance/glance-api.conf
 sudo sed -i '1927i connection = mysql+pymysql://glance:root@localhost/glance' /etc/glance/glance-api.conf
 sudo sed -i '2043i stores = file,http' /etc/glance/glance-api.conf
@@ -106,16 +118,22 @@ sudo sed -i '3497i username = glance' /etc/glance/glance-api.conf
 sudo sed -i '3498i password = root' /etc/glance/glance-api.conf
 sudo sed -i '4497i flavor = keystone' /etc/glance/glance-api.conf
 
+#Remplacement du token dans le fichier de conf glance
+sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/glance/glance-api.conf
+
+#Synchronisation des paramétres
 sudo su -s /bin/sh -c "glance-manage db_sync" glance	
 sudo service glance-registry restart
 sudo service glance-api restart
  	
+#Test sur le téléchargement et le déploiement de l'image cirros(image de test)
 wget http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
 openstack image create "cirros" --file cirros-0.4.0-x86_64-disk.img  --disk-format qcow2 --container-format bare --public
 openstack image list
 
 #Installation d'Openstack Compute
 	
+#Création des databases nova_api,nova,nova_cell0 dans mysql et ajout des privileges
 TEMP=`sudo mysql << MyScript
 CREATE DATABASE nova_api;
 CREATE DATABASE nova;
@@ -128,6 +146,7 @@ GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' IDENTIFIED BY 'root';
 MyScript`
 
+#Création des utilisateurs et roles ainsi que des points de terminaison utiles pour nova
 . admin-openrc
 openstack user create --domain default --password-prompt nova
 openstack role add --project service --user nova admin
@@ -142,15 +161,17 @@ openstack endpoint create --region RegionOne placement public http://$1:8778
 openstack endpoint create --region RegionOne placement internal http://$1:8778
 openstack endpoint create --region RegionOne placement admin http://$1:8778
 
-sudo sed -i "s/deb http://archive.ubuntu.com/ubuntu bionic main restricted/deb http://archive.ubuntu.com/ubuntu bionic main universe restricted/g" /etc/apt/sources.list
-sudo sed -i "s/deb http://archive.ubuntu.com/ubuntu bionic-security main restricted/deb http://archive.ubuntu.com/ubuntu bionic-security main universe restricted/g" /etc/apt/sources.list
-sudo sed -i "s/deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted/deb http://archive.ubuntu.com/ubuntu bionic-updates main universe restricted/g" /etc/apt/sources.list
+#MAJ du repo pour télécharger et installer nova
+sudo add-apt-repository universe
 sudo apt update
 sudo apt install -y nova-api nova-conductor nova-consoleauth nova-novncproxy nova-scheduler nova-placement-api
 sudo apt install -y rabbitmq-server
+
+#Ajoute les permissions sur rabbit-mq
 sudo rabbitmqctl add_user openstack root
 sudo rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
+#Ajoute, met en commentaire le paramétrage de nova
 sudo sed -i '5i transport_url = rabbit://openstack:root@localhost' /etc/nova/nova.conf
 sudo sed -i '1295,1295 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '1296i my_ip = IP_CONTROLLER' /etc/nova/nova.conf
@@ -186,6 +207,12 @@ sudo sed -i '10352i enabled = true' /etc/nova/nova.conf
 sudo sed -i '10353i server_listen = 0.0.0.0' /etc/nova/nova.conf
 sudo sed -i '10354i server_proxyclient_address = HOSTNAME_COMPUTE_NODE' /etc/nova/nova.conf
 
+#Remplacement des tokens
+sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/nova/nova.conf 
+sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/nova/nova.conf 
+sudo sed -i "s/HOSTNAME_COMPUTE_NODE/$3/g" /etc/nova/nova.conf 
+
+#Synchronisation de nova
 sudo su -s /bin/sh -c "nova-manage api_db sync" nova
 sudo su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
 sudo su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
@@ -198,6 +225,7 @@ sudo service nova-scheduler restart
 sudo service nova-conductor restart
 sudo service nova-novncproxy restart
 
+#Validation du bon déploiement de nova
 . admin-openrc
 openstack compute service list
 openstack catalog list
@@ -206,12 +234,14 @@ sudo nova-status upgrade check
 
 #Installation d'Openstack network
 
+#Création de la database neutron dans mysql et ajout des privileges
 TEMP=`sudo mysql << MyScript
 CREATE DATABASE neutron;
 GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'root';
 MyScript`
 
+#Ajout de l'utilisateur et de son role et enfin des 3 points de terminaison
 . admin-openrc
 openstack user create --domain default --password-prompt neutron
 openstack role add --project service --user neutron admin
@@ -220,6 +250,7 @@ openstack endpoint create --region RegionOne network public http://$1:9696
 openstack endpoint create --region RegionOne network internal http://$1:9696
 openstack endpoint create --region RegionOne network admin http://$1:9696
 
+#Installation et paramétrage des fichiers de configuration neutron
 sudo apt install -y neutron-server neutron-plugin-ml2 neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent neutron-metadata-agent
 sudo sed -i '3i service_plugins = router' /etc/neutron/neutron.conf
 sudo sed -i '4i allow_overlapping_ips = false' /etc/neutron/neutron.conf
@@ -250,6 +281,9 @@ sudo sed -i '1539i rabbit_host = localhost' /etc/neutron/neutron.conf
 sudo sed -i '1540i rabbit_userid = openstack' /etc/neutron/neutron.conf
 sudo sed -i '1541i rabbit_password = root' /etc/neutron/neutron.conf
 
+#Remplacement du token
+sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/neutron/neutron.conf
+
 sudo sed -i '129i type_drivers = local,flat,vlan,gre,vxlan,geneve' /etc/neutron/plugins/ml2/ml2_conf.ini
 sudo sed -i '130i tenant_network_types = vxlan' /etc/neutron/plugins/ml2/ml2_conf.ini
 sudo sed -i '131i mechanism_drivers = linuxbridge,l2population' /etc/neutron/plugins/ml2/ml2_conf.ini
@@ -265,6 +299,9 @@ sudo sed -i '204i enable_vxlan =true' /etc/neutron/plugins/ml2/linuxbridge_agent
 sudo sed -i '205i local_ip = IP_CONTROLLER' /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 sudo sed -i '206i l2_population = true' /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 
+sudo sed -i "s/PHYSICAL_NETWORK_INTERFACE/$5/g" /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+
 sudo sed -i '2i interface_driver = linuxbridge' /etc/neutron/l3_agent.ini
 
 sudo sed -i '2i interface_driver = linuxbridge' /etc/neutron/dhcp_agent.ini
@@ -273,6 +310,8 @@ sudo sed -i '4i enable_isolated_metadata = false' /etc/neutron/dhcp_agent.ini
 
 sudo sed -i '2i nova_metadata_host = HOSTNAME_CONTROLLER' /etc/neutron/metadata_agent.ini
 sudo sed -i '3i metadata_proxy_shared_secret = INSIGHT' /etc/neutron/metadata_agent.ini
+
+sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/neutron/metadata_agent.ini
 
 sudo sed -i '7644i url = http://HOSTNAME_CONTROLLER:9696' /etc/nova/nova.conf
 sudo sed -i '7645i auth_url = http://HOSTNAME_CONTROLLER:5000' /etc/nova/nova.conf
@@ -286,6 +325,11 @@ sudo sed -i '7652i password = root' /etc/nova/nova.conf
 sudo sed -i '7653i service_metadata_proxy = true' /etc/nova/nova.conf
 sudo sed -i '7654i metadata_proxy_shared_secret = INSIGHT' /etc/nova/nova.conf
 
+sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/nova/nova.conf 
+sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/nova/nova.conf 
+sudo sed -i "s/HOSTNAME_COMPUTE_NODE/$3/g" /etc/nova/nova.conf 
+
+#Synchronisation du déploiement neutron
 sudo su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
 sudo service nova-api restart
 sudo service neutron-server restart
@@ -317,18 +361,10 @@ sudo sed -i '334i \\x27enable_lb\x27: False,' /etc/openstack-dashboard/local_set
 sudo sed -i '335i \\x27enable_firewall\x27: False,' /etc/openstack-dashboard/local_settings.py
 sudo sed -i '346i \\x27enable_vpn\x27: False,' /etc/openstack-dashboard/local_settings.py
 sudo sed -i "s/'enable_fip_topology_check': True,/'enable_fip_topology_check': False,/g" /etc/openstack-dashboard/local_settings.py
+sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/openstack-dashboard/local_settings.py
 sudo service apache2 reload
 
+#MAJ du cache memoire nécessaire à l'accès du dashboard
 sudo sed -i "s/-l 127.0.0.1/-l IP_CONTROLLER/g"  /etc/memcached.conf
-sudo service memcached restart
-
-sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/glance/glance-api.conf
-sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/nova/nova.conf 
-sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/nova/nova.conf 
-sudo sed -i "s/HOSTNAME_COMPUTE_NODE/$3/g" /etc/nova/nova.conf 
-sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/neutron/neutron.conf
-sudo sed -i "s/PHYSICAL_NETWORK_INTERFACE/$5/g" /etc/neutron/plugins/ml2/linuxbridge_agent.ini
-sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/neutron/plugins/ml2/linuxbridge_agent.ini
-sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/neutron/metadata_agent.ini
-sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/openstack-dashboard/local_settings.py
 sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/memcached.conf
+sudo service memcached restart
