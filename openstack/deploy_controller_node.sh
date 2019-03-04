@@ -179,8 +179,8 @@ sudo sed -i '2422,2422 s/#//' /etc/nova/nova.conf
 sudo sed -i '3210i auth_strategy = keystone' /etc/nova/nova.conf
 sudo sed -i '3508,3508 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '3509i connection = mysql+pymysql://nova:root@localhost/nova_api' /etc/nova/nova.conf
-sudo sed -i '4629,4629 s/^/#/' /etc/nova/nova.conf
-sudo sed -i '4630i connection = mysql+pymysql://nova:root@localhost/nova' /etc/nova/nova.conf
+sudo sed -i '4628,4628 s/^/#/' /etc/nova/nova.conf
+sudo sed -i '4629i connection = mysql+pymysql://nova:root@localhost/nova' /etc/nova/nova.conf
 sudo sed -i '5332i api_servers = http://HOSTNAME_CONTROLLER:9292' /etc/nova/nova.conf
 sudo sed -i '6133i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '6134i memcached_servers = HOSTNAME_CONTROLLER:11211' /etc/nova/nova.conf
@@ -191,7 +191,7 @@ sudo sed -i '6138i project_name = service' /etc/nova/nova.conf
 sudo sed -i '6139i username = nova' /etc/nova/nova.conf
 sudo sed -i '6140i password = root' /etc/nova/nova.conf
 sudo sed -i '7972i lock_path = /var/lib/nova/tmp' /etc/nova/nova.conf
-sudo sed -i '8868,8868 s/^/#/' /etc/nova/nova.conf
+sudo sed -i '8866,8866 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '8869i os_region_name = RegionOne' /etc/nova/nova.conf
 sudo sed -i '8870i project_domain_name = default' /etc/nova/nova.conf
 sudo sed -i '8871i project_name = service' /etc/nova/nova.conf
@@ -200,9 +200,9 @@ sudo sed -i '8873i user_domain_name = default' /etc/nova/nova.conf
 sudo sed -i '8874i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '8875i username = placement' /etc/nova/nova.conf
 sudo sed -i '8876i password = root' /etc/nova/nova.conf
-sudo sed -i '9536,9536 s/#//' /etc/nova/nova.conf
+sudo sed -i '9534,9534 s/#//' /etc/nova/nova.conf
 sudo sed -i "s/discover_hosts_in_cells_interval = -1/discover_hosts_in_cells_interval = 300/g" /etc/nova/nova.conf
-sudo sed -i '9870,9870 s/#//' /etc/nova/nova.conf
+sudo sed -i '9868,9868 s/#//' /etc/nova/nova.conf
 sudo sed -i "s/keymap = en-us/keymap = fr/g" /etc/nova/nova.conf
 sudo sed -i '10352i enabled = true' /etc/nova/nova.conf
 sudo sed -i '10353i server_listen = 0.0.0.0' /etc/nova/nova.conf
