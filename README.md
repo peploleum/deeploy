@@ -67,6 +67,25 @@ Sample : ./mirror-github.sh https://github.com/peploleum/ graphy magnarox/graphy
 
 follow this [recipe](https://computingforgeeks.com/how-to-configure-gitlab-freeipa-authentication/)
 
+> convenience scripts are [here](gitlab/config):
+
+        cd gitlab/config
+        
+> edit scripts and config files to match freeipa settings (IP, server hostname).  
+> execute prepare script (gitlab-ce container id required)  
+        
+        ./prepare-ldap.sh $gitlab-ce_docker_container_id
+        
+> execute a bash in the gitlab container
+
+        docker exec -it $gitlab_container_id /bin/bash
+        
+> in the container: check config files in the container (/configure-ldap.sh and /etc/gitlab/freeipa_setting.yml)  
+> in the container: execute config script  
+
+        ./configure-ldap.sh
+
+        
 ### CI / CD sample
 (TODO)
 
