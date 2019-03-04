@@ -63,6 +63,9 @@ For each project :
 
 Sample : ./mirror-github.sh https://github.com/peploleum/ graphy magnarox/graphy
 
+### LDAP configuration
+
+follow this [recipe](https://computingforgeeks.com/how-to-configure-gitlab-freeipa-authentication/)
 
 ### CI / CD sample
 (TODO)
