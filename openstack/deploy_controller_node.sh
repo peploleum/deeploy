@@ -181,6 +181,7 @@ sudo sed -i '3509i connection = mysql+pymysql://nova:root@localhost/nova_api' /e
 sudo sed -i '3679i enable = False' /etc/nova/nova.conf
 sudo sed -i '4628,4628 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '4629i connection = mysql+pymysql://nova:root@localhost/nova' /etc/nova/nova.conf
+sudo sed -i '5332i api_servers = http://HOSTNAME_CONTROLLER:9292' /etc/nova/nova.conf
 sudo sed -i '6133i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '6134i memcached_servers = HOSTNAME_CONTROLLER:11211' /etc/nova/nova.conf
 sudo sed -i '6135i auth_type = password' /etc/nova/nova.conf
