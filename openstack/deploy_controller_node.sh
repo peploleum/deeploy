@@ -173,14 +173,14 @@ sudo rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
 #Ajoute, met en commentaire le paramétrage de nova
 sudo sed -i '5i transport_url = rabbit://openstack:root@localhost' /etc/nova/nova.conf
-sudo sed -i '1295,1295 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '1296i my_ip = IP_CONTROLLER' /etc/nova/nova.conf
+sudo sed -i '1760,1760 s/#//' /etc/nova/nova.conf
+sudo sed -i '2422,2422 s/#//' /etc/nova/nova.conf
 sudo sed -i '3210i auth_strategy = keystone' /etc/nova/nova.conf
 sudo sed -i '3508,3508 s/^/#/' /etc/nova/nova.conf
 sudo sed -i '3509i connection = mysql+pymysql://nova:root@localhost/nova_api' /etc/nova/nova.conf
-sudo sed -i '3679i enable = False' /etc/nova/nova.conf
-sudo sed -i '4628,4628 s/^/#/' /etc/nova/nova.conf
-sudo sed -i '4629i connection = mysql+pymysql://nova:root@localhost/nova' /etc/nova/nova.conf
+sudo sed -i '4629,4629 s/^/#/' /etc/nova/nova.conf
+sudo sed -i '4630i connection = mysql+pymysql://nova:root@localhost/nova' /etc/nova/nova.conf
 sudo sed -i '5332i api_servers = http://HOSTNAME_CONTROLLER:9292' /etc/nova/nova.conf
 sudo sed -i '6133i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '6134i memcached_servers = HOSTNAME_CONTROLLER:11211' /etc/nova/nova.conf
@@ -332,6 +332,7 @@ sudo sed -i "s/HOSTNAME_COMPUTE_NODE/$3/g" /etc/nova/nova.conf
 
 #Synchronisation du déploiement neutron
 sudo su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+
 sudo service nova-api restart
 sudo service neutron-server restart
 sudo service neutron-linuxbridge-agent restart
@@ -369,3 +370,9 @@ sudo service apache2 reload
 sudo sed -i "s/-l 127.0.0.1/-l IP_CONTROLLER/g"  /etc/memcached.conf
 sudo sed -i "s/IP_CONTROLLER/$2/g" /etc/memcached.conf
 sudo service memcached restart
+
+sudo service nova-api restart
+sudo service nova-conductor restart
+sudo service nova-consoleauth restart
+sudo service nova-novncproxy restart
+sudo service nova-scheduler restart
