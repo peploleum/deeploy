@@ -1,0 +1,17 @@
+main: 
+  label: 'FreeIPA'
+  host: 'ipaserver.peploleum.com'
+  port: 389
+  uid: 'uid'
+  method: 'tls'
+  bind_dn: 'uid=gitlab,cn=users,cn=compat,dc=peploleum,dc=com'
+  password: 'gitlab'
+  encryption: 'plain'
+  base: 'cn=accounts,dc=peploleum,dc=com'
+  verify_certificates: false
+  attributes:
+    username: ['uid']
+    email: ['mail']
+    name: 'displayName'
+    first_name: 'givenName'
+    last_name: 'sn'
