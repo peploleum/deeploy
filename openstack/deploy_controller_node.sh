@@ -202,9 +202,8 @@ sudo sed -i '8873i user_domain_name = default' /etc/nova/nova.conf
 sudo sed -i '8874i auth_url = http://HOSTNAME_CONTROLLER:5000/v3' /etc/nova/nova.conf
 sudo sed -i '8875i username = placement' /etc/nova/nova.conf
 sudo sed -i '8876i password = root' /etc/nova/nova.conf
-#sudo sed -i '9534,9534 s/#//' /etc/nova/nova.conf
 sudo sed -i "s/discover_hosts_in_cells_interval = -1/discover_hosts_in_cells_interval = 300/g" /etc/nova/nova.conf
-#sudo sed -i '9868,9868 s/#//' /etc/nova/nova.conf
+sudo sed -i '9869,9869 s/#//' /etc/nova/nova.conf
 sudo sed -i "s/keymap = en-us/keymap = fr/g" /etc/nova/nova.conf
 sudo sed -i '10352i enabled = true' /etc/nova/nova.conf
 sudo sed -i '10353i server_listen = 0.0.0.0' /etc/nova/nova.conf

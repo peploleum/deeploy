@@ -56,6 +56,7 @@ Execute the command on controller openstack:
         sudo chmod 777 enrolment_node.sh
 
 Execute shell enrolment_node.sh in openstack-controller.
+Uncomment discover_hosts_in_cells_interval in etc/nova/nova.conf
 
 ### Init image data Openstack :
 
