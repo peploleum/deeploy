@@ -365,7 +365,7 @@ sudo sed -i '334i \\x27enable_lb\x27: False,' /etc/openstack-dashboard/local_set
 sudo sed -i '335i \\x27enable_firewall\x27: False,' /etc/openstack-dashboard/local_settings.py
 sudo sed -i '336i \\x27enable_vpn\x27: False,' /etc/openstack-dashboard/local_settings.py
 sudo sed -i "s/'enable_fip_topology_check': True,/'enable_fip_topology_check': False,/g" /etc/openstack-dashboard/local_settings.py
-sudo sed -i '859i SESSION_ENGINE = \\x27django.contrib.sessions.backends.cache\x27' /etc/openstack-dashboard/local_settings.py
+sudo sed -i '859i SESSION_ENGINE = \x27django.contrib.sessions.backends.cache\x27' /etc/openstack-dashboard/local_settings.py
 sudo sed -i "s/HOSTNAME_CONTROLLER/$1/g" /etc/openstack-dashboard/local_settings.py
 sudo service apache2 reload
 
