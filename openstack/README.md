@@ -2,6 +2,9 @@
 
 ## Openstack
 
+### Warning
+* The password to enter is "**root**".
+
 ### Prerequisites :  
 * Logging in openstack-controller
 * Verify admin-openrc
@@ -18,7 +21,7 @@ Execute the command :
 
         git clone https://github.com/peploleum/deeploy.git
         cd deeploy/openstack/
-        sudo chmod 777 deploy_controller_node.sh
+        sudo chmod +x deploy_controller_node.sh
 
 Execute shell deploy_controller_node.sh in controller node.
         
@@ -40,7 +43,7 @@ Execute the command :
 
         git clone https://github.com/peploleum/deeploy.git
         cd deeploy/openstack/
-        sudo chmod 777 deploy_compute_node.sh
+        sudo chmod +x deploy_compute_node.sh
         
 Execute shell deploy_compute_node.sh in new compute node.
         
@@ -53,7 +56,7 @@ Execute shell deploy_compute_node.sh in new compute node.
 
 Execute the command on controller openstack:
         
-        sudo chmod 777 enrolment_node.sh
+        sudo chmod +x enrolment_node.sh
 
 Execute shell enrolment_node.sh in openstack-controller.
 Uncomment discover_hosts_in_cells_interval in etc/nova/nova.conf
@@ -77,6 +80,8 @@ Execute script deploy_param_openstack.sh in openstack-controller.
 ### Create instance Openstack :
 
 This script launch a new Virtual Machine.
+
+sudo chmod +x create_instance.sh
 
 Execute script create_instance.sh in openstack-controller.
 

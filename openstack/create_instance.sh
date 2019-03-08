@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo param 1 : Nom du flavor
+echo param 1 : Nom du flavor \(gabarit\)
 echo param 2 : Nom de l\'image
-echo param 3 : ID du network
+echo param 3 : ID du network \(identifiant réseau dans le dashboard openstack\)
 echo param 4 : Nom de la paire de cles
 echo param 5 : Nom de l\'instance
 

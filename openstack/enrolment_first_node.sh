@@ -5,6 +5,11 @@
 # Access openstack
 . admin-openrc
 
+#Add quota
+openstack quota set admin --ram 500000
+openstack quota set admin --cores 500
+openstack quota set admin --instances 1000
+
 # View new node
 openstack compute service list --service nova-compute
 
