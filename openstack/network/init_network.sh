@@ -11,7 +11,6 @@ cd network
 # Cleanup
 openstack router unset --external-gateway router1
 openstack network delete public
-openstack network delete private
 openstack subnet pool delete subnet-pool-ip4
 openstack address scope delete address-scope-ip4
 openstack router remove subnet router1 $(openstack subnet list -c ID -f value)
@@ -23,4 +22,3 @@ openstack address scope create --share --ip-version 4 address-scope-ip4
 openstack subnet pool create --address-scope address-scope-ip4 --share --pool-prefix $1 --default-prefix-length $2 subnet-pool-ip4
 openstack subnet create --network public --subnet-pool subnet-pool-ip4 subnet-public
 openstack router set --external-gateway public router1
-openstack network create private
