@@ -120,3 +120,8 @@ Follow these steps on the openstack-controller
         MIN_DISK_SIZE : Amount of disk space in GB that is required to boot the image
         MIN_RAM_SIZE : Amount of RAM in MB that is required to boot the image
         IMAGE_QCOW2 : .qcow2 file generated previously
+
+## Links
+
+[Openstack webUI](http://192.168.0.10/horizon/identity/)
+
