@@ -131,16 +131,11 @@ Follow these steps on the openstack-controller
 
 * Use the UI to install OS. You can use this guide for help (https://docs.openstack.org/image-guide/create-images-manually.html)
 
-* Clean up the image
-
-        sudo virt-sysprep -d IMAGE_NAME
 * Upload image on Openstack
 
-        openstack image create --name IMAGE_NAME --disk-format qcow2 --min-disk MIN_DISK_SIZE --min-ram MIN_RAM_SIZE --file IMAGE_QCOW2 --public
+        openstack image create IMAGE_NAME --disk-format qcow2 --file IMAGE_QCOW2 --public
         
         IMAGE_NAME : The name of the image
-        MIN_DISK_SIZE : Amount of disk space in GB that is required to boot the image
-        MIN_RAM_SIZE : Amount of RAM in MB that is required to boot the image
         IMAGE_QCOW2 : .qcow2 file generated previously
 
 ## Links
