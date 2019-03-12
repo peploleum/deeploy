@@ -1,0 +1,26 @@
+#cloud-config
+
+#Specify the user
+users:
+  - default
+  - name: capgemini 
+    lock_passwd: False
+    sudo: ["ALL=(ALL) NOPASSWD:ALL\nDefaults:root !requiretty"]
+    shell: /bin/bash
+
+write_files:
+  - content: |
+        #!/bin/sh
+        DEBIAN_FRONTEND=noninteractive sudo apt-get -qqy update
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install -qqy git 
+        sudo chown capgemini:capgemini /home/capgemini
+        cd /home/capgemini
+        git clone https://github.com/peploleum/deeploy.git
+        cd deeploy/freeipa/client/
+        ./install-ubuntu-18.04.sh
+    path: /home/capgemini/deploy_freeipa.sh
+    permissions: 0777
+
+# run commands
+runcmd:
+ - su -l capgemini ./deploy_freeipa.sh

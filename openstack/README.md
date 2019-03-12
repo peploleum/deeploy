@@ -98,6 +98,23 @@ Execute script create_instance.sh in openstack-controller.
 
 example : ./create_instance.sh custom Ubuntu_16.04 sandbox 12.12.12.12 192.168.0.112 sampleServer
 
+### Create instance with freeipa Openstack :
+
+This script launch a new Virtual Machine with deployment freeipa.
+
+sudo chmod +x create_instance_with_freeipa.sh
+
+Execute script create_instance.sh in openstack-controller.
+
+        param 1 : Flavor name -- ex : Large
+        param 2 : Image name -- ex : Ubuntu_16.04.desktop
+        param 3 : Network name -- ex : sandbox
+        param 4 : Private Instance IP -- ex : 12.12.12.113
+        param 5 : Public Floating IP -- ex : 192.168.0.113
+        param 6 : Instance name -- ex : instance04
+
+example : ./create_instance_with_freeipa.sh custom Ubuntu_16.04.desktop sandbox 12.12.12.12 192.168.0.112 sampleDesktop
+
 ### Create new Image from ISO file
 
 Follow these steps on the openstack-controller
