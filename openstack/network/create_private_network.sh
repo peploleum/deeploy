@@ -10,6 +10,10 @@ cd ..
 . admin-openrc
 cd network
 
+# Cleanup
+openstack router remove subnet router1 subnet-$1
+openstack network delete $1
+
 openstack network create $1
-openstack subnet create subnet-$1 --subnet-range $2 --network $1 --allocation-pool start=$3,end=$4
+openstack subnet create subnet-$1 --subnet-range $2 --network $1 --allocation-pool start=$3,end=$4 --dns-nameserver 66.28.0.45 --dns-nameserver 8.8.8.8
 openstack router add subnet router1 subnet-$1 
