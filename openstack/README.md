@@ -61,21 +61,25 @@ Execute the command on controller openstack:
 Execute shell enrolment_node.sh in openstack-controller.
 Uncomment discover_hosts_in_cells_interval in etc/nova/nova.conf
 
-### Init image data Openstack :
-
+### Init Openstack :
+#### General
 This script initialize Network, Security Group, KeyPair, Flavor and Image.
 
 Execute script deploy_param_openstack.sh in openstack-controller.
 
-        param 1 : Adresse du sous réseau prive (ex:xxx.xxx.xxx.xxx)
-        param 2 : Adresse du sous réseau prive sans le dernier digit (ex:xxx:xxx:xxx)
-        param 3 : Adresse de début du reseau public
-        param 4 : Adresse de fin du reseau public
-        param 5 : Adresse du serveur dns public
-        param 6 : Adresse de la passerelle public
-        param 7 : Adresse du sous reseau public (ex:xxx.xxx.xxx.xxx)
-        param 8 : Digit du masquage du réseau (ex:xx)
-        param 9 : Nom de la paire de clés openstack
+        param 1 : Public network CIDR -- ex: 192.168.0.0/16
+        param 2 : Public network start pool -- ex: 192.168.0.101
+        param 3 : Public network end pool -- ex: 192.168.0.250
+        param 4 : Public network gateway -- ex: 192.168.0.1
+        param 5 : Public network DNS -- ex: 66.28.0.45        
+
+#### Private network
+Create all your customs privates networks using script create_private_network.sh
+
+        param 1 : Network name -- ex : sandbox
+        param 2 : IP range -- ex : 10.0.10.0/24
+        param 3 : Start -- ex : 10.0.10.10
+        param 4 : End -- ex : 10.0.10.250
 
 ### Create instance Openstack :
 
@@ -85,13 +89,14 @@ sudo chmod +x create_instance.sh
 
 Execute script create_instance.sh in openstack-controller.
 
-        param 1 : Nom du flavor
-        param 2 : Nom de l'image
-        param 3 : ID du network
-        param 4 : Nom de la paire de cles
-        param 5 : Nom de l'instance
+        param 1 : Flavor name -- ex : Small
+        param 2 : Image name -- ex : Ubuntu-16.04
+        param 3 : Network name -- ex : sandbox
+        param 4 : Private Instance IP -- ex : 10.0.10.113
+        param 5 : Public Floating IP -- ex : 192.168.0.113
+        param 6 : Instance name -- ex : instance04
 
-example : ./create_instance.sh custom Ubuntu_16.04 20da2941-8676-4f4c-9c05-031ce0305eda INSIGHT docker
+example : ./create_instance.sh custom Ubuntu_16.04 sandbox 12.12.12.12 192.168.0.112 sampleServer
 
 ### Create new Image from ISO file
 
