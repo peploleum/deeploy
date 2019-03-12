@@ -1,13 +1,20 @@
 #!/bin/bash
 
-echo param 1 : Nom du flavor \(gabarit\)
-echo param 2 : Nom de l\'image
-echo param 3 : Network name
-echo param 4 : Nom de la paire de cles
-echo param 5 : Nom de l\'instance
+echo param 1 : Flavor name -- ex : Small
+echo param 2 : Image name -- ex : Ubuntu-16.04
+echo param 3 : Network name -- ex : sandbox
+echo param 4 : Private Instance IP -- ex : 10.0.10.113
+echo param 5 : Public Floating IP -- ex : 192.168.0.113
+echo param 6 : Instance name -- ex : instance04
 
-#Create flavor
-openstack server create --flavor $1 --image $2 --network $3 --security-group openstack --key-name $4 $5
+#Create Port
+openstack port create --network $3 --fixed-ip subnet=subnet-$3,ip-address=$4 --device-owner compute:nova --security-group openstack port-$6
+
+#Create Instance
+openstack server create --flavor $1 --image $2 --key-name INSIGHT --port port-$6 $6
+
+#Add floating-ip
+openstack floating ip create public --floating-ip-address $5 --port port-$6
 
 #Generate token instance
-openstack console url show $5
+openstack console url show $6
