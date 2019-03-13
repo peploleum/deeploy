@@ -39,8 +39,8 @@ openstack keypair delete $KEY_NAME
 #Create image Ubuntu 
 openstack image create --container-format ova --disk-format vmdk --public --file ubuntu_16.04_desktop.vmdk Ubuntu_16.04_desktop
 openstack image create --container-format ova --disk-format vmdk --public --file ubuntu_18.04_desktop.vmdk Ubuntu_18.04_desktop
-openstack image create --disk-format qcow2 --public --file ubuntu_16.04_server.qcow2 Ubuntu_16.04_server
-openstack image create --disk-format qcow2 --public --file ubuntu_18.04_server.qcow2 Ubuntu_18.04_server
+openstack image create --disk-format qcow2 --public --file images/ubuntu-16.04-server.img Ubuntu_16.04_server
+openstack image create --disk-format qcow2 --public --file images/ubuntu-18.04-server.img Ubuntu_18.04_server
 
 #Create all gabarits
 openstack flavor create --id 0 --vcpus 1 --ram 2048 --disk 1 Small
