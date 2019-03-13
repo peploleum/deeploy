@@ -8,7 +8,7 @@ echo param 4 : Public network gateway -- ex: 192.168.0.1
 echo param 5 : Public network DNS -- ex: 66.28.0.45
 
 NETWORK_NAME=public
-KEY_NAME=INSIGHT
+KEY_NAME=rsa_key
 
 # Access openstack
 . admin-openrc
@@ -63,4 +63,4 @@ openstack security group rule create --protocol tcp --dst-port 22:22 openstack
 openstack security group rule create --protocol tcp --dst-port 6443:6443 openstack
 
 #Create key
-openstack keypair create $KEY_NAME
+openstack keypair create $KEY_NAME --private-key ~/$KEY_NAME.pem
