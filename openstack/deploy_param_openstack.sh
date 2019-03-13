@@ -19,12 +19,12 @@ openstack image delete Ubuntu_18.04_desktop
 openstack image delete Ubuntu_16.04_server
 openstack image delete Ubuntu_18.04_server
 
-openstack flavor delete Small
-openstack flavor delete Medium
-openstack flavor delete Large
-openstack flavor delete Extra_large
-openstack flavor delete Extra_extra_large
-openstack flavor delete Kubernetes
+openstack flavor delete S
+openstack flavor delete M
+openstack flavor delete L
+openstack flavor delete XL
+openstack flavor delete XXL
+openstack flavor delete XXXL
 
 openstack router unset --external-gateway router1
 openstack router remove subnet router1 $(openstack subnet list -c ID -f value)
@@ -37,18 +37,18 @@ openstack security group delete openstack
 openstack keypair delete $KEY_NAME
 
 #Create image Ubuntu 
-openstack image create --container-format ova --disk-format vmdk --public --file ubuntu_16.04_desktop.vmdk Ubuntu_16.04_desktop
-openstack image create --container-format ova --disk-format vmdk --public --file ubuntu_18.04_desktop.vmdk Ubuntu_18.04_desktop
+openstack image create --disk-format vmdk --public --file images/ubuntu_16.04_desktop.vmdk Ubuntu_16.04_desktop
+openstack image create --disk-format vmdk --public --file images/ubuntu_18.04_desktop.vmdk Ubuntu_18.04_desktop
 openstack image create --disk-format qcow2 --public --file images/ubuntu-16.04-server.img Ubuntu_16.04_server
 openstack image create --disk-format qcow2 --public --file images/ubuntu-18.04-server.img Ubuntu_18.04_server
 
 #Create all gabarits
-openstack flavor create --id 0 --vcpus 1 --ram 2048 --disk 1 Small
-openstack flavor create --id 1 --vcpus 2 --ram 4096 --disk 20 Medium
-openstack flavor create --id 2 --vcpus 4 --ram 16000 --disk 100 Large
-openstack flavor create --id 3 --vcpus 8 --ram 32000 --disk 500 Extra_large
-openstack flavor create --id 4 --vcpus 16 --ram 64000 --disk 5000 Extra_extra_large
-openstack flavor create --id 5 --vcpus 4 --ram 16000 --disk 250 Kubernetes
+openstack flavor create --id 0 --vcpus 1 --ram 2048 --disk 1 S
+openstack flavor create --id 1 --vcpus 2 --ram 4096 --disk 20 M
+openstack flavor create --id 2 --vcpus 4 --ram 16000 --disk 100 L
+openstack flavor create --id 3 --vcpus 8 --ram 16000 --disk 250 XL
+openstack flavor create --id 4 --vcpus 8 --ram 32000 --disk 250 XXL
+openstack flavor create --id 5 --vcpus 16 --ram 64000 --disk 250 XXXL
 
 # Create public network
 openstack router create router1
