@@ -115,28 +115,13 @@ Execute script create_instance.sh in openstack-controller.
 
 example : ./create_instance_with_freeipa.sh custom Ubuntu_16.04.desktop sandbox 12.12.12.12 192.168.0.112 sampleDesktop
 
-### Create new Image from ISO file
+### Connect to the VM
 
-Follow these steps on the openstack-controller
- * Install packages and param user
+Download the rsa key file from openstack-controller \(~/rsa_key.pem\) on your computer.
 
-        sudo apt-get install -y qemu-kvm libvirt-bin virtinst virt-manager libguestfs-tools
-        sudo adduser $USER libvirt
- * Download ISO
+When you create a session on MobaXterm, add this file in "Advanced SSH Settings ->  Use private key".
 
-        Example : curl http://ro.releases.ubuntu.com/releases/16.04.5/ubuntu-16.04.5-server-amd64.iso --output ubuntu-16.04.5-server-amd64.iso
-* Launch virt-manager
-        
-        sudo virt-manager
-
-* Use the UI to install OS. You can use this guide for help (https://docs.openstack.org/image-guide/create-images-manually.html)
-
-* Upload image on Openstack
-
-        openstack image create IMAGE_NAME --disk-format qcow2 --file IMAGE_QCOW2 --public
-        
-        IMAGE_NAME : The name of the image
-        IMAGE_QCOW2 : .qcow2 file generated previously
+        User : ubuntu
 
 ## Links
 
