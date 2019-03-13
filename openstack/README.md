@@ -127,3 +127,11 @@ When you create a session on MobaXterm, add this file in "Advanced SSH Settings 
 
 [Openstack webUI](http://192.168.0.10/horizon/identity/)
 
+### Add all templates openstack
+
+This script deploy all VMs.
+
+sudo chmod +x create_templates.sh
+
+Execute script create_templates.sh in openstack-controller.
+
