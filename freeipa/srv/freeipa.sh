@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 3 ]; then
+if [ $# -lt 4 ]; then
   echo "Usage: freeipa.sh VERB HOSTIP REALM HOSTNAME"
   echo
   echo VERB must be one of:
@@ -14,9 +14,13 @@ if [ $# -lt 3 ]; then
   echo REALM must meet the following:
   echo "  • valid realm name"
   echo
+  echo
+  echo HOSTNAME must meet the following:
+  echo "  • valid hostname"
+  echo
   echo "Examples:"
-  echo "  • $0 10.0.0.1 PEPLOLEUM.COM ipaserver.peploleum.com" 
-  echo "  • $0 192.168.9.1 MYREALM.DE deutschserver.myrealm.de"
+  echo "  • $0 install 10.0.0.1 PEPLOLEUM.COM ipaserver.peploleum.com" 
+  echo "  • $0 run 192.168.9.1 MYREALM.DE deutschserver.myrealm.de"
   exit 1
 fi
 

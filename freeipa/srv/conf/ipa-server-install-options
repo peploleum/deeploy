@@ -1,7 +1,7 @@
---realm=ARTEMIS.CAPGEMINI.COM
+--realm=PEPLOLEUM.COM
 --ds-password=adminadmin
 --admin-password=adminadmin
---domain=artemis.capgemini.com
+--domain=peploleum.com
 --setup-dns
 --forwarder=66.28.0.45
 --forwarder=66.28.0.61
