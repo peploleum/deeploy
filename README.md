@@ -107,8 +107,7 @@ Make sure git is set up to checkout out linux style end of lines
 * run the installer (requires ipv6-enabled docker daemon)
         
         cd freeipa/srv
-        ./install.sh
-        ./run.sh
+        ./freeipa.sh install 10.10.10.10 PEPLOLEUM.COM server.peploleum.com
 
 #### Client
 
