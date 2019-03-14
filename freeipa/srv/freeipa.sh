@@ -14,10 +14,6 @@ if [ $# -lt 3 ]; then
   echo REALM must meet the following:
   echo "  • valid realm name"
   echo
-  echo "ARGS are VERB-specific optional arguments"
-  echo "  • tag requires a version"
-  echo "  • push takes an option version, defaults to 'latest' "
-  echo
   echo "Examples:"
   echo "  • $0 10.0.0.1 PEPLOLEUM.COM ipaserver.peploleum.com" 
   echo "  • $0 192.168.9.1 MYREALM.DE deutschserver.myrealm.de"
