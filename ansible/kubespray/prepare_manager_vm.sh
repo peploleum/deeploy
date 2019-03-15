@@ -15,3 +15,7 @@ cp -rfp inventory/sample inventory/mycluster
 # Update Ansible inventory file with inventory builder
 declare -a IPS=(12.12.12.20 12.12.12.21 12.12.12.22)
 CONFIG_FILE=inventory/mycluster/hosts.ini python3 contrib/inventory_builder/inventory.py ${IPS[@]}
+
+sed -i -e "s/node1/k8s-master/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node2/k8s-node1/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node3/k8s-node2/g" inventory/mycluster/hosts.ini
