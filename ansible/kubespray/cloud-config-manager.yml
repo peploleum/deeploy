@@ -3,37 +3,38 @@
 write_files:
   - content: |
           -----BEGIN RSA PRIVATE KEY-----
-MIIEowIBAAKCAQEA8F8UcXKMeY2jDn3fdVgcNiacOoAYeCahop4D4vTJszKvBy7D
-QZKTTFNFLzh8ZptBeJKTMkb2Hey80DZ22xOfD0H8cpsaSFfhwKmH5osOkN2cIqog
-kfH+XU/tVu7fK8u+47DbuzoK0syINGZYaB5cqqg8pUlbI7hetPsXPm6zlHHZgHLD
-VjNUACtGCdE4WPGg1j7PJdMkbEgMIzjUu619l5UnYvD1rz+jS4KShZ08kGTeXlBR
-KhrigT2betBpXXz+xfYldrJm4bCV2p1MAa524OXIvZ9Zg3qEoJ7DlsdIOFkrlTWw
-Q0zyaZIscmOXzGoDdsVTtH2cX3vokHAsJvFhGwIDAQABAoIBAEH6hz0AqUhwNVK0
-AFNQZSYEARwZrx3D1NgzMXPppze18M8y6cuk9SOdM79bbOIpOZZj/V1ulv3tzoIE
-gSlvQFjKzwWSR2uWG9RrdG82uj/PZJ0rP5dv6lcoqkgTd1SpL3OGRzokG3ZzR+vC
-MAAcXWlGlqbz9L1gTTa2OVIcxtQ2x7PhFxNRH5b6Je6haRrtIrA4RVokwEjcSz0q
-Hi4FKWM/Z93MyOu//eYQlpk5WdWp3bZJBSuertGO6ExRzbCkCuuEj5ISENIuZk9D
-Wu6JWZeMUr7qG2irXr3CEPCdLUSCUESzE2RoHhdJoNen5RnMri4aRlVFqgYIjFUz
-yEGqpYECgYEA/5gOt3JQTNIDj1WWFi2qU3n+fTDS95lZX09Rz81Vk/yetneosIu8
-FL7QX/A3WfBkrMVSiCsvi57l68a1hQQDnpA1dHXaUBDGzucAaEL8Fd3HXyU27/bA
-dzJRbB0WWTFLXLzXjKd7r6d4z1VN+bEXc+hrTnUR6vMa4T96MMmd7tsCgYEA8MDU
-8ONqFK8a74RacfxI290c4IQ4HFmepzp87+VQ7v42R4S190m5o6rfeI9Hh6WDK3ZB
-6pJW55hNjlQsSDOYYIPb/9HCWIfrb2hlg6xrl7BWuFTmAoG+X3EbvK0MgufPDYSZ
-glnrx7Y/q+f6d+31G0rj/04/1EPTtdkJB9MPSsECgYAVA19SXaeUaT+5rQOl1yNF
-saXmjPkLOiRK3a6QMwVyITa7MaNAwHw6CGYBPTKPxl/AhIiAgWxrQikM9U0/HlFd
-2+VJKddE9dwiboNuDvPCqHUXsWuO1u6D3jMrfEi2FINpoGzoN2zHyDD6erzqZlDT
-SqxnyuAqPMpc8mcNU8YUOQKBgQC/GRDtNFYbnPJQdEomeA6NFnG5dLnlJu3b530M
-HoWjbn0/P4QAibCkzRkc5P3uGd6IPRINU6NPqYDGHOIZXXryATg7UxBknV6vy7no
-TpAIk5wCLMF18+5ca7eMh/+KWN3s6PfAlAenOm5H0ZbqYyNPSp63JDFeF4iQq3mT
-kGBvAQKBgFnyjgktLJ0NpDsfLRzq2rLQG48xTcwYGbbTe7uWYzahgWo4JA6hTcN0
-My00PXU7s3pLu6Dk4g7KTfQaPnJTHjN7qO0pNM0ADZGMpLpO4i3gE3aFXnfcu40h
-ZO2/M+IiwXamidph4h09ccO7dPh11VkC/53E4B5FyjO+CnMXrhsH
------END RSA PRIVATE KEY-----
-    path: /home/ubuntu/.ssh/rsa_key.pem
-    owner: ubuntu:ubuntu
+          MIIEowIBAAKCAQEA8F8UcXKMeY2jDn3fdVgcNiacOoAYeCahop4D4vTJszKvBy7D
+          QZKTTFNFLzh8ZptBeJKTMkb2Hey80DZ22xOfD0H8cpsaSFfhwKmH5osOkN2cIqog
+          kfH+XU/tVu7fK8u+47DbuzoK0syINGZYaB5cqqg8pUlbI7hetPsXPm6zlHHZgHLD
+          VjNUACtGCdE4WPGg1j7PJdMkbEgMIzjUu619l5UnYvD1rz+jS4KShZ08kGTeXlBR
+          KhrigT2betBpXXz+xfYldrJm4bCV2p1MAa524OXIvZ9Zg3qEoJ7DlsdIOFkrlTWw
+          Q0zyaZIscmOXzGoDdsVTtH2cX3vokHAsJvFhGwIDAQABAoIBAEH6hz0AqUhwNVK0
+          AFNQZSYEARwZrx3D1NgzMXPppze18M8y6cuk9SOdM79bbOIpOZZj/V1ulv3tzoIE
+          gSlvQFjKzwWSR2uWG9RrdG82uj/PZJ0rP5dv6lcoqkgTd1SpL3OGRzokG3ZzR+vC
+          MAAcXWlGlqbz9L1gTTa2OVIcxtQ2x7PhFxNRH5b6Je6haRrtIrA4RVokwEjcSz0q
+          Hi4FKWM/Z93MyOu//eYQlpk5WdWp3bZJBSuertGO6ExRzbCkCuuEj5ISENIuZk9D
+          Wu6JWZeMUr7qG2irXr3CEPCdLUSCUESzE2RoHhdJoNen5RnMri4aRlVFqgYIjFUz
+          yEGqpYECgYEA/5gOt3JQTNIDj1WWFi2qU3n+fTDS95lZX09Rz81Vk/yetneosIu8
+          FL7QX/A3WfBkrMVSiCsvi57l68a1hQQDnpA1dHXaUBDGzucAaEL8Fd3HXyU27/bA
+          dzJRbB0WWTFLXLzXjKd7r6d4z1VN+bEXc+hrTnUR6vMa4T96MMmd7tsCgYEA8MDU
+          8ONqFK8a74RacfxI290c4IQ4HFmepzp87+VQ7v42R4S190m5o6rfeI9Hh6WDK3ZB
+          6pJW55hNjlQsSDOYYIPb/9HCWIfrb2hlg6xrl7BWuFTmAoG+X3EbvK0MgufPDYSZ
+          glnrx7Y/q+f6d+31G0rj/04/1EPTtdkJB9MPSsECgYAVA19SXaeUaT+5rQOl1yNF
+          saXmjPkLOiRK3a6QMwVyITa7MaNAwHw6CGYBPTKPxl/AhIiAgWxrQikM9U0/HlFd
+          2+VJKddE9dwiboNuDvPCqHUXsWuO1u6D3jMrfEi2FINpoGzoN2zHyDD6erzqZlDT
+          SqxnyuAqPMpc8mcNU8YUOQKBgQC/GRDtNFYbnPJQdEomeA6NFnG5dLnlJu3b530M
+          HoWjbn0/P4QAibCkzRkc5P3uGd6IPRINU6NPqYDGHOIZXXryATg7UxBknV6vy7no
+          TpAIk5wCLMF18+5ca7eMh/+KWN3s6PfAlAenOm5H0ZbqYyNPSp63JDFeF4iQq3mT
+          kGBvAQKBgFnyjgktLJ0NpDsfLRzq2rLQG48xTcwYGbbTe7uWYzahgWo4JA6hTcN0
+          My00PXU7s3pLu6Dk4g7KTfQaPnJTHjN7qO0pNM0ADZGMpLpO4i3gE3aFXnfcu40h
+          ZO2/M+IiwXamidph4h09ccO7dPh11VkC/53E4B5FyjO+CnMXrhsH
+          -----END RSA PRIVATE KEY-----
+    path: /home/ubuntu/rsa_key.pem
     permissions: '0600'
 
 runcmd:
   - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
   - git clone https://github.com/peploleum/deeploy.git /home/ubuntu/deeploy/
   - sudo chown ubuntu:ubuntu /home/ubuntu/deeploy/ -R
+  - sudo chown ubuntu:ubuntu /home/ubuntu/rsa_key.pem
+
