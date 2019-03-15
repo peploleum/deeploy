@@ -34,4 +34,6 @@ ZO2/M+IiwXamidph4h09ccO7dPh11VkC/53E4B5FyjO+CnMXrhsH
     permissions: '0600'
 
 runcmd:
+  - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
   - git clone https://github.com/peploleum/deeploy.git /home/ubuntu/deeploy/
+  - sudo chown ubuntu:ubuntu /home/ubuntu/deeploy/ -R
