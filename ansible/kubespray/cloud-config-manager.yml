@@ -1,0 +1,4 @@
+#cloud-config
+
+runcmd:
+  - git clone https://github.com/peploleum/deeploy.git /home/ubuntu/deeploy/
