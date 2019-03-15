@@ -32,6 +32,8 @@ if [ $# -lt 6 ] || [ $# -gt 7 ] ; then
   exit 1
 fi
 
+. admin-openrc
+
 KEY_NAME=rsa_key
 
 #Create Port

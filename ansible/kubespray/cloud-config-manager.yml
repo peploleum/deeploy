@@ -29,12 +29,12 @@ write_files:
           My00PXU7s3pLu6Dk4g7KTfQaPnJTHjN7qO0pNM0ADZGMpLpO4i3gE3aFXnfcu40h
           ZO2/M+IiwXamidph4h09ccO7dPh11VkC/53E4B5FyjO+CnMXrhsH
           -----END RSA PRIVATE KEY-----
-    path: /home/ubuntu/rsa_key.pem
+    path: /home/temp/rsa_key.pem
     permissions: '0600'
 
 runcmd:
   - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
-  - git clone https://github.com/peploleum/deeploy.git /home/ubuntu/deeploy/
-  - sudo chown ubuntu:ubuntu /home/ubuntu/deeploy/ -R
-  - sudo chown ubuntu:ubuntu /home/ubuntu/rsa_key.pem
+  - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
+  - sudo chown ubuntu:ubuntu /home/temp/deeploy/ -R
+  - sudo chown ubuntu:ubuntu /home/temp/rsa_key.pem
 
