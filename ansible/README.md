@@ -1,4 +1,10 @@
-# Ansible
+# ANSIBLE
+
+## Kubespray
+
+See [Kubespray documentation](./kubespray/README.md).
+
+## General stuff
 
 ### Prepare target machine
 

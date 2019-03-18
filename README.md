@@ -12,4 +12,4 @@ See [FreeIPA documentation](./freeipa/README.md).
 
 ## ANSIBLE
 
-See [Ansible documentation](./freeipa/README.md).
+See [Ansible documentation](./ansible/README.md).
