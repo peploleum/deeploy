@@ -29,13 +29,13 @@ sudo ufw allow from any to any port 20,21,10000:10100 proto tcp
 sudo service vsftpd restart
 
 #Installation de ssh
-sudo apt install -y ssh
-sudo sed -i '118i Match group sftp' /etc/ssh/sshd_config
-sudo sed -i '119i ChrootDirectory /home' /etc/ssh/sshd_config
-sudo sed -i "s/X11Forwarding yes/X11Forwarding no/g" /etc/ssh/sshd_config 
-sudo sed -i '120i AllowTcpForwarding no' /etc/ssh/sshd_config
-sudo sed -i '121i ForceCommand internal-sftp' /etc/ssh/sshd_config
-sudo service ssh restart
+#sudo apt install -y ssh
+#sudo sed -i '118i Match group sftp' /etc/ssh/sshd_config
+#sudo sed -i '119i ChrootDirectory /home' /etc/ssh/sshd_config
+#sudo sed -i "s/X11Forwarding yes/X11Forwarding no/g" /etc/ssh/sshd_config 
+#sudo sed -i '120i AllowTcpForwarding no' /etc/ssh/sshd_config
+#sudo sed -i '121i ForceCommand internal-sftp' /etc/ssh/sshd_config
+#sudo service ssh restart
 
 #Ajout de l'utilisateur dans le group sftp
 sudo addgroup sftp
@@ -50,7 +50,7 @@ sudo apt install -y tasksel
 sudo tasksel install samba-server
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf_backup
 sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf_backup | grep . > /etc/samba/smb.conf'
-sudo smbpasswd -a ubuntu
+sudo smbpasswd -a test
 sudo sed -i '1i [homes]' /etc/samba/smb.conf
 sudo sed -i '2i    comment = Home Directories' /etc/samba/smb.conf
 sudo sed -i '3i    browseable = yes' /etc/samba/smb.conf
@@ -61,6 +61,6 @@ sudo sed -i '7i    valid users = %S' /etc/samba/smb.conf
 sudo systemctl restart smbd
 
 smbclient -L localhost
-sudo mkdir /home/ubuntu/partage
-sudo chmod 755 /home/ubuntu/partage
+sudo mkdir /home/test/partage
+sudo chmod 755 /home/test/partage
 sudo systemctl status smbd
