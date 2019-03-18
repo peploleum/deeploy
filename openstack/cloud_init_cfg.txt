@@ -17,7 +17,8 @@ write_files:
         cd /home/ubuntu
         git clone https://github.com/peploleum/deeploy.git
         cd deeploy/freeipa/client/
-        ./install-ubuntu-18.04.sh
+        sudo chmod +x install-ubuntu-18.04.sh
+        #./install-ubuntu-18.04.sh //a modifier lorsque le repo sera sur gitlab
     path: /home/ubuntu/deploy_freeipa.sh
     permissions: 0777
 
