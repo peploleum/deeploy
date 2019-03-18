@@ -36,7 +36,7 @@ sudo apt-get install -y freeipa-client
 echo "$1 $2" | sudo tee -a /etc/hosts
 
 #install freeipa client
-sudo ipa-client-install --hostname=`hostname -f` --mkhomedir --server=$3 --domain $4 --realm $5 --principal=$6 --password=$6 -U
+sudo ipa-client-install --hostname=`hostname -f` --mkhomedir --server=$2 --domain=$3 --realm=$4 --principal=$5 --password=$6 -U
 
 #enable mkhomedir
 echo 'Name: activate mkhomedir
