@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
-if [ $# -lt 7 ]; then
+set -x
+if [ $# -lt 6 ]; then
   echo "Usage: $0 IPA_SERVER_IP IPA_SERVER_FQDN IPA_DOMAIN_NAME IPA_REALM IPA_PRINCIPAL IPA_PASSWORD"
   echo
   echo IPA_SERVER_IP must be:
@@ -29,7 +29,7 @@ fi
 #install freeipa-client package for ubuntu 18.04 and set hostname according to proper DNS
 sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo hostnamectl set-hostname node-01.peploleum.com
+sudo hostnamectl set-hostname $(hostname).$3
 sudo apt-get install -y freeipa-client
 
 #add ipa server hostname and IP address to hosts
