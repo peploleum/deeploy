@@ -1,8 +1,13 @@
 #!/bin/bash
 
-../install_ansible.sh
+# Load variables
+. kubespray.conf
 
-git clone https://github.com/kubernetes-sigs/kubespray.git ~/kubespray
+# Install Ansible
+$DEEPLOY_PATH/ansible/install_ansible.sh
+
+# Clone Kubespray project
+git clone $GITHUB_KUBESPRAY ~/kubespray
 cd ~/kubespray
 git checkout v2.8.3
 
@@ -13,13 +18,13 @@ sudo pip install -r requirements.txt
 cp -rfp inventory/sample inventory/mycluster
 
 # Update Ansible inventory file with inventory builder
-declare -a IPS=(12.12.12.20 12.12.12.21 12.12.12.22)
+declare -a IPS=($MASTER_PRIVATE_IP $NODE1_PRIVATE_IP $NODE2_PRIVATE_IP)
 CONFIG_FILE=inventory/mycluster/hosts.ini python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 
 # Replace nodes name
-sed -i -e "s/node1/k8s-master/g" inventory/mycluster/hosts.ini
-sed -i -e "s/node2/k8s-node1/g" inventory/mycluster/hosts.ini
-sed -i -e "s/node3/k8s-node2/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node1/$MASTER_NAME/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node2/$NODE1_NAME/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node3/$NODE2_NAME/g" inventory/mycluster/hosts.ini
 sed -i -e "8,8d" inventory/mycluster/hosts.ini
 
 # Set cilium as network plugin

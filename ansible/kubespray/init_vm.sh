@@ -1,13 +1,16 @@
 #!/bin/bash
 
-cd ~/deeploy/openstack
-. admin-openrc
+# This script init 4 VM to deploy Kubernetes. Please check kubespray.conf file before runnig this script.
+
+# Load variables
+. kubespray.conf 
+. $DEEPLOY_PATH/openstack/admin-openrc
 
 # Remove Instances
-./remove_instance.sh k8s-ansible 192.168.0.211
-./remove_instance.sh k8s-master 192.168.0.220
-./remove_instance.sh k8s-node1 192.168.0.221
-./remove_instance.sh k8s-node2 192.168.0.222
+$DEEPLOY_PATH/openstack/remove_instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove_instance.sh $MASTER_NAME $MASTER_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove_instance.sh $NODE1_NAME $NODE1_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove_instance.sh $NODE2_NAME $NODE2_PUBLIC_IP
 
 # Remove Kubernetes Security Group
 openstack security group delete kubernetes
@@ -18,19 +21,19 @@ openstack security group rule create kubernetes --protocol udp --dst-port 1:6553
 openstack security group rule create kubernetes --protocol tcp --dst-port 1:65535
 
 # Create Instances
-./create_instance.sh M Ubuntu_18.04_server sandbox 12.12.12.11 192.168.0.211 k8s-ansible ~/deeploy/ansible/kubespray/cloud-config-manager.yml
-./create_instance.sh M Ubuntu_18.04_server sandbox 12.12.12.20 192.168.0.220 k8s-master ~/deeploy/ansible/kubespray/cloud-config-k8s.yml
-./create_instance.sh M Ubuntu_18.04_server sandbox 12.12.12.21 192.168.0.221 k8s-node1 ~/deeploy/ansible/kubespray/cloud-config-k8s.yml
-./create_instance.sh M Ubuntu_18.04_server sandbox 12.12.12.22 192.168.0.222 k8s-node2 ~/deeploy/ansible/kubespray/cloud-config-k8s.yml
+$DEEPLOY_PATH/openstack/create_instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+$DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+$DEEPLOY_PATH/openstack/create_instance.sh $NODE1_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE1_PRIVATE_IP $NODE1_PUBLIC_IP $NODE1_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+$DEEPLOY_PATH/openstack/create_instance.sh $NODE2_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE2_PRIVATE_IP $NODE2_PUBLIC_IP $NODE2_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
 
 # Set security group
-openstack server add security group k8s-ansible kubernetes
-openstack server add security group k8s-master kubernetes
-openstack server add security group k8s-node1 kubernetes
-openstack server add security group k8s-node2 kubernetes
+openstack server add security group $ANSIBLE_NAME kubernetes
+openstack server add security group $MASTER_NAME kubernetes
+openstack server add security group $NODE1_NAME kubernetes
+openstack server add security group $NODE2_NAME kubernetes
 
-openstack server remove security group k8s-ansible openstack
-openstack server remove security group k8s-master openstack
-openstack server remove security group k8s-node1 openstack
-openstack server remove security group k8s-node2 openstack
+openstack server remove security group $ANSIBLE_NAME openstack
+openstack server remove security group $MASTER_NAME openstack
+openstack server remove security group $NODE1_NAME openstack
+openstack server remove security group $NODE2_NAME openstack
 
