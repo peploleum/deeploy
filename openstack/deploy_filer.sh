@@ -61,7 +61,7 @@ sudo apt-get update
 sudo tasksel install samba-server
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf_backup
 sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf_backup | grep . > /etc/samba/smb.conf'
-sudo smbpasswd -a test
+sudo smbpasswd -a ubuntu
 sudo sed -i '1i [homes]' /etc/samba/smb.conf
 sudo sed -i '2i    comment = Home Directories' /etc/samba/smb.conf
 sudo sed -i '3i    browseable = yes' /etc/samba/smb.conf
@@ -75,11 +75,12 @@ sudo sed -i "s/realm = IPA_DOMAIN_NAME.IPA_REALM/realm = $3.$4/g" /etc/samba/smb
 sudo sed -i '12i   dedicated keytab file = FILE:/etc/samba/samba.keytab' /etc/samba/smb.conf
 sudo sed -i '13i   kerberos method = dedicated keytab' /etc/samba/smb.conf
 sudo sed -i '14i   security = ads' /etc/samba/smb.conf
+sudo sed -i '15i   dns proxy = no' /etc/samba/smb.conf
 sudo systemctl restart smbd
 
 smbclient -L localhost
-sudo mkdir /home/test/partage
-sudo chmod 755 /home/test/partage
+sudo mkdir /home/ubuntu/partage
+sudo chmod 755 /home/ubuntu/partage
 sudo systemctl status smbd
 
 set +x
