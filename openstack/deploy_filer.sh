@@ -1,19 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [ $# -lt 2 ] ; then
-  echo "Usage: deploy_filer.sh DOMAIN REALM_DOMAIN"
+set -x
+if [ $# -lt 4 ] ; then
+  echo "Usage: deploy_filer.sh IPA_SERVER_IP IPA_SERVER_FQDN IPA_DOMAIN_NAME IPA_REALM"
   echo
-  echo DOMAIN must meet the following:
+  echo IPA_SERVER_IP must be:
+  echo "  â€¢ valid IP of running IPA server"
+  echo
+  echo IPA_SERVER_FQDN must meet the following:
+  echo "  â€¢ valid Fully Qualified Domain Name of running IPA server"
+  echo
+  echo IPA_DOMAIN_NAME must meet the following:
   echo "  â€¢ be defined in samba"
   echo
-  echo REALM_DOMAIN must meet the following:
+  echo IPA_REALM must meet the following:
   echo "  â€¢ be defined in samba"
   echo
     echo "Examples:"
-  echo "  â€¢ $0 peploleum peploleum.com "
+  echo "  â€¢ $0 10.0.0.1 ipa.gitlab.peploleum.com gitlab peploleum.com "
   exit 1
 fi
 
+#add ipa server hostname and IP address to hosts
+echo "$1 $2" | sudo tee -a /etc/hosts
 
 #Installation de sftp
 sudo apt-get install -y vsftpd
@@ -33,8 +42,6 @@ sudo sed -i '12i secure_chroot_dir=/var/run/vsftpd/empty' /etc/vsftpd.conf
 sudo sed -i '13i pam_service_name=vsftpd' /etc/vsftpd.conf
 sudo sed -i '14i rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem' /etc/vsftpd.conf
 sudo sed -i '15i rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key' /etc/vsftpd.conf
-#sudo sed -i '14i rsa_cert_file=/home/ubuntu/rsa_key.pem' /etc/vsftpd.conf
-#sudo sed -i '15i rsa_private_key_file=/home/ubuntu/rsa_key.key' /etc/vsftpd.conf
 sudo sed -i '16i ssl_enable=NO' /etc/vsftpd.conf
 sudo sed -i '17i pasv_enable=Yes' /etc/vsftpd.conf
 sudo sed -i '18i pasv_min_port=10000' /etc/vsftpd.conf
@@ -43,20 +50,8 @@ sudo sed -i '20i allow_writeable_chroot=YES' /etc/vsftpd.conf
 sudo ufw allow from any to any port 20,21,10000:10100 proto tcp
 sudo service vsftpd restart
 
-#Installation de ssh
-#sudo apt install -y ssh
-#sudo sed -i '118i Match group sftp' /etc/ssh/sshd_config
-#sudo sed -i '119i ChrootDirectory /home' /etc/ssh/sshd_config
-#sudo sed -i "s/X11Forwarding yes/X11Forwarding no/g" /etc/ssh/sshd_config 
-#sudo sed -i '120i AllowTcpForwarding no' /etc/ssh/sshd_config
-#sudo sed -i '121i ForceCommand internal-sftp' /etc/ssh/sshd_config
-#sudo service ssh restart
-
 #Ajout de l'utilisateur dans le group sftp
 sudo addgroup sftp
-#sudo useradd -m sftpuser -g sftp
-#sudo passwd sftpuser
-#sudo chmod 700 /home/sftpuser/
 sudo usermod -aG sftp ubuntu
 sudo chmod 700 /home/ubuntu/
 
@@ -73,8 +68,8 @@ sudo sed -i '4i    read only = no' /etc/samba/smb.conf
 sudo sed -i '5i    create mask = 0700' /etc/samba/smb.conf
 sudo sed -i '6i    directory mask = 0700' /etc/samba/smb.conf
 sudo sed -i '7i    valid users = %S' /etc/samba/smb.conf
-sudo sed -i "s/workgroup = WORKGROUP/workgroup = $1/g" /etc/samba/smb.conf 
-sudo sed -i '11i   realm = $2' /etc/samba/smb.conf
+sudo sed -i "s/workgroup = WORKGROUP/workgroup = $3/g" /etc/samba/smb.conf 
+sudo sed -i '11i   realm = $3.$4' /etc/samba/smb.conf
 sudo sed -i '12i   dedicated keytab file = FILE:/etc/samba/samba.keytab' /etc/samba/smb.conf
 sudo sed -i '13i   kerberos method = dedicated keytab' /etc/samba/smb.conf
 sudo sed -i '14i   security = ads' /etc/samba/smb.conf
@@ -84,3 +79,5 @@ smbclient -L localhost
 sudo mkdir /home/test/partage
 sudo chmod 755 /home/test/partage
 sudo systemctl status smbd
+
+set +x
