@@ -70,7 +70,8 @@ sudo sed -i '5i    create mask = 0700' /etc/samba/smb.conf
 sudo sed -i '6i    directory mask = 0700' /etc/samba/smb.conf
 sudo sed -i '7i    valid users = %S' /etc/samba/smb.conf
 sudo sed -i "s/workgroup = WORKGROUP/workgroup = $3/g" /etc/samba/smb.conf 
-sudo sed -i '11i   realm = $3.$4' /etc/samba/smb.conf
+sudo sed -i '11i   realm = IPA_DOMAIN_NAME.IPA_REALM' /etc/samba/smb.conf
+sudo sed -i "s/realm = IPA_DOMAIN_NAME.IPA_REALM/realm = $3.$4/g" /etc/samba/smb.conf 
 sudo sed -i '12i   dedicated keytab file = FILE:/etc/samba/samba.keytab' /etc/samba/smb.conf
 sudo sed -i '13i   kerberos method = dedicated keytab' /etc/samba/smb.conf
 sudo sed -i '14i   security = ads' /etc/samba/smb.conf
