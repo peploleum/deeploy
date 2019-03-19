@@ -2,12 +2,12 @@
 
 set -x
 if [ $# -lt 4 ] ; then
-  echo "Usage: deploy_filer.sh IPA_SERVER_IP IPA_SERVER_FQDN IPA_DOMAIN_NAME IPA_REALM"
+  echo "Usage: deploy_filer.sh IPA_SERVER_IP IPA_SERVER_NAME IPA_DOMAIN_NAME IPA_REALM"
   echo
   echo IPA_SERVER_IP must be:
   echo "  â€¢ valid IP of running IPA server"
   echo
-  echo IPA_SERVER_FQDN must meet the following:
+  echo IPA_SERVER_NAME must meet the following:
   echo "  â€¢ valid Fully Qualified Domain Name of running IPA server"
   echo
   echo IPA_DOMAIN_NAME must meet the following:
@@ -17,12 +17,12 @@ if [ $# -lt 4 ] ; then
   echo "  â€¢ be defined in samba"
   echo
     echo "Examples:"
-  echo "  â€¢ $0 10.0.0.1 ipa.gitlab.peploleum.com gitlab peploleum.com "
+  echo "  â€¢ $0 10.0.0.1 ipa gitlab peploleum.com "
   exit 1
 fi
 
 #add ipa server hostname and IP address to hosts
-echo "$1 $2" | sudo tee -a /etc/hosts
+echo "$1 $2.$3.$4" | sudo tee -a /etc/hosts
 
 #Installation de sftp
 sudo apt-get install -y vsftpd
@@ -57,6 +57,7 @@ sudo chmod 700 /home/ubuntu/
 
 #Installation de samba
 sudo apt install -y tasksel
+sudo apt-get update
 sudo tasksel install samba-server
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf_backup
 sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf_backup | grep . > /etc/samba/smb.conf'
