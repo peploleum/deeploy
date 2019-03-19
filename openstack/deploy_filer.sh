@@ -1,5 +1,20 @@
 #!/bin/bash
 
+if [ $# -lt 2 ] ; then
+  echo "Usage: deploy_filer.sh DOMAIN REALM_DOMAIN"
+  echo
+  echo DOMAIN must meet the following:
+  echo "  â€¢ be defined in samba"
+  echo
+  echo REALM_DOMAIN must meet the following:
+  echo "  â€¢ be defined in samba"
+  echo
+    echo "Examples:"
+  echo "  â€¢ $0 peploleum peploleum.com "
+  exit 1
+fi
+
+
 #Installation de sftp
 sudo apt-get install -y vsftpd
 sudo cp /etc/vsftpd.conf /etc/vsftpd.conf_orig
@@ -58,6 +73,11 @@ sudo sed -i '4i    read only = no' /etc/samba/smb.conf
 sudo sed -i '5i    create mask = 0700' /etc/samba/smb.conf
 sudo sed -i '6i    directory mask = 0700' /etc/samba/smb.conf
 sudo sed -i '7i    valid users = %S' /etc/samba/smb.conf
+sudo sed -i "s/workgroup = WORKGROUP/workgroup = $1/g" /etc/samba/smb.conf 
+sudo sed -i '11i   realm = $2' /etc/samba/smb.conf
+sudo sed -i '12i   dedicated keytab file = FILE:/etc/samba/samba.keytab' /etc/samba/smb.conf
+sudo sed -i '13i   kerberos method = dedicated keytab' /etc/samba/smb.conf
+sudo sed -i '14i   security = ads' /etc/samba/smb.conf
 sudo systemctl restart smbd
 
 smbclient -L localhost
