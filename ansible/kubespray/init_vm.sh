@@ -21,10 +21,11 @@ openstack security group rule create kubernetes --protocol udp --dst-port 1:6553
 openstack security group rule create kubernetes --protocol tcp --dst-port 1:65535
 
 # Create Instances
+extra_args="--file /home/temp/kubespray.conf=$DEEPLOY_PATH/ansible/kubespray/kubespray.conf --file /home/temp/install-ubuntu-18.04.sh=$DEEPLOY_PATH/freeipa/client/install-ubuntu-18.04.sh"
 $DEEPLOY_PATH/openstack/create_instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
-$DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
-$DEEPLOY_PATH/openstack/create_instance.sh $NODE1_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE1_PRIVATE_IP $NODE1_PUBLIC_IP $NODE1_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
-$DEEPLOY_PATH/openstack/create_instance.sh $NODE2_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE2_PRIVATE_IP $NODE2_PUBLIC_IP $NODE2_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+$DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml $extra_args
+$DEEPLOY_PATH/openstack/create_instance.sh $NODE1_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE1_PRIVATE_IP $NODE1_PUBLIC_IP $NODE1_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml $extra_args
+$DEEPLOY_PATH/openstack/create_instance.sh $NODE2_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE2_PRIVATE_IP $NODE2_PUBLIC_IP $NODE2_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml $extra_args
 
 # Set security group
 openstack server add security group $ANSIBLE_NAME kubernetes

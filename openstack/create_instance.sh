@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $# -lt 6 ] || [ $# -gt 7 ] ; then
-  echo "Usage: create_instance.sh FLAVOR IMAGE NETWORK IP_PRIVATE IP_PUBLIC INSTANCE_NAME USER_DATA[optionnal]"
+if [ $# -lt 6 ] || [ $# -gt 8 ] ; then
+  echo "Usage: create_instance.sh FLAVOR IMAGE NETWORK IP_PRIVATE IP_PUBLIC INSTANCE_NAME USER_DATA[optional] EXTRA_ARGS[optional]"
   echo
   echo FLAVOR must meet the following:
   echo "  • be defined in openstack" 
@@ -23,12 +23,16 @@ if [ $# -lt 6 ] || [ $# -gt 7 ] ; then
   echo INSTANCE_NAME must meet the following:
   echo "  • valid hostname"
   echo
-  echo USER_DATA is optionnal:
+  echo USER_DATA is optional:
   echo "  • valid user data file"
+  echo
+  echo EXTRA_ARGS is optional:
+  echo "  • string to add extra argument to the openstack server create function"
   echo
   echo "Examples:"
   echo "  • $0 S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance" 
   echo "  • $0 S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance my_user_data.txt"
+  echo "  • $0 S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance my_user_data.txt \"--file test.txt=test.txt\""
   exit 1
 fi
 
@@ -47,6 +51,9 @@ case $nb_param in
     ;;
   7)
     openstack server create --flavor $1 --image $2 --key-name $KEY_NAME --user-data $7 --port port-$6 $6
+    ;;
+  8)
+    openstack server create --flavor $1 --image $2 --key-name $KEY_NAME --user-data $7 --port port-$6 $8 $6
     ;;
   *)
     echo "Bad param"
