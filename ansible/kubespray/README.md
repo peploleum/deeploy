@@ -2,7 +2,7 @@
 
 This recipe describes how to install kubernetes with Ansible on 3 VM in an openstack network.
 
-First, you need to check 'kubespray.conf' and modify it if needed.
+First, you need to check 'kubespray.conf' and 'cloud-config-k8s.yml' and modify it if needed.
 
 Then, create the VM with :
     
@@ -53,6 +53,13 @@ This script create kubecfg.p12 and token.txt. To test dashboard :
 * Launch your web browser and import certificate file \( kubecfg.p12 \)
 * Restart your web browser and go on [Kubernetes Dashboard](https://192.168.0.120:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy)
 * Connect using token in the file token.txt
+
+If everything is OK, remove the ansible VM. Connect on openstack-controller :
+    
+    cd ~/deeploy/ansible/kubespray
+    . kubespray.conf
+    cd ~/deeploy/openstack
+    ./remove_instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
 
 That's all folks!
 
