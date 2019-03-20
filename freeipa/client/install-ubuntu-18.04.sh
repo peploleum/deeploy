@@ -30,7 +30,7 @@ fi
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo hostnamectl set-hostname $(hostname).$3
-sudo apt-get install -y freeipa-client
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client
 
 #add ipa server hostname and IP address to hosts
 echo "$1 $2" | sudo tee -a /etc/hosts
