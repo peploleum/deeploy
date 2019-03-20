@@ -1,0 +1,11 @@
+version: '2'
+services:
+  insight-postgresql:
+    image: postgres:10.4
+    volumes:
+    - ./postgresdata/:/var/lib/postgresql/data/
+    environment:
+    - POSTGRES_USER=jira
+    - POSTGRES_PASSWORD=
+    ports:
+    - 5432:5432
