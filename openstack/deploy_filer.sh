@@ -1,28 +1,6 @@
 #!/usr/bin/env bash
 
 set -x
-if [ $# -lt 4 ] ; then
-  echo "Usage: deploy_filer.sh IPA_SERVER_IP IPA_SERVER_NAME IPA_DOMAIN_NAME IPA_REALM"
-  echo
-  echo IPA_SERVER_IP must be:
-  echo "  â€¢ valid IP of running IPA server"
-  echo
-  echo IPA_SERVER_NAME must meet the following:
-  echo "  â€¢ valid Fully Qualified Domain Name of running IPA server"
-  echo
-  echo IPA_DOMAIN_NAME must meet the following:
-  echo "  â€¢ be defined in samba"
-  echo
-  echo IPA_REALM must meet the following:
-  echo "  â€¢ be defined in samba"
-  echo
-    echo "Examples:"
-  echo "  â€¢ $0 10.0.0.1 ipa gitlab peploleum.com "
-  exit 1
-fi
-
-#add ipa server hostname and IP address to hosts
-echo "$1 $2.$3.$4" | sudo tee -a /etc/hosts
 
 #Installation de sftp
 sudo apt-get install -y vsftpd
@@ -54,7 +32,7 @@ sudo service vsftpd restart
 sudo addgroup sftp
 sudo adduser -q test
 sudo adduser test sftp
-sudo chmod 700 /home/test/
+sudo chmod 777 /home/test/
 
 #Installation de samba
 sudo apt install -y tasksel
@@ -63,25 +41,24 @@ sudo tasksel install samba-server
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf_backup
 sudo bash -c 'grep -v -E "^#|^;" /etc/samba/smb.conf_backup | grep . > /etc/samba/smb.conf'
 sudo smbpasswd -a test
-sudo sed -i '1i [homes]' /etc/samba/smb.conf
-sudo sed -i '2i    comment = Home Directories' /etc/samba/smb.conf
-sudo sed -i '3i    browseable = yes' /etc/samba/smb.conf
-sudo sed -i '4i    read only = no' /etc/samba/smb.conf
-sudo sed -i '5i    create mask = 0700' /etc/samba/smb.conf
-sudo sed -i '6i    directory mask = 0700' /etc/samba/smb.conf
-sudo sed -i '7i    valid users = %S' /etc/samba/smb.conf
-#sudo sed -i "s/workgroup = WORKGROUP/workgroup = $3/g" /etc/samba/smb.conf 
-#sudo sed -i '11i   realm = IPA_DOMAIN_NAME.IPA_REALM' /etc/samba/smb.conf
-#sudo sed -i "s/realm = IPA_DOMAIN_NAME.IPA_REALM/realm = $3.$4/g" /etc/samba/smb.conf 
-#sudo sed -i '12i   dedicated keytab file = FILE:/etc/samba/samba.keytab' /etc/samba/smb.conf
-#sudo sed -i '13i   kerberos method = dedicated keytab' /etc/samba/smb.conf
-#sudo sed -i '14i   security = ads' /etc/samba/smb.conf
-#sudo sed -i '15i   dns proxy = no' /etc/samba/smb.conf
+
+#Création du partage
+sudo mkdir /media/partage
+sudo chmod 777 /media/partage
+sudo chown test /media/partage
+sudo adduser test root
+sudo sed -i '27i [partage]' /etc/samba/smb.conf
+sudo sed -i '28i    comment = Partage réseau' /etc/samba/smb.conf
+sudo sed -i '29i    path = /media/partage' /etc/samba/smb.conf
+sudo sed -i '30i    available = yes' /etc/samba/smb.conf
+sudo sed -i '31i    valid users = test,ubuntu' /etc/samba/smb.conf
+sudo sed -i '32i    read only = no' /etc/samba/smb.conf
+sudo sed -i '23i    browseable = yes' /etc/samba/smb.conf
+sudo sed -i '34i    public = yes' /etc/samba/smb.conf
+sudo sed -i '35i    writable = yes' /etc/samba/smb.conf
 sudo systemctl restart smbd
 
 smbclient -L localhost
-sudo mkdir /home/test/partage
-sudo chmod 755 /home/test/partage
 sudo systemctl status smbd
 
 set +x
