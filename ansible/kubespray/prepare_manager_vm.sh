@@ -23,9 +23,12 @@ declare -a IPS=($MASTER_PRIVATE_IP $NODE1_PRIVATE_IP $NODE2_PRIVATE_IP)
 CONFIG_FILE=inventory/mycluster/hosts.ini python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 
 # Replace nodes name
-sed -i -e "s/node1/$MASTER_NAME.$IPA_DOMAIN_NAME/g" inventory/mycluster/hosts.ini
-sed -i -e "s/node2/$NODE1_NAME.$IPA_DOMAIN_NAME/g" inventory/mycluster/hosts.ini
-sed -i -e "s/node3/$NODE2_NAME.$IPA_DOMAIN_NAME/g" inventory/mycluster/hosts.ini
+#sed -i -e "s/node1/$MASTER_NAME.$IPA_DOMAIN_NAME/g" inventory/mycluster/hosts.ini
+#sed -i -e "s/node2/$NODE1_NAME.$IPA_DOMAIN_NAME/g" inventory/mycluster/hosts.ini
+#sed -i -e "s/node3/$NODE2_NAME.$IPA_DOMAIN_NAME/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node1/$MASTER_NAME/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node2/$NODE1_NAME/g" inventory/mycluster/hosts.ini
+sed -i -e "s/node3/$NODE2_NAME/g" inventory/mycluster/hosts.ini
 sed -i -e "8,8d" inventory/mycluster/hosts.ini
 
 # Set cilium as network plugin
