@@ -20,6 +20,21 @@ openstack security group create kubernetes
 openstack security group rule create kubernetes --protocol udp --dst-port 1:65535
 openstack security group rule create kubernetes --protocol tcp --dst-port 1:65535
 
+# Update conf file
+sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+sed -i -e "s/##IPA_SERVER_FQDN##/$IPA_SERVER_FQDN/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+sed -i -e "s/##IPA_DOMAIN_NAME##/$IPA_DOMAIN_NAME/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+sed -i -e "s/##IPA_REALM##/$IPA_REALM/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
+
+sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+sed -i -e "s/##IPA_SERVER_FQDN##/$IPA_SERVER_FQDN/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+sed -i -e "s/##IPA_DOMAIN_NAME##/$IPA_DOMAIN_NAME/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+sed -i -e "s/##IPA_REALM##/$IPA_REALM/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
+
 # Create Instances
 $DEEPLOY_PATH/openstack/create_instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
 $DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml

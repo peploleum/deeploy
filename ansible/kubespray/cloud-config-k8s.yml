@@ -2,12 +2,12 @@
 
 write_files:
   - content: |
-          export IPA_SERVER_IP=10.0.0.1
-          export IPA_SERVER_FQDN=ipaserver.peploleum.com
-          export IPA_DOMAIN_NAME=peploleum.com
-          export IPA_REALM=PEPLOLEUM.COM
-          export IPA_PRINCIPAL=admin
-          export IPA_PASSWORD=adminadmin
+          export IPA_SERVER_IP=##IPA_SERVER_IP##
+          export IPA_SERVER_FQDN=##IPA_SERVER_FQDN##
+          export IPA_DOMAIN_NAME=##IPA_DOMAIN_NAME##
+          export IPA_REALM=##IPA_REALM##
+          export IPA_PRINCIPAL=##IPA_PRINCIPAL##
+          export IPA_PASSWORD=##IPA_PASSWORD##
     path: /home/temp/ipa.conf
     permissions: '0755'
 

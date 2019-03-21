@@ -31,10 +31,17 @@ write_files:
           -----END RSA PRIVATE KEY-----
     path: /home/temp/rsa_key.pem
     permissions: '0600'
+  - content: |
+          export IPA_SERVER_IP=##IPA_SERVER_IP##
+          export IPA_SERVER_FQDN=##IPA_SERVER_FQDN##
+          export IPA_DOMAIN_NAME=##IPA_DOMAIN_NAME##
+          export IPA_REALM=##IPA_REALM##
+          export IPA_PRINCIPAL=##IPA_PRINCIPAL##
+          export IPA_PASSWORD=##IPA_PASSWORD##
+    path: /home/temp/ipa.conf
+    permissions: '0755'
 
 runcmd:
   - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
   - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
-  - sudo chown ubuntu:ubuntu /home/temp/deeploy/ -R
-  - sudo chown ubuntu:ubuntu /home/temp/rsa_key.pem
-
+  - sudo chown ubuntu:ubuntu /home/temp/ -R
