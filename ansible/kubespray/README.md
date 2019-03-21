@@ -2,7 +2,7 @@
 
 This recipe describes how to install kubernetes with Ansible on 3 VM in an openstack network.
 
-First, you need to check 'kubespray.conf' and 'cloud-config-k8s.yml' and modify it if needed.
+First, you need to check 'kubespray.conf' and modify it if needed.
 
 Then, create the VM with :
     
