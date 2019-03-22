@@ -12,9 +12,13 @@
 ### Install controller node :
 #### Prerequisites :
 * Install Ubuntu 18.04 server
-* Execute sudo apt-get update
-* Execute sudo apt-get upgrade
+* Execute the following commands:
 
+        
+        sudo apt-get -y update
+        sudo apt-get -y upgrade
+        
+        
 The controller node is accessible in ssh.
 
 Execute the command :

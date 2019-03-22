@@ -13,3 +13,8 @@ See [FreeIPA documentation](./freeipa/README.md).
 ## ANSIBLE
 
 See [Ansible documentation](./ansible/README.md).
+
+
+## Openstack
+
+See [Openstack documentation](./openstack/README.md).
