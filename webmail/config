@@ -1,0 +1,10 @@
+
+export STORAGE_BASE_DIR='/var/vmail'
+export WEB_SERVER='NGINX'
+export BACKEND_ORIG='OPENLDAP'
+export BACKEND='OPENLDAP'
+export USE_IREDADMIN='YES'
+export USE_ROUNDCUBE='YES'
+export USE_NETDATA='YES'
+export USE_FAIL2BAN='YES'
+#EOF
