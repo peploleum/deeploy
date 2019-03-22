@@ -24,7 +24,7 @@ if [ $# -lt 4 ] ; then
   echo "  • IP if the compute node (e.g local machine)"
   echo
   echo "Examples:"
-  echo "  • $0 192.168.0.10 eno1 192.168.0.14"
+  echo "  • $0 192.168.0.10 openstack-controller eno1 192.168.0.14"
   exit 1
 fi
 

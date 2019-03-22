@@ -67,7 +67,8 @@ Execute the command on controller openstack:
         sudo chmod +x enrolment_node.sh
 
 Execute shell enrolment_node.sh in openstack-controller.
-Uncomment discover_hosts_in_cells_interval in etc/nova/nova.conf
+
+For the first compute node enrolment, uncomment discover_hosts_in_cells_interval in etc/nova/nova.conf
 
 ### Init Openstack :
 #### General
