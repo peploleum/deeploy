@@ -1,9 +1,33 @@
 #!/bin/bash
+set -x
 
 echo param 1 : nom du controlleur openstack
 echo param 2 : ip du controlleur openstack
 echo param 3 : nom de l\'interface du reseau physique
 echo param 4 : ip du compute openstack
+
+
+if [ $# -lt 4 ] ; then
+  echo "Usage: $0 CONTROLLER_NAME CONTORLLER_IP NETWORK_INTERFACE COMPUTE_NODE_IP"
+  echo
+  echo CONTROLLER_NAME must meet the following:
+  echo "  • hostname of the openstack controller"
+  echo
+  echo CONTORLLER_IP must meet the following:
+  echo "  • valid IPv4 of the openstack controller"
+  echo
+  echo NETWORK_INTERFACE must meet the following:
+  echo "  • name of the local network interface (e.g. eno1)"
+  echo
+  echo COMPUTE_NODE_IP must meet the following:
+  echo "  • valid IPv4"
+  echo "  • IP if the compute node (e.g local machine)"
+  echo
+  echo "Examples:"
+  echo "  • $0 192.168.0.10 eno1 192.168.0.14"
+  exit 1
+fi
+
 
 sudo sed -i '3i IP	HOSTNAME' /etc/hosts
 sudo sed -i "s/IP/$4/g" /etc/hosts
