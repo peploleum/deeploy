@@ -3,6 +3,15 @@
 
 FreeIPA is the Redhat IDM.
 
+#### Warning
+
+In openstack, add the security group freeipa on each VM you want to enroll in FreeIPA including the freeipa server itself.
+
+If this security group doesn't exist, you can generate it with these commands on the openstack controller :
+
+        cd deeploy/freeipa/srv
+        ./create-freeipa-security-group.sh
+
 #### Server
 
 Make sure git is set up to checkout out linux style end of lines
