@@ -107,24 +107,20 @@ Execute script create_instance.sh in openstack-controller.
 
 example : ./create_instance.sh custom Ubuntu_16.04 sandbox 12.12.12.12 192.168.0.112 sampleServer
 
-### Create instance with freeipa Openstack :
+### Create instance with FreeIPA enrollment :
 
-This script launch a new Virtual Machine with deployment freeipa.
+Init FreeIPA configuration with script freeipa/init-freeipa-conf.sh :
 
-sudo chmod +x create_instance_with_freeipa.sh
+        cd freeipa
+        ./init-freeipa-conf.sh IPA_SERVER_IP IPA_SERVER_FQDN IPA_DOMAIN_NAME IPA_REALM IPA_PRINCIPAL IPA_PASSWORD
 
-Execute script create_instance.sh in openstack-controller.
+example : ./init-freeipa-conf.sh 10.0.0.1 ipaserver.peploleum.com peploleum.com PEPLOLEUM.COM admin adminadmin
 
-        param 1 : Flavor name -- ex : Large
-        param 2 : Image name -- ex : Ubuntu_16.04.desktop
-        param 3 : Network name -- ex : sandbox
-        param 4 : Private Instance IP -- ex : 12.12.12.113
-        param 5 : Public Floating IP -- ex : 192.168.0.113
-        param 6 : Instance name -- ex : instance04
+Create the instance with the create_instance.sh script. Use temp-cloud-init-freeipa.yml file as cloud-init boot file.
 
-example : ./create_instance_with_freeipa.sh custom Ubuntu_16.04.desktop sandbox 12.12.12.12 192.168.0.112 sampleDesktop
+        ./create_instance.sh S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance ./freeipa/temp-cloud-init-freeipa.yml
 
-### Connect to the VM
+## Connect to the VM
 
 Download the rsa key file from openstack-controller \(~/rsa_key.pem\) on your computer.
 
