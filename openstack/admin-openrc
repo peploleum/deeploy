@@ -5,5 +5,5 @@ export OS_USERNAME=admin
 export OS_PASSWORD=root
 export OS_AUTH_URL=http://openstack-controller:5000/v3
 export OS_IDENTITY_API_VERSION=3
-export OS_REGION_NAME=RegionOne
-export OS_TENANT_ID=91fc949d74ce42feaaa91457c29c8090
+#export OS_REGION_NAME=RegionOne
+#export OS_TENANT_ID=91fc949d74ce42feaaa91457c29c8090
