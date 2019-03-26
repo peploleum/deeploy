@@ -16,10 +16,15 @@ $DEEPLOY_PATH/openstack/remove_instance.sh $NODE2_NAME $NODE2_PUBLIC_IP
 openstack security group delete kubernetes
 
 # Create Security Group
-openstack security group create kubernetes
-openstack security group rule create kubernetes --protocol udp --dst-port 1:65535
-openstack security group rule create kubernetes --protocol tcp --dst-port 1:65535
-openstack security group rule create kubernetes --protocol icmp
+if openstack security group list | grep kubernetes
+then
+        echo "Openstack Kubernetes security group already exist."
+else
+	openstack security group create kubernetes
+	openstack security group rule create kubernetes --protocol udp --dst-port 1:65535
+	openstack security group rule create kubernetes --protocol tcp --dst-port 1:65535
+	openstack security group rule create kubernetes --protocol icmp
+fi
 
 # Update conf file
 sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/kubespray/cloud-config-manager.yml
