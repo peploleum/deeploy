@@ -1,11 +1,16 @@
 ---
 
 - name: Download nexus_package 
-  get_url: url=http://download.sonatype.com/nexus/oss/{{ nexus_package }} dest="{{ nexus_download_dir }}/{{ nexus_package }}"
+  get_url: url={{ nexus_download_url }} dest="{{ nexus_download_dir }}/{{ nexus_package }}"
   tags: download
   sudo: no
 
 - name: Ensure Nexus o/s group exists
   group: name="{{ nexus_os_group }}" state=present
   when: nexus_create_os_group
+  sudo: true
+
+- name: Ensure Nexus o/s user exists
+  user: name="{{ nexus_os_user }}" group="{{ nexus_os_group }}" shell="{{ nexus_os_user_shell }}" state=present
+  when: nexus_create_os_user
   sudo: true
