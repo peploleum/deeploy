@@ -50,16 +50,20 @@ For a project :
 * Get the registration token in Settings > CI/CD > Runners  
 * Run the registration script
 
-        ./register-runner.sh %containerID %projectName %gitLabIP %RegistrationToken
+        ./register-runner.sh GITLAB_RUNNER_CONTAINER_ID GITLAB_PROJECT_NAME GITLAB_HOST_IP REGISTER_TOKEN GITLAB_HOST_FQDN
+        
+> Example: 
+
+        ./register-runner.sh 12 insight 10.0.0.32 121221 gitlab.peploleum.com
 
 #### Mirror project Github to GitLab
 For each project :
 
 * Run the mirror script
 
-        ./mirror-github.sh %GitHubUserLink %GitHubProjectName %GitLabProject
+        ./mirror-github.sh GITHUB_USER_URL GITHUB_PROJECT_NAME GITLAB_PROJECT_NAME GITLAB_HOST_FQDN
 
-Sample : ./mirror-github.sh https://github.com/peploleum/ graphy magnarox/graphy
+Sample : ./mirror-github.sh https://github.com/peploleum/ insight insight/insight gitlab.peploleum.com
 
 ### LDAP configuration
 
@@ -71,9 +75,9 @@ follow this [recipe](https://computingforgeeks.com/how-to-configure-gitlab-freei
         
 > edit scripts and config files to match freeipa settings (IP, server hostname).
     
-> execute prepare script (gitlab-ce container id required)  
+> execute prepare script (gitlab-ce container id required) and follow instructions
         
-        ./prepare-ldap.sh $gitlab-ce_docker_container_id
+        ./prepare-ldap.sh
         
 > execute a bash in the gitlab container
 
@@ -83,8 +87,4 @@ follow this [recipe](https://computingforgeeks.com/how-to-configure-gitlab-freei
   
 > in the container: execute config script  
 
-        ./configure-ldap.sh
-
-        
-### CI / CD sample
-(TODO)
+        ./configure-ldap.sh IPA_SERVER_IP IPA_SERVER_FQDN
