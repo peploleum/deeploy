@@ -1,8 +1,26 @@
 #!/bin/bash
 
-echo param 1 : GitHub user link --- https://github.com/username/
-echo param 2 : GitHub project name --- repository-to-mirror
-echo param 3 : GitLab project --- username/repository
+set -x
+if [ $# -lt 4 ]; then
+  echo "Usage: $0 GITHUB_USER_URL GITHUB_PROJECT_NAME GITLAB_PROJECT_NAME GITLAB_HOST_FQDN"
+  echo
+  echo GITHUB_USER_URL must be:
+  echo "  • GitHub user url"
+  echo "  • example: https://github.com/peploleum/"
+  echo
+  echo GITHUB_PROJECT_NAME must meet the following:
+  echo "  • valid github project name"
+  echo
+  echo GITLAB_PROJECT_NAME must meet the following:
+  echo "  • valid existing gitlab name"
+  echo
+  echo GITLAB_HOST_FQDN must meet the following:
+  echo "  • gitlab host Fully Qualified Domain Name"
+  echo
+  echo  echo "Examples:"
+  echo "  • $0 https://github.com/peploleum/ insight insight/insight gitlab.peploleum.com"
+  exit 1
+fi
 
 mirrorsDir="$HOME/mirrors"
 
@@ -11,7 +29,7 @@ mkdir $mirrorsDir
 cd $mirrorsDir
 git clone --mirror $1$2.git
 cd $2.git
-git remote set-url --push origin ssh://git@gitlab.peploleum.com:9022/$3
+git remote set-url --push origin ssh://git@$4:9022/$3
 
 # Automatic update script
 file="$mirrorsDir/$2_update.sh"

@@ -5,7 +5,7 @@ services:
       context: ./src/gitlab
     container_name: gitlab 
     restart: always
-    hostname: gitlab.peploleum.com
+    hostname: ${GITLAB_HOST_FQDN}
     ports:
     - "9022:22"
     - "9080:9080"
@@ -16,7 +16,7 @@ services:
     - ./srv/gitlab/config:/etc/gitlab
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.peploleum.com:9080'
+        external_url 'http://${GITLAB_HOST_FQDN}:9080'
   gitlab-runner:
     build:
       context: ./src/runner

@@ -12,7 +12,7 @@
 ### Run GitLab :
 
         cd gitlab
-        docker-compose -f gitlab.yml up -d
+        ./start-gitlab.sh
 
 ### Configure GitLab
 Use a web browser and connect to http://gitlab.peploleum.com:9080
