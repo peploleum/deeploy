@@ -8,5 +8,6 @@
 - hosts: nexus-vm
   gather_facts: true
   roles:
+    - { role: java}
     - { role: nexus}
 
