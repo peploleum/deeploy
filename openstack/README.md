@@ -118,7 +118,7 @@ example : ./init-freeipa-conf.sh 10.0.0.1 ipaserver.peploleum.com peploleum.com 
 
 Create the instance with the create_instance.sh script. Use temp-cloud-init-freeipa.yml file as cloud-init boot file.
 
-        ./create_instance.sh S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance ./freeipa/temp-cloud-init-freeipa.yml
+        ./create_instance.sh S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance ./freeipa/temp-cloud-init-freeipa.yml freeipa
 
 ## Connect to the VM
 
