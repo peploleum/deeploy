@@ -4,5 +4,9 @@
   gather_facts: false
   roles:
     - { role: bootstrap}
+
+- hosts: nexus-vm
+  gather_facts: true
+  roles:
     - { role: nexus}
 
