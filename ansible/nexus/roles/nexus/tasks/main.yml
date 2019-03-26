@@ -14,3 +14,22 @@
   user: name="{{ nexus_os_user }}" group="{{ nexus_os_group }}" shell="{{ nexus_os_user_shell }}" state=present
   when: nexus_create_os_user
   sudo: true
+
+- name: Ensure Nexus installation directory exists
+  file:
+    path="{{ nexus_installation_dir }}"
+    state="directory"
+  sudo: true
+
+- name: Unpack Nexus download
+  unarchive:
+    src="{{ nexus_download_dir }}/{{ nexus_package }}"
+    dest="{{ nexus_installation_dir }}"
+    creates="{{ nexus_installation_dir }}/nexus-{{ nexus_version }}"
+    force=no
+    copy=false
+    owner={{ nexus_os_user }}
+    group={{ nexus_os_group }}
+    mode="0755"
+  tags: unpack
+
