@@ -20,8 +20,9 @@ then
 else
 	openstack security group create nexus
 	openstack security group rule create nexus --protocol tcp --dst-port 8081
-#	openstack security group rule create nexus --protocol tcp --dst-port 1:65535
-#	openstack security group rule create nexus --protocol icmp
+	openstack security group rule create nexus --protocol tcp --dst-port 9080
+	openstack security group rule create nexus --protocol tcp --dst-port 9081
+	openstack security group rule create nexus --protocol tcp --dst-port 9082
 fi
 
 # Create Instances
