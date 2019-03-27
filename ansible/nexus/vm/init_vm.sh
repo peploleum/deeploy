@@ -28,5 +28,5 @@ fi
 $DEEPLOY_PATH/openstack/create_instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/nexus/vm/cloud-config-manager.yml
 #openstack server add security group $ANSIBLE_NAME nexus
 $DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME
-#openstack server add security group $MASTER_NAME nexus
+openstack server add security group $MASTER_NAME nexus
 
