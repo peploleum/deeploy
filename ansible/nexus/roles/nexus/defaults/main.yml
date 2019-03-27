@@ -60,12 +60,12 @@ ldap_connections: []
 #    ldap_group_member_attribute: 'memberUid'
 #    ldap_group_member_format: '${username}'
 
-nexus_config_pypi: false
+nexus_config_pypi: true
 nexus_config_docker: false
-nexus_config_raw: false
+nexus_config_raw: true
 nexus_config_rubygems: false
 nexus_config_bower: false
-nexus_config_npm: false
+nexus_config_npm: true
 
 # also see _nexus_privilege_defaults below
 nexus_privileges:
@@ -85,38 +85,36 @@ nexus_roles:
       - all-repos-read
     roles: []
 
-nexus_local_users: []
-# example user item :
-#  - username: jenkins # used as key to update
-#    first_name: Jenkins
-#    last_name: CI
-#    email: support@company.com
-#    password: "s3cr3t"
-#    roles:
-#      - developers
+nexus_local_users: 
+  - username: user1 #used as key to update
+    first_name: User1
+    last_name: ""
+    email: ""
+    password: "nexus"
+    roles:
+      - developers
 
-nexus_delete_default_repos: false
-
-nexus_delete_default_blobstore: false
+nexus_delete_default_repos: true
+nexus_delete_default_blobstore: true
 
 #
 # Nexus blobstore config
-nexus_blob_split: false     # True - blobstores per format
+nexus_blob_split: true     # True - blobstores per format
 nexus_blob_names:           # Splited blob name list @ blob_vars.yml
   pypi:
-    blob: 'default'
+    blob: 'pypi-blob'
   raw:
-    blob: 'default'
+    blob: 'raw-blob'
   docker:
-    blob: 'default'
+    blob: 'docker-blob'
   ruby:
-    blob: 'default'
+    blob: 'ruby-blob'
   bower:
-    blob: 'default'
+    blob: 'bower-blob'
   npm:
-    blob: 'default'
+    blob: 'npm-blob'
   mvn:
-    blob: 'default'
+    blob: 'mvn-blob'
 
 
 nexus_blobstores: []
