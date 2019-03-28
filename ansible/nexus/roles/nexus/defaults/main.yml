@@ -13,6 +13,9 @@ nexus_script_dir: '{{ nexus_installation_dir }}/nexus-{{ nexus_version }}/etc/sc
 nexus_restore_log: '/var/log/nexus-restore.log'
 nexus_backup_log: '/var/log/nexus-backup.log'
 
+add_apt_plugin: true
+apt_plugin_version: '1.0.10'
+apt_plugin_file: 'nexus-repository-apt-{{ apt_plugin_version }}.jar'
 # Nexus restore procedure:
 # run ansible-playbook example.yml -e "nexus_restore_point=(# date of choice -> %y-%m-%d #)"
 # nexus_restore_point: '17-02-22' # Example format
