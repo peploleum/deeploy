@@ -169,7 +169,7 @@
     path: /{{ nexus_installation_dir }}/nexus-latest/system/net/staticsnow/nexus-repository-apt/{{ apt_plugin_version }}
     state: directory
     mode: 0755
-  when: add_apt_plugin 
+  when: add_apt_plugin
 
 - name: Copy nexus-repository-apt plugin
   copy:
@@ -297,6 +297,8 @@
     - delete_repo
     - delete_blobstore
     - create_blobstore
+    - create_repo_apt_proxy
+    - create_repo_apt_hosted
     - create_repo_maven_proxy
     - create_repo_maven_group
     - create_repo_maven_hosted

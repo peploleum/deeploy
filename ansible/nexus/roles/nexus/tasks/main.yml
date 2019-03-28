@@ -68,6 +68,14 @@
   with_items: "{{ nexus_repos_maven_group }}"
 
 - block:
+  - include: create_repo_apt_proxy_each.yml
+    with_items: "{{ nexus_repos_apt_proxy }}"
+
+  - include: create_repo_apt_hosted_each.yml
+    with_items: "{{ nexus_repos_apt_hosted }}"
+  when: nexus_config_apt
+
+- block:
   - include: create_repo_docker_hosted_each.yml
     with_items: "{{ nexus_repos_docker_hosted }}"
 

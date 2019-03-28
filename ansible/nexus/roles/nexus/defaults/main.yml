@@ -69,6 +69,7 @@ nexus_config_raw: true
 nexus_config_rubygems: false
 nexus_config_bower: false
 nexus_config_npm: true
+nexus_config_apt: true
 
 # also see _nexus_privilege_defaults below
 nexus_privileges:
@@ -88,7 +89,7 @@ nexus_roles:
       - all-repos-read
     roles: []
 
-nexus_local_users: 
+nexus_local_users:
   - username: dev #used as key to update
     first_name: Dev
     last_name: Dev
@@ -104,6 +105,8 @@ nexus_delete_default_blobstore: true
 # Nexus blobstore config
 nexus_blob_split: true     # True - blobstores per format
 nexus_blob_names:           # Splited blob name list @ blob_vars.yml
+  apt:
+    blob: 'apt-blob'
   pypi:
     blob: 'pypi-blob'
   raw:
@@ -124,6 +127,17 @@ nexus_blobstores: []
 # example blobstore item :
 # - name: separate-storage
 #   path: /mnt/custom/path
+
+# apt support ...
+_nexus_repos_apt_defaults:
+  blob_store: "{{ nexus_blob_names.apt.blob }}"
+  strict_content_validation: true
+
+nexus_repos_apt_proxy:
+  - name: apt-ubuntu-bionic
+    remote_url: 'http://nova.clouds.archive.ubuntu.com/ubuntu/'
+    distribution: bionic
+    flat: false
 
 # also see _nexus_repos_maven_defaults below
 nexus_repos_maven_proxy:
