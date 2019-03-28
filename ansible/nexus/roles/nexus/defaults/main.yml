@@ -139,6 +139,8 @@ nexus_repos_apt_proxy:
     distribution: bionic
     flat: false
 
+nexus_repos_apt_hosted: []
+
 # also see _nexus_repos_maven_defaults below
 nexus_repos_maven_proxy:
   - name: maven-central
