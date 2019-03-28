@@ -163,40 +163,39 @@
   when: httpd_setup_enable
 
 # PLUGINS
-# create a directory if it doesn't exist
-- name: Create apt plugin direcyory
-  file:
-    path: /{{ nexus_installation_dir }}/nexus-latest/system/net/staticsnow/nexus-repository-apt/{{ apt_plugin_version }}
-    state: directory
-    mode: 0755
-  when: add_apt_plugin
 
-- name: Copy nexus-repository-apt plugin
-  copy:
-    src: "plugins/{{ apt_plugin_file }}"
-    dest: "{{ nexus_installation_dir }}/nexus-latest/system/net/staticsnow/nexus-repository-apt/{{ apt_plugin_version }}/{{ apt_plugin_file }}"
-  when: add_apt_plugin
+## APT Plugin
+- block:
+  - name: Create apt plugin direcyory
+    file:
+      path: /{{ nexus_installation_dir }}/nexus-latest/system/net/staticsnow/nexus-repository-apt/{{ apt_plugin_version }}
+      state: directory
+      mode: 0755
 
-- name: Declare apt plugin
-  lineinfile:
-    dest: "{{ nexus_installation_dir }}/nexus-latest/system/org/sonatype/nexus/assemblies/nexus-core-feature/{{ nexus_version }}/nexus-core-feature-{{ nexus_version }}-features.xml"
-    line: "        <feature version=\"{{ apt_plugin_version }}\" prerequisite=\"false\" dependency=\"false\">nexus-repository-apt</feature>"
-    regexp: ">nexus-repository-apt<"
-    insertafter: ">nexus-repository-maven<"
-  when: add_apt_plugin
+  - name: Copy nexus-repository-apt plugin
+    copy:
+      src: "plugins/{{ apt_plugin_file }}"
+      dest: "{{ nexus_installation_dir }}/nexus-latest/system/net/staticsnow/nexus-repository-apt/{{ apt_plugin_version }}/{{ apt_plugin_file }}"
 
-- name: Declare apt plugin
-  blockinfile:
-    path: "{{ nexus_installation_dir }}/nexus-latest/system/org/sonatype/nexus/assemblies/nexus-core-feature/{{ nexus_version }}/nexus-core-feature-{{ nexus_version }}-features.xml"
-    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
-    block: |
-      <feature name="nexus-repository-apt" description="net.staticsnow:nexus-repository-apt" version="{{ apt_plugin_version }}">
-          <details>net.staticsnow:nexus-repository-apt</details>
-          <bundle>mvn:net.staticsnow/nexus-repository-apt/{{ apt_plugin_version }}</bundle>
-          <bundle>mvn:org.apache.commons/commons-compress/1.18</bundle>
-          <bundle>mvn:org.tukaani/xz/1.8</bundle>
-      </feature>
-    insertafter: "</feature>"
+  - name: Declare apt plugin
+    lineinfile:
+      dest: "{{ nexus_installation_dir }}/nexus-latest/system/org/sonatype/nexus/assemblies/nexus-core-feature/{{ nexus_version }}/nexus-core-feature-{{ nexus_version }}-features.xml"
+      line: "        <feature version=\"{{ apt_plugin_version }}\" prerequisite=\"false\" dependency=\"false\">nexus-repository-apt</feature>"
+      regexp: ">nexus-repository-apt<"
+      insertafter: ">nexus-repository-maven<"
+
+  - name: Declare apt plugin
+    blockinfile:
+      path: "{{ nexus_installation_dir }}/nexus-latest/system/org/sonatype/nexus/assemblies/nexus-core-feature/{{ nexus_version }}/nexus-core-feature-{{ nexus_version }}-features.xml"
+      marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+      block: |
+        <feature name="nexus-repository-apt" description="net.staticsnow:nexus-repository-apt" version="{{ apt_plugin_version }}">
+            <details>net.staticsnow:nexus-repository-apt</details>
+            <bundle>mvn:net.staticsnow/nexus-repository-apt/{{ apt_plugin_version }}</bundle>
+            <bundle>mvn:org.apache.commons/commons-compress/1.18</bundle>
+            <bundle>mvn:org.tukaani/xz/1.8</bundle>
+        </feature>
+      insertafter: "</feature>"
   when: add_apt_plugin
 
 - name: Create systemd service configuration
@@ -299,6 +298,9 @@
     - create_blobstore
     - create_repo_apt_proxy
     - create_repo_apt_hosted
+    - create_repo_yum_proxy
+    - create_repo_yum_group
+    - create_repo_yum_hosted
     - create_repo_maven_proxy
     - create_repo_maven_group
     - create_repo_maven_hosted

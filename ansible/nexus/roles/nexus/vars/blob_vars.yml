@@ -3,6 +3,8 @@ nexus_blob_prefix: 'blob-' # Note: Nexus restore - blob name-convention 'blob-*'
 nexus_blob_names:
   apt:
     blob: '{{ nexus_blob_prefix }}apt'
+  yum:
+    blob: '{{ nexus_blob_prefix }}yum'
   pypi:
     blob: '{{ nexus_blob_prefix }}pypi'
   raw:
@@ -22,6 +24,8 @@ nexus_blob_names:
 nexus_blobstores:
   - name: '{{ nexus_blob_prefix }}apt'
     path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.apt.blob }}"
+  - name: '{{ nexus_blob_prefix }}yum'
+      path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.yum.blob }}"
   - name: '{{ nexus_blob_prefix }}raw'
     path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.raw.blob }}"
   - name: '{{ nexus_blob_prefix }}pypi'

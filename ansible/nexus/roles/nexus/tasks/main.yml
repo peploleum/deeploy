@@ -33,6 +33,7 @@
     - name: "{{ nexus_blob_names.npm.blob }}"
     - name: "{{ nexus_blob_names.mvn.blob }}"
     - name: "{{ nexus_blob_names.apt.blob }}"
+    - name: "{{ nexus_blob_names.yum.blob }}"
   when: nexus_data_dir_contents.stdout == "" and nexus_delete_default_blobstore
 
 - include: setup_ldap_each.yml
@@ -75,6 +76,17 @@
   - include: create_repo_apt_hosted_each.yml
     with_items: "{{ nexus_repos_apt_hosted }}"
   when: nexus_config_apt
+
+- block:
+  - include: create_repo_yum_proxy_each.yml
+    with_items: "{{ nexus_repos_yum_proxy }}"
+
+  - include: create_repo_yum_hosted_each.yml
+    with_items: "{{ nexus_repos_yum_hosted }}"
+
+  - include: create_repo_yum_group_each.yml
+    with_items: "{{ nexus_repos_yum_group }}"
+  when: nexus_config_yum
 
 - block:
   - include: create_repo_docker_hosted_each.yml

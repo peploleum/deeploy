@@ -70,6 +70,7 @@ nexus_config_rubygems: false
 nexus_config_bower: false
 nexus_config_npm: true
 nexus_config_apt: true
+nexus_config_yum: true
 
 # also see _nexus_privilege_defaults below
 nexus_privileges:
@@ -107,6 +108,8 @@ nexus_blob_split: true     # True - blobstores per format
 nexus_blob_names:           # Splited blob name list @ blob_vars.yml
   apt:
     blob: 'apt-blob'
+  yum:
+    blob: 'yum-blob'
   pypi:
     blob: 'pypi-blob'
   raw:
@@ -128,7 +131,7 @@ nexus_blobstores: []
 # - name: separate-storage
 #   path: /mnt/custom/path
 
-# apt support ...
+# Apt support ...
 _nexus_repos_apt_defaults:
   blob_store: "{{ nexus_blob_names.apt.blob }}"
   strict_content_validation: true
@@ -140,6 +143,23 @@ nexus_repos_apt_proxy:
     flat: false
 
 nexus_repos_apt_hosted: []
+
+# Yum support ...
+_nexus_repos_yum_defaults:
+  blob_store: "{{ nexus_blob_names.yum.blob }}"
+  strict_content_validation: true
+  policy_name: "None"
+
+nexus_repos_yum_proxy:
+  - name: yum-centos
+    remote_url: 'http://mirror.centos.org/centos/'
+
+nexus_repos_yum_hosted: []
+
+nexus_repos_yum_group:
+  - name: yum-public
+    member_repos:
+      - yum-centos
 
 # also see _nexus_repos_maven_defaults below
 nexus_repos_maven_proxy:
