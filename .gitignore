@@ -23,6 +23,7 @@
 hs_err_pid*
 
 .idea
+*.iml
 
 # Ansible retry files
 *.retry
