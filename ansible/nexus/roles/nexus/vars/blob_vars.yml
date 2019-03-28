@@ -25,7 +25,7 @@ nexus_blobstores:
   - name: '{{ nexus_blob_prefix }}apt'
     path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.apt.blob }}"
   - name: '{{ nexus_blob_prefix }}yum'
-      path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.yum.blob }}"
+    path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.yum.blob }}"
   - name: '{{ nexus_blob_prefix }}raw'
     path: "{{ nexus_data_dir }}/blobs/{{ nexus_blob_names.raw.blob }}"
   - name: '{{ nexus_blob_prefix }}pypi'
