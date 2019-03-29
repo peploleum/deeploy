@@ -6,7 +6,7 @@ See [Kubespray documentation](./kubespray/README.md).
 
 ## Nexus
 
-See [Nexus documentation](./nexus/README.md).
+See [Nexus documentation](./nexus/docs/README.md).
 
 ## Gitlab [TODO]
 
