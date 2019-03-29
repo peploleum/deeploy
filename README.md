@@ -1,6 +1,6 @@
-# deeploy
+# DEEPLOY
 
-Deployment convnience scripts. Mostly for Ubuntu 18.04 server.
+Deployment convenience scripts. Mostly for Ubuntu 18.04 server.
 
 ## GitLab
 

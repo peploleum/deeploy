@@ -4,23 +4,43 @@
 
 See [Kubespray documentation](./kubespray/README.md).
 
+## Nexus
+
+See [Nexus documentation](./nexus/README.md).
+
+## Gitlab [TODO]
+
+See [Gitlab documentation](./gitlab/README.md).
+
 ## General stuff
 
 ### Prepare target machine
 
-* Install ssh server
+* Have SSH Server
 
-        sudo apt-get install openssh-server
-
-### Prepare deploy host
+### Prepare manager (deployment machine)
 
 * Run the script install_ansible.sh
-* Update the file /etc/ansible/hosts with target machine IP or Name
-* Initialize ssh connection
+* Update the file /etc/ansible/hosts with target machine IP or create your own hosts.ini file
 
-        ssh (ssh_user)@(target)
+### Run your playbook
 
-### Run gitlab_playbook
+        ansible-playbook -i hosts.ini your-playbook.yml <ssh and sudo option>
+        
+SSH Options :
+* With Rsa_key file 
+        
+        --key-file "path/to/rsa_key.pem"
+* With user and password
 
-        ansible-playbook gitlab-playbook.yml -u (ssh_user) --ask-pass --ask-become-pass
+        --user RemoteUser --ask-pass
+
+Sudo Options :
+* Declare privilege escalation method
+        
+        --become --become-method sudo --become-user root
+* If password is needed, add the following
+
+        --ask-become-pass
+        
 
