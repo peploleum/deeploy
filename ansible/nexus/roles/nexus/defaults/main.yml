@@ -42,26 +42,29 @@ httpd_setup_enable: false
 httpd_ssl_certificate_file: 'files/nexus-vm.crt'
 httpd_ssl_certificate_key_file: 'files/nexus-vm.key'
 
-ldap_connections: []
+ldap_connections: 
 # example ldap config :
-#  - ldap_name: 'My Company LDAP' # used as a key to update the ldap config
-#    ldap_protocol: 'ldaps' # ldap or ldaps
-#    ldap_hostname: 'ldap.mycompany.com'
-#    ldap_port: 636
-#    ldap_auth: 'simple' or 'none'
-#    ldap_auth_username: 'username' (or DN)   (optional)
-#    ldap_auth_password: 'password'           (optional)
-#    ldap_search_base: 'dc=mycompany,dc=net'
-#    ldap_user_base_dn: 'ou=users'
-#    ldap_user_object_class: 'inetOrgPerson'
-#    ldap_user_id_attribute: 'uid'
-#    ldap_user_real_name_attribute: 'cn'
-#    ldap_user_email_attribute: 'mail'
-#    ldap_group_base_dn: 'ou=groups'
-#    ldap_group_object_class: 'posixGroup'
-#    ldap_group_id_attribute: 'cn'
-#    ldap_group_member_attribute: 'memberUid'
-#    ldap_group_member_format: '${username}'
+  - ldap_name: 'FreeIPA' # used as a key to update the ldap config
+    ldap_protocol: 'ldap' # ldap or ldaps
+    ldap_hostname: '10.0.0.11'
+    ldap_port: 389
+    ldap_auth: 'simple'
+    ldap_auth_username: 'uid=nexus,cn=users,cn=accounts,dc=peploleum,dc=com'
+    ldap_auth_password: 'nexus'
+    ldap_search_base: 'dc=peploleum,dc=com'
+    user_subtree: false
+    ldap_user_base_dn: 'cn=users,cn=accounts'
+    ldap_user_object_class: 'posixaccount'
+    ldap_user_id_attribute: 'uid'
+    ldap_user_real_name_attribute: 'cn'
+    ldap_user_email_attribute: 'mail'
+    map_groups_as_roles: true
+    group_subtree: true
+    ldap_group_base_dn: 'cn=groups,cn=accounts'
+    ldap_group_object_class: 'posixgroup'
+    ldap_group_id_attribute: 'cn'
+    ldap_group_member_attribute: 'member'
+    ldap_group_member_format: 'uid=${username},cn=users,cn=accounts,dc=peploleum,dc=com'
 
 nexus_config_pypi: true
 nexus_config_docker: true
