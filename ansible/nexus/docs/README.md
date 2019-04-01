@@ -104,11 +104,11 @@ If you want to publish your project, put this in the `pom.xml` :
   <distributionManagement>
     <snapshotRepository>
       <id>nexus-snapshots</id>
-      <url>http://nexus.peploleum.com:8081/repository/maven-snapshots/</url>
+      <url>http://nexus.peploleum.com:8081/repository/maven-private-snapshots/</url>
     </snapshotRepository>
     <repository>
       <id>nexus-releases</id>
-      <url>http://nexus.peploleum.com:8081/repository/maven-releases/</url>
+      <url>http://nexus.peploleum.com:8081/repository/maven-private-releases/</url>
     </repository>
   </distributionManagement>
 ```
