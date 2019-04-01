@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script init 4 VM to deploy Kubernetes. Please check kubespray.conf file before runnig this script.
+# This script init 1 or 2 VM to deploy Nexus. Please check nexus.conf file before running this script.
 
 # Load variables
 . nexus.conf
@@ -16,7 +16,7 @@ openstack security group delete nexus
 # Create Security Group
 if openstack security group list | grep nexus
 then
-        echo "Openstack nexus security group already exist."
+  echo "Openstack nexus security group already exist."
 else
 	openstack security group create nexus
 	openstack security group rule create nexus --protocol tcp --dst-port 8081
@@ -27,7 +27,9 @@ fi
 
 # Create Instances
 $DEEPLOY_PATH/openstack/create_instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/nexus/vm/cloud-config-manager.yml
-#openstack server add security group $ANSIBLE_NAME nexus
-$DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME
-openstack server add security group $MASTER_NAME nexus
 
+if $USE_NEXUS_VM
+then
+  $DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME
+  openstack server add security group $MASTER_NAME nexus
+fi
