@@ -126,9 +126,9 @@ registry=http://nexus.peploleum.com:8081/repository/npm-all/
 
 If you have a project that you want to publish to your Nexus, put this in `package.json`:
 
-```yaml
+```json
 {
-  ...
+
 
   "publishConfig": {
     "registry": "http://nexus.peploleum.com:8081/repository/npm-internal/"
@@ -155,8 +155,47 @@ Now, you can publish with :
 
 ### Docker
 
+Create or update `daemon.json` to declare nexus registry as insecure. Find this file :
+* `/etc/docker/daemon.json` on Linux
+* `C:\ProgramData\Docker\config\daemon.json` on Windows
 
+Your `daemon.json` may look like this :
+```json
+{
+"debug": true,
+"ipv6": true,
+"fixed-cidr-v6": "2001:db8:1::/64",
+"hosts": ["unix:///var/run/docker.sock", "tcp://127.0.0.1:2375"],
+"insecure-registries": ["http://nexus.peploleum.com:9082","http://nexus.peploleum.com:9080"]
+}
+```
 
+Reload configuration :
+* On Linux :
+
+      sudo systemctl daemon-reload
+      sudo systemctl restart docker
+
+* On Windows, restart docker service
+
+##### Pull
+Login to repository :
+
+     docker login nexus.peploleum.com:9082
+Pull image :
+     
+     docker pull nexus.peploleum.com:9082/hello-world:latest
+
+##### Push
+Login to repository :
+
+     docker login nexus.peploleum.com:9080
+Tag and push image :
+     
+     docker tag <image ID> nexus.peploleum.com:9080/<image>:<tag>
+     docker push nexus.peploleum.com:9080/<image>:<tag>
+
+> **WARNING** pull port and push port are different. 
 
 ## External links
 
