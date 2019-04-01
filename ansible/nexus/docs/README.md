@@ -115,6 +115,40 @@ If you want to publish your project, put this in the `pom.xml` :
 
 ### Node (Javascript)
 
+Update `.npmrc` or `npmrc` to add nexus as repository. Find this file :
+* per-project config file (`/path/to/my/project/.npmrc`)
+* per-user config file (`~/.npmrc`)
+* npm builtin config file (`/path/to/npm/npmrc`)
+
+```bash
+registry=http://nexus.peploleum.com:8081/repository/npm-all/
+```
+
+If you have a project that you want to publish to your Nexus, put this in `package.json`:
+
+```yaml
+{
+  ...
+
+  "publishConfig": {
+    "registry": "http://nexus.peploleum.com:8081/repository/npm-internal/"
+  }
+}
+```
+
+and put authentication in your `.npmrc`
+```bash
+email=you@example.com
+always-auth=true
+_auth=YWRtaW46YWRtaW4xMjM=
+```
+`YWRtaW46YWRtaW4xMjM=` is base64-encoded string for `admin:admin123`. You can create this encoded string with the command line call to openssl :
+
+    echo -n 'admin:admin123' | openssl base64
+
+Now, you can publish with :
+
+    npm publish
 
 ### Pypi (Python)
 
