@@ -32,13 +32,13 @@ Once it's done, you can launch ansible deployment with this script :
 
 Wait some minutes. If all it's ok you'll have this kind of return :
 
-    ..........
-    PLAY RECAP *****************************************************************
-    kubernetes-master                 : ok=375  changed=115  unreachable=0    failed=0
-    kubernetes-node-01                : ok=284  changed=86   unreachable=0    failed=0
-    kubernetes-node-02                : ok=282  changed=86   unreachable=0    failed=0
-    localhost                         : ok=1    changed=0    unreachable=0    failed=0
-    ..........
+```console
+PLAY RECAP ************************************************************************
+kubernetes-master                 : ok=375  changed=115  unreachable=0    failed=0
+kubernetes-node-01                : ok=284  changed=86   unreachable=0    failed=0
+kubernetes-node-02                : ok=282  changed=86   unreachable=0    failed=0
+localhost                         : ok=1    changed=0    unreachable=0    failed=0
+```
 
 Now, we are going to finalize the dashboard credential. Connect on kubernetes-master :
 

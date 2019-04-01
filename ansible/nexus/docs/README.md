@@ -32,15 +32,96 @@ If you don't use `init_vm.sh` to create a dedicated VM for Nexus, ensure that yo
 
 You can add `nexus` security group to your existing VM to open these ports. 
 
-## Prepare and launch install
+## Prepare and launch Nexus installation
 
+On the manager :
+* Check and update the target IP in `hosts.ini`
+* Check and update all ansible variables in  `roles/nexus/defaults/main.yml`. A large part of this file is explain [here](nexus-oss-3.md).
 
+This file allow you to manage users / roles / blobstore / repository / ldap / ... during the installation. Take time to be sure that everything is good for you before running installation. 
+> **WARNING** : LDAP configuration must be updated or removed.
 
+Run the deployment :
 
+     ansible-playbook -i hosts.ini --key-file "~/rsa_key.pem" --become --become-method=sudo --become-user=root nexus-playbook.yml
+ 
+ Wait some minutes. If all it's ok you'll have this kind of return : 
+ 
+ ```console
+ PLAY RECAP ************************************************************************
+ nexus                      : ok=308  changed=31   unreachable=0    failed=0
+ ```
+ 
 ## Update Nexus repository
 
 
 ## Configure client
+
+Replace in all following `nexus.peploleum.com` by IP or name of your nexus.
+
+### APT
+
+
+### YUM
+
+
+### Maven (Java and Scala)
+Update `settings.xml` to add nexus as server and mirror. Find this file :
+* `${maven.home}/conf/settings.xml` to globally configure
+* `${user.home}/.m2/settings.xml` to user configure
+
+```xml
+<settings>
+
+  <servers>
+    <server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+    <server>
+      <id>nexus-releases</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+  </servers>
+
+  <mirrors>
+    <mirror>
+      <id>nexus</id>
+      <name>nexus</name>
+      <url>http://nexus.peploleum.com:8081/repository/maven-public/</url>
+      <mirrorOf>*</mirrorOf>
+    </mirror>
+  </mirrors>
+
+</settings>
+```
+
+If you want to publish your project, put this in the `pom.xml` :
+
+```xml
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://nexus.peploleum.com:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>nexus-releases</id>
+      <url>http://nexus.peploleum.com:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
+```
+
+### Node (Javascript)
+
+
+### Pypi (Python)
+
+
+### Docker
+
+
 
 
 ## External links
