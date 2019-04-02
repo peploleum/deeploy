@@ -1,8 +1,25 @@
 # Nexus Ansible
 
 This document explains how to prepare and install Nexus OSS. It also explains how to parameter yours clients apps and IDE to use Nexus repository.
-  
-## Prepare the manager
+
+## Summary
+
+* [Installation](#installation)
+  * [Prepare the manager](#prepare-the-manager)
+  * [Prepare the target machine](#prepare-the-target-machine)
+  * [Prepare and launch Nexus installation](#prepare-and-launch-nexus-installation)
+* [Update Nexus Repository](#update-nexus-repository)
+* [Configure client](#configure-client)
+  * [APT](#apt)
+  * [YUM](#yum)
+  * [Maven](#maven-java-and-scala)
+  * [Node](#node-javascript)
+  * [Pypi](#pypi-python)
+  * [Docker](#docker)
+* [External links](#external-links)
+
+## Installation
+### Prepare the manager
 
 Update variables in the file `vm/nexus.conf`.
 
@@ -22,7 +39,7 @@ Connect on manager :
     cd deeploy/ansible
     ./install_ansible.sh
 
-## Prepare the target machine
+### Prepare the target machine
 
 If you don't use `init_vm.sh` to create a dedicated VM for Nexus, ensure that your existing machine have these ports opened :
 * 8081 (Nexus main access)
@@ -32,7 +49,7 @@ If you don't use `init_vm.sh` to create a dedicated VM for Nexus, ensure that yo
 
 You can add `nexus` security group to your existing VM to open these ports. 
 
-## Prepare and launch Nexus installation
+### Prepare and launch Nexus installation
 
 On the manager :
 * Check and update the target IP in `hosts.ini`
