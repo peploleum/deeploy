@@ -140,8 +140,20 @@ _nexus_repos_apt_defaults:
   strict_content_validation: true
 
 nexus_repos_apt_proxy:
-  - name: apt-ubuntu-bionic
+  - name: apt-archive-bionic
     remote_url: 'http://nova.clouds.archive.ubuntu.com/ubuntu/'
+    distribution: bionic
+    flat: false
+  - name: apt-security-bionic
+    remote_url: 'http://security.ubuntu.com/ubuntu'
+    distribution: bionic-security
+    flat: false
+  - name: apt-docker-bionic
+    remote_url: 'https://download.docker.com/linux/ubuntu'
+    distribution: bionic
+    flat: false
+  - name: apt-ansible-bionic
+    remote_url: 'http://ppa.launchpad.net/ansible/ansible/ubuntu'
     distribution: bionic
     flat: false
 

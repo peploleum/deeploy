@@ -57,10 +57,51 @@ Run the deployment :
 
 ## Configure client
 
-Replace in all following `nexus.peploleum.com` by IP or name of your nexus.
+Replace in all following `nexus.peploleum.com` with IP or name of your nexus.
 
 ### APT
 
+We describe 3 methods:
+* Manual
+* Apt-add-repository
+* Cloud-init
+
+##### Manual
+You can update manually `/etc/apt/sources.list` and files in `/etc/apt/sources.list.d/` and replace url. For example, replace line :
+     
+     deb http://nova.clouds.archive.ubuntu.com/ubuntu/ bionic main restricted
+with
+ 
+     deb http://nexus.peploleum.com:8081/repository/apt-archive-bionic/ bionic main restricted
+
+##### Apt-add-repository
+You can use `apt-add-repository` to add new source to apt.
+
+     sudo apt-add-repository http://nexus.peploleum.com:8081/repository/apt-ansible-bionic/
+ 
+##### Cloud-init
+You can use `cloud-init` file when you create your VM to configure your apt repository.
+
+```yaml
+#cloud-config
+
+apt:
+  primary:
+    - arches: [default]
+      uri: http://nexus.peploleum.com:8081/repository/apt-archive-bionic/
+  security:
+    - arches: [default]
+      uri: http://nexus.peploleum.com:8081/repository/apt-security-bionic/
+  sources:
+    docker:
+      source: "deb http://nexus.peploleum.com:8081/repository/apt-docker-bionic bionic stable"
+      key: |
+        ------BEGIN PGP PUBLIC KEY BLOCK-------
+        <key data>
+        ------END PGP PUBLIC KEY BLOCK-------
+```
+
+> [Here](ubuntu-cloudinit.yml) is a file for ubuntu server 18.04 with docker repository.
 
 ### YUM
 
