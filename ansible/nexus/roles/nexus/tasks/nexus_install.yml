@@ -218,14 +218,16 @@
     src: "{{ item }}.j2"
     dest: "{{ nexus_script_dir }}/{{ item }}"
     mode: 0755
-  with_items: "{{ nexus_deployed_scripts }}"
+  with_items: 
+      - "{{ nexus_deployed_scripts }}"
 
 - name: "Symlink scripts to /sbin"
   file:
-    src: "{{ item }}"
+    src: "{{ nexus_script_dir }}/{{ item }}"
     dest: "/sbin/{{ item | basename }}"
     state: link
- with_items: "{{ nexus_deployed_scripts }}"
+  with_items: 
+      - "{{ nexus_deployed_scripts }}"
 
 - name: 'Check if data directory is empty (first-time install)'
   command: "ls {{ nexus_data_dir }}"
@@ -274,6 +276,15 @@
     mode: "0755"
     recurse: false
   with_items: "{{ nexus_app_dir_settings_dirs }}"
+
+- name: Chown scripts files to 755
+  file:
+    path: "{{ nexus_script_dir }}/{{ item }}"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  with_items: 
+    - "{{ nexus_deployed_scripts }}"
 
 - name: First-time install admin password
   set_fact:

@@ -11,7 +11,7 @@ if [ $? != 0 ]; then
   echo "Error code: $? Failed to stop nexus service"
 else
   # Remove if exist
-  if [ -f ${backup_dir}/${blob_dir} ]; then
+  if [ -d ${backup_dir}/${blob_dir} ]; then
     rm -R ${backup_dir}/${blob_dir}
   fi
 
