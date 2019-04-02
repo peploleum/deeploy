@@ -5,6 +5,15 @@ MDATE=$(date +%y-%m-%d)
 blob_dir="blob-backup-${MDATE}"
 backup_dir={{ nexus_backup_dir }}
 data_dir={{ nexus_data_dir }}
+nexus_port={{ nexus_default_port }}
+nexus_context={{ nexus_default_context_path }}
+admin_pass={{ nexus_admin_password }}
+
+# Remove temp .bak files
+find ${backup_dir} -name "*.bak" -type f -delete
+
+# Call admin backup task
+curl -X POST "http://localhost:${nexus_port}${nexus_context}service/rest/v1/script/run_task_by_name/run" -H "accept: application/json" -H "Content-Type: text/plain" -d "{\"name\":\"db-backup\"}" --user admin:${admin_pass}
 
 systemctl stop nexus
 if [ $? != 0 ]; then
@@ -16,11 +25,13 @@ else
   fi
 
   cp -r ${data_dir}/blobs ${backup_dir}/${blob_dir}
+  
   mkdir ${backup_dir}/${blob_dir}/db
   for file in $(find ${backup_dir} -name "*${MDATE}*.bak" -type f); do
     mv ${file} ${backup_dir}/${blob_dir}/db/;
-  chown {{ nexus_os_user }}:{{ nexus_os_group }} -Rf ${backup_dir}
   done
+  
+  chown {{ nexus_os_user }}:{{ nexus_os_group }} -Rf ${backup_dir}
 fi
 systemctl restart nexus
 
