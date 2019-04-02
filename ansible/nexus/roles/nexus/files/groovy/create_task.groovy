@@ -21,6 +21,11 @@ taskConfiguration.setName(parsed_args.name)
 
 parsed_args.taskProperties.each { key, value -> taskConfiguration.setString(key, value) }
 
-Schedule schedule = taskScheduler.scheduleFactory.cron(new Date(), parsed_args.cron)
+Schedule schedule
+
+if(parsed_args.cron != null)
+  schedule = taskScheduler.scheduleFactory.cron(new Date(), parsed_args.cron)
+else
+  schedule = taskScheduler.scheduleFactory.manual()
 
 taskScheduler.scheduleTask(taskConfiguration, schedule)

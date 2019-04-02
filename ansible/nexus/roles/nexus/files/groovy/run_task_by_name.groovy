@@ -12,7 +12,8 @@ TaskInfo existingTask = taskScheduler.listsTasks().find { TaskInfo taskInfo ->
 
 if (existingTask) {
   existingTask.runNow()
-  existingTask.getCurrentState();
+  while (existingTask.getCurrentState().getRunState() != null)
+    sleep(500)
 }
 else
   throw new RuntimeException("Unknown task : " + parsed_args.name)
