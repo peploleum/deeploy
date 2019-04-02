@@ -105,6 +105,36 @@ apt:
 
 ### YUM
 
+We describe 2 methods:
+* Manual
+* Cloud-init
+
+> **WARNING** : On CentOS, you need to disable fastestmirror to avoid troubles. In file `/etc/yum/pluginconf.d/fastestmirror.conf`, change `enabled` value to `0`.
+
+##### Manual
+You can update or create files in `/etc/yum.repos.d/` and replace url. For example, replace line :
+     
+     baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+with
+ 
+     baseurl=http://nexus.peploleum.com:8081/repository/yum-centos/$releasever/os/$basearch/
+
+##### Cloud-init
+You can use `cloud-init` file when you create your VM to configure your apt repository.
+
+```yaml
+#cloud-config
+
+yum_repos:
+    nexus-yum-base:
+        name: Nexus CentOS-$releasever - Base
+        baseurl: http://nexus.peploleum.com:8081/repository/yum-centos/$releasever/os/$basearch/
+        enabled: true
+        gpgcheck: true
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+```
+
+> [Here](centos-cloudinit.yml) is a file for centos 7 18.11 with docker repository. It also disable fastestmirror plugin.
 
 ### Maven (Java and Scala)
 Update `settings.xml` to add nexus as server and mirror. Find this file :

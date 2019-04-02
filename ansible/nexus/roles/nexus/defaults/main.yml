@@ -266,9 +266,9 @@ _nexus_repos_raw_defaults:
   layout_policy: strict # strict or permissive
   write_policy: allow_once # allow_once or allow
 
-nexus_repos_raw_proxy:
-  - name: raw-docker-centos-gpg
-    remote_url: 'https://download.docker.com/linux/centos'
+nexus_repos_raw_proxy: []
+#  - name: raw-docker-centos-gpg
+#    remote_url: 'https://download.docker.com/linux/centos'
 
 nexus_repos_raw_hosted: []
 
