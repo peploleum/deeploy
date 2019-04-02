@@ -218,7 +218,7 @@
     src: "{{ item }}.j2"
     dest: "{{ nexus_script_dir }}/{{ item }}"
     mode: 0755
-  with_items: 
+  with_items:
       - "{{ nexus_deployed_scripts }}"
 
 - name: "Symlink scripts to /sbin"
@@ -226,7 +226,7 @@
     src: "{{ nexus_script_dir }}/{{ item }}"
     dest: "/sbin/{{ item | basename }}"
     state: link
-  with_items: 
+  with_items:
       - "{{ nexus_deployed_scripts }}"
 
 - name: 'Check if data directory is empty (first-time install)'
@@ -283,7 +283,7 @@
     owner: "root"
     group: "root"
     mode: "0755"
-  with_items: 
+  with_items:
     - "{{ nexus_deployed_scripts }}"
 
 - name: First-time install admin password
@@ -337,6 +337,7 @@
     - create_repo_npm_proxy
     - create_repo_npm_group
     - create_task
+    - run_task_by_name
 
 - name: "Config nexus-backup shell cron"
   cron:
