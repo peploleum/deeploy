@@ -240,6 +240,45 @@ Now, you can publish with :
 
 ### Pypi (Python)
 
+Create or update `pip.conf` or `pip.ini` file. Find file here :
+* `~/.config/pip/pip.conf` on Linux
+* `%HOME/pip/pip.ini` on Windows
+
+```ini
+[global]
+index = http://nexus.peploleum.com:8081/repository/pypi-all/pypi
+index-url = http://nexus.peploleum.com:8081/repository/pypi-all/simple
+trusted-host = nexus.peploleum.com
+```
+
+You can pull package :
+
+     pip install <package_name>
+
+##### Publish python package
+
+Create file `.pypirc` in `$HOME` and declare your private repository :
+
+```ini
+[distutils]
+index-servers=
+    nexus
+
+[nexus]
+repository: http://nexus.peploleum.com:8081/repository/pypi-internal/
+username: admin
+password: admin123
+```
+
+Install `twine` to publish :
+
+    pip install twine 
+
+> **WARNING** : Ensure that `twine` is in your $PATH. you can use `pip show -f twine` to locate.
+
+Publish with :
+ 
+    twine upload -r nexus /path/to/dist.tar.gz
 
 ### Docker
 
