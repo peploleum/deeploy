@@ -2,23 +2,48 @@
 
 set -x
 
-MDATE=$1
+if [ $# -ne 1 ] ; then
+  echo "Usage : $0 backup_file.tar.gz"
+  exit 1
+fi
 
-if [ "x$1" = "x" ]; then  MDATE='$(date +%y-%m-%d)'; else MDATE=$1; fi
+if [ ! -f "$1" ]; then
+  echo "The file $1 does not exist!"
+  exit 1
+fi
+
+filename=$1
+name=$(echo "${filename}" | cut -f 1 -d '.')
+backup_dir=/tmp/${name}
+
+# Extract in /tmp
+rm -R ${backup_dir}
+mkdir ${backup_dir}
+tar zxvf ${filename} -C ${backup_dir}/
+chown -R {{ nexus_os_user }}:{{ nexus_os_group }} ${backup_dir}
+
+# Backup archive need to have only one directory at root
+blob_dir=$(ls ${backup_dir} | head -1)
 
 # Generated with Ansible vars
-blob_dir="blob-backup-${MDATE}"
-backup_dir={{ nexus_backup_dir }}
 data_dir={{ nexus_data_dir }}
 blob_prefix={{ nexus_blob_prefix |d('blob-') }}
 
+
+# Stop Nexus
 systemctl stop nexus
 if [ $? != 0 ]; then
   echo "Error code: $? Failed to stop nexus service"
 else
+  # Restore data
   rm -rf ${data_dir}/db/*
   rm -rf ${data_dir}/blobs/*
   sudo -u {{ nexus_os_user }} cp ${backup_dir}/${blob_dir}/db/* ${data_dir}/restore-from-backup/
   sudo -u {{ nexus_os_user }} cp -r ${backup_dir}/${blob_dir}/${blob_prefix}* ${data_dir}/blobs/
+
+  # Clean /tmp directory
+  rm -R ${backup_dir}
 fi
+
+# Restart Nexus
 systemctl start nexus

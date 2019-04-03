@@ -31,7 +31,11 @@ else
     mv ${file} ${backup_dir}/${blob_dir}/db/;
   done
   
-  chown {{ nexus_os_user }}:{{ nexus_os_group }} -Rf ${backup_dir}
+  cd ${backup_dir}
+  tar zcvf ${blob_dir}.tar.gz ${blob_dir}/
+  chown {{ nexus_os_user }}:{{ nexus_os_group }} ${blob_dir}.tar.gz
+
+  sudo rm -R ${blob_dir}/
 fi
 systemctl restart nexus
 
