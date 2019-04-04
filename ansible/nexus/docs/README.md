@@ -71,6 +71,41 @@ Run the deployment :
  
 ## Update Nexus repository
 
+You need to have Nexus installed with this Ansible role on 2 separated machine (Ubuntu 18.04 server). One offline and one online.
+
+### Generate Backup on offline machine
+
+A cron backup task is running once a day and create an archive in `/var/nexus-backup/`. The file name is `blob-backup-yy-mm-dd.tar.gz`.  
+
+If needed, you can create a new backup file with this command :
+
+     sudo nexus-blob-backup.sh
+
+Transfer the last archive on the online machine.
+
+### Update online machine from backup
+ 
+Use the `nexus-blob-restore.sh` script to apply the backup.
+ 
+     sudo nexus-blob-restore.sh blob-backup-yy-mm-dd.tar.gz
+     
+Wait a minute, your online Nexus must have exactly the same content of your offline Nexus.
+
+Execute all you want to add content in your Nexus. You can use the [documentation below](#configure-client) to param your apps to work with Nexus.
+
+Once you have finish, use backup script on your online machine to create a new archive.
+
+     sudo nexus-blob-backup.sh
+     
+Transfer the archive on the offline machine.
+
+### Update offline machine
+
+On the offline machine use this command :
+
+     sudo nexus-blob-restore.sh blob-backup-yy-mm-dd.tar.gz
+
+Wait a minute while Nexus is booting. Check with Nexus WebUI that your offline Nexus is up to date.
 
 ## Configure client
 
