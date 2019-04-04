@@ -33,6 +33,7 @@ export IPA_REALM=$4
 export IPA_PRINCIPAL=$5
 export IPA_PASSWORD=$6
 
+rm temp-cloud-init-freeipa.yml
 cp cloud-init-freeipa.yml temp-cloud-init-freeipa.yml
 
 sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" temp-cloud-init-freeipa.yml

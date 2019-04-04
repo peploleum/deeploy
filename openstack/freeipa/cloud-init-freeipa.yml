@@ -10,9 +10,21 @@ write_files:
           export IPA_PASSWORD=##IPA_PASSWORD##
     path: /home/temp/ipa.conf
     permissions: '0755'
+  - content: |4
+        network:
+            version: 2
+            ethernets:
+                ens3:
+                    nameservers:
+                        search: [##IPA_DOMAIN_NAME##]
+    path: /etc/netplan/51-freeipa-dns.yaml
+    permissions: '0644'
+    owner: root:root
 
 runcmd:
   - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
+  - sudo netplan generate
+  - sudo netplan apply
   - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
   - sudo chown ubuntu:ubuntu /home/temp/ -R
   - . /home/temp/ipa.conf
