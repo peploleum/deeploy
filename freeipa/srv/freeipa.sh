@@ -19,7 +19,7 @@ if [ $# -lt 4 ]; then
   echo "  • valid hostname"
   echo
   echo "Examples:"
-  echo "  • $0 install 10.0.0.1 PEPLOLEUM.COM ipaserver.peploleum.com" 
+  echo "  • $0 install 10.0.0.1 PEPLOLEUM.COM ipaserver.peploleum.com"
   echo "  • $0 run 192.168.9.1 MYREALM.DE deutschserver.myrealm.de"
   exit 1
 fi
@@ -37,23 +37,27 @@ case $verb in
 
 install)
 
-echo "installing freeipa server with parameters: $1 $2 $3 $4" 
+echo "installing freeipa server with parameters: $1 $2 $3 $4"
 sudo rm -rf data
 mkdir data
 cp conf/ipa-server-install-options data/
-sudo echo '*.*' > data/.gitignore 
-sudo echo '/**' >> data/.gitignore 
+sudo echo '*.*' > data/.gitignore
+sudo echo '/**' >> data/.gitignore
 ;;
 
 run)
 
-echo "running freeipa server with parameters: $1 $2 $3 $4" 
+echo "running freeipa server with parameters: $1 $2 $3 $4"
 ;;
 
 esac
 
+# Stop systemd-resolved.service to free DNS port 53
+sudo systemctl disable systemd-resolved.service
+sudo systemctl stop systemd-resolved.service
+
 docker run --rm --name freeipa-server-container \
-        -e IPA_SERVER_IP=$2 -e PASSWORD=adminadmin -p 153:53/udp -p 153:53 \
+        -e IPA_SERVER_IP=$2 -e PASSWORD=adminadmin -p 53:53/udp -p 53:53 \
             -p 180:80 -p 443:443 -p 389:389 -p 636:636 -p 88:88 -p 464:464 \
         -p 88:88/udp -p 464:464/udp -p 123:123/udp -p 7389:7389 \
         -p 19443:9443 -p 19444:9444 -p 19445:9445 \
