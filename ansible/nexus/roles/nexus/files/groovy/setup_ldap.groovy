@@ -47,8 +47,11 @@ mapping.setUserObjectClass(parsed_args.user_object_class)
 mapping.setUserIdAttribute(parsed_args.user_id_attribute)
 mapping.setUserRealNameAttribute(parsed_args.user_real_name_attribute)
 mapping.setEmailAddressAttribute(parsed_args.user_email_attribute)
+mapping.setUserSubtree(parsed_args.user_subtree)
 
 if (parsed_args.map_groups_as_roles) {
+    mapping.setGroupSubtree(parsed_args.group_subtree)
+    mapping.setGroupType("static")
     mapping.setLdapGroupsAsRoles(true)
     mapping.setGroupBaseDn(parsed_args.group_base_dn)
     mapping.setGroupObjectClass(parsed_args.group_object_class)
@@ -56,9 +59,6 @@ if (parsed_args.map_groups_as_roles) {
     mapping.setGroupMemberAttribute(parsed_args.group_member_attribute)
     mapping.setGroupMemberFormat(parsed_args.group_member_format)
 }
-
-mapping.setUserSubtree(parsed_args.user_subtree)
-mapping.setGroupSubtree(parsed_args.group_subtree)
 
 ldapConfig.setMapping(mapping)
 
