@@ -26,7 +26,6 @@ apt_plugin_file: 'nexus-repository-apt-{{ apt_plugin_version }}.jar'
 # Nexus default properties
 nexus_default_port: 8081
 nexus_docker_hosted_port: 9080
-nexus_docker_proxy_port: 9081
 nexus_docker_group_port: 9082
 nexus_default_context_path: '/'
 
@@ -288,13 +287,13 @@ nexus_repos_docker_hosted:
 
 nexus_repos_docker_proxy:
   - name: docker-proxy
-    http_port: "{{ nexus_docker_proxy_port }}"
+    http_port: 
     v1_enabled: True
     index_type: "HUB"
     proxy_url: "https://registry-1.docker.io"
     use_nexus_certificates_to_access_index: false
   - name: docker-elasticsearch
-    http_port: "-1"
+    http_port: 
     v1_enabled: True
     index_type: "HUB"
     proxy_url: "https://docker.elastic.co/"
