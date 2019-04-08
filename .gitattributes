@@ -1,2 +1,4 @@
 * text=auto eol=lf
 *.sh eol=lf
+*.jar binary
+*.tar.bz2 binary
