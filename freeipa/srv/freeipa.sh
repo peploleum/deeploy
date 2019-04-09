@@ -52,9 +52,21 @@ echo "running freeipa server with parameters: $1 $2 $3 $4"
 
 esac
 
+# Need to param systemd-resolved to avoid DNS trouble
 # Stop systemd-resolved.service to free DNS port 53
-sudo systemctl disable systemd-resolved.service
 sudo systemctl stop systemd-resolved.service
+
+# Update conf
+sudo sed -i -e "s/^.*DNSStubListener.*/DNSStubListener=no/g" /etc/systemd/resolved.conf
+
+# Create a new static resolv.conf and create a link
+sudo cp /run/systemd/resolve/stub-resolv.conf /usr/lib/systemd/resolv.conf
+sudo mv /etc/resolv.conf /etc/resolv.conf.bak
+sudo sed -i -e "s/127.0.0.53/127.0.0.1/g" /usr/lib/systemd/resolv.conf
+sudo ln -sf /usr/lib/systemd/resolv.conf /etc/resolv.conf
+
+# Start systemd-resolved service
+sudo systemctl start systemd-resolved.service
 
 docker run --rm --name freeipa-server-container \
         -e IPA_SERVER_IP=$2 -e PASSWORD=adminadmin -p 53:53/udp -p 53:53 \
@@ -65,3 +77,4 @@ docker run --rm --name freeipa-server-container \
         -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
         --tmpfs /run --tmpfs /tmp \
         -v $PWD/data:/data peploleum/freeipa-server -r $3 -U
+
