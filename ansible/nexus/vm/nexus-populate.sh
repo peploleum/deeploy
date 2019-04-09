@@ -5,6 +5,7 @@
 nexusIp=10.0.0.11
 nexusPort=8081
 nexusDockerPort=9082
+nexusDockerHostPort=9080
 
 ## DOCKER Pull
 docker login ${nexusIp}:${nexusDockerPort}
@@ -32,7 +33,10 @@ docker pull ${nexusIp}:${nexusDockerPort}/cassandra:3.11.4
 docker pull ${nexusIp}:${nexusDockerPort}/redis:4.0.14
 docker pull ${nexusIp}:${nexusDockerPort}/mariadb:10.2.23
 docker pull ${nexusIp}:${nexusDockerPort}/postgres:9.6.12
+
 ## Janusgraph (pas de repos docker officiel)
-#docker pull ${nexusIp}:${nexusDockerPort}/janusgraph:0.3.1
+docker login ${nexusIp}:${nexusDockerHostPort}
+docker build -t ${nexusIp}:${nexusDockerHostPort}/janusgraph:0.3.1 ./janusgraph/
+docker push ${nexusIp}:${nexusDockerHostPort}/janusgraph:0.3.1
 
 
