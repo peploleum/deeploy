@@ -1,0 +1,94 @@
+#!/bin/bash
+
+set -e
+# set -x
+
+VOLUME="$1"
+shift
+if [ -z "$VOLUME" ] ; then
+	echo "Usage: $0 /volume-path [ /other-volume-paths ]" >&2
+	exit 1
+fi
+
+while [ -n "$VOLUME" ] ; do
+	# echo "Populating $VOLUME ..."
+	OLDEST_BUILD_ID=""
+	if [ -f "$VOLUME/build-id" ] ; then
+		OLDEST_BUILD_ID=$( ls -t "$VOLUME"/build-id* | tail -1 )
+	fi
+	cd "$VOLUME-template"
+
+	find * | while read f ; do
+		if [ -d "$VOLUME-template/$f" ] ; then
+			if [ -L "$VOLUME/$f" ] && ! [ -L "$VOLUME-template/$f" ] ; then
+				echo "Removing symlink $VOLUME/$f, replacing with directory from $VOLUME-template."
+				rm -f "$VOLUME/$f"
+			elif [ -f "$VOLUME/$f" ] ; then
+				echo "Removing file $VOLUME/$f, replacing with directory from $VOLUME-template."
+				rm -f "$VOLUME/$f"
+			fi
+		fi
+		if ! [ -e "$VOLUME/$f" ] ; then
+			tar cf - "$f" | ( cd "$VOLUME" && tar xf - )
+		elif [ "$f" == "build-id" ] ; then
+			true
+		elif [ -L "$f" ] && [ -L "$VOLUME/$f" ] ; then
+			if [ "$( readlink $f )" != "$( readlink $VOLUME/$f )" ] ; then
+				echo "There are symlinks $f in both $VOLUME-template $VOLUME, with different targets, leaving in $VOLUME as is."
+			fi
+		elif [ -L "$f" ] && ! [ -L "$VOLUME/$f" ] ; then
+			echo "There is symlink $f in $VOLUME-template and not on $VOLUME, leaving in $VOLUME as is."
+		elif ! [ -L "$f" ] && [ -L "$VOLUME/$f" ] ; then
+			echo "There is symlink $f in $VOLUME and not on $VOLUME-template, leaving in $VOLUME as is."
+		elif [ -f "$VOLUME/$f" ] && ! cmp -s "$VOLUME/$f" "$VOLUME-template/$f" ; then
+			if [ -f "$VOLUME-template/.configfiles/$f" ] ; then
+				if [ -d "$VOLUME/.configfiles" ] ; then
+					if cmp -s "$VOLUME/.configfiles/$f" "$VOLUME/$f" ; then
+						echo -n "Config file with no local change updated from rpm: "
+						cp -vfp "$VOLUME-template/$f" "$VOLUME/$f"
+					elif cmp -s "$VOLUME/.configfiles/$f" "$VOLUME-template/.configfiles/$f" ; then
+						: # echo "Config file with local changes not updated in rpm, keeping local changes: $f"
+					else
+						if [ -f "$VOLUME-template/.configfiles-noreplace/$f" ] ; then
+							# echo -n "Config noreplace file with local changes, keeping local changes: "
+							cp -fp "$VOLUME-template/$f" "$VOLUME/$f.rpmnew"
+						else
+							echo -n "Config yes-replace file with local changes overwritten from rpm update: "
+							mv -vf "$VOLUME/$f" "$VOLUME/$f.rpmsave"
+							cp -vfp "$VOLUME-template/$f" "$VOLUME/$f"
+						fi
+					fi
+				else
+					# older volumes did not have .configfiles
+					# use the oldest build-id* to guesstimate modified files
+					if [ "$OLDEST_BUILD_ID" -ot "$VOLUME/$f" ] ; then
+						if [ -f "$VOLUME-template/.configfiles-noreplace/$f" ] ; then
+							# echo -n "Config noreplace file with local changes (based on $OLDEST_BUILD_ID), keeping local changes: "
+							cp -fp "$VOLUME-template/$f" "$VOLUME/$f.rpmnew"
+						else
+							echo -n "Config yes-replace file with local changes (based on $OLDEST_BUILD_ID) overwritten from rpm update: "
+							mv -vf "$VOLUME/$f" "$VOLUME/$f.rpmsave"
+							cp -vfp "$VOLUME-template/$f" "$VOLUME/$f"
+						fi
+					else
+						echo -n "Config file with no local change (based on $OLDEST_BUILD_ID) updated from rpm: "
+						cp -vfp "$VOLUME-template/.configfiles-noreplace/$f" "$VOLUME/$f"
+					fi
+				fi
+			elif [ -f "$VOLUME-template/.rpm-owned/$f" ] ; then
+				echo -n "Non-config file updated from rpm: "
+				cp -vfp "$VOLUME-template/$f" "$VOLUME/$f"
+			fi
+		fi
+	done
+	rm -rf "$VOLUME/.configfiles" "$VOLUME/.configfiles-noreplace"
+	tar cf - .configfiles .configfiles-noreplace | ( cd "$VOLUME" && tar xf - )
+
+	chown --reference="$VOLUME-template" "$VOLUME"
+	chmod --reference="$VOLUME-template" "$VOLUME"
+
+	VOLUME="$1"
+	shift || :
+done
+
+exit 0
