@@ -287,17 +287,24 @@ nexus_repos_docker_hosted:
 
 nexus_repos_docker_proxy:
   - name: docker-proxy
-    http_port: 
+    http_port:
     v1_enabled: True
     index_type: "HUB"
     proxy_url: "https://registry-1.docker.io"
     use_nexus_certificates_to_access_index: false
   - name: docker-elasticsearch
-    http_port: 
+    http_port:
     v1_enabled: True
     index_type: "HUB"
     proxy_url: "https://docker.elastic.co/"
     use_nexus_certificates_to_access_index: false
+  - name: docker-gcr
+    http_port:
+    v1_enabled: True
+    index_type: "HUB"
+    proxy_url: "https://gcr.io/"
+    use_nexus_certificates_to_access_index: false
+
 
 nexus_repos_docker_group:
   - name: docker-group
@@ -307,6 +314,7 @@ nexus_repos_docker_group:
       - docker-hosted
       - docker-proxy
       - docker-elasticsearch
+      - docker-gcr
 
 # RubyGems support
 _nexus_repos_rubygems_defaults:
