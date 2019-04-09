@@ -34,9 +34,13 @@ docker pull ${nexusIp}:${nexusDockerPort}/redis:4.0.14
 docker pull ${nexusIp}:${nexusDockerPort}/mariadb:10.2.23
 docker pull ${nexusIp}:${nexusDockerPort}/postgres:9.6.12
 
-## Janusgraph (pas de repos docker officiel)
 docker login ${nexusIp}:${nexusDockerHostPort}
+
+## Janusgraph (pas de repos docker officiel)
 docker build -t ${nexusIp}:${nexusDockerHostPort}/janusgraph:0.3.1 ./janusgraph/
 docker push ${nexusIp}:${nexusDockerHostPort}/janusgraph:0.3.1
 
+## FreeIPA (pas de repos docker officiel)
+docker build -t ${nexusIp}:${nexusDockerHostPort}/freeipa-server:4.6.4 ./freeipa/srv/
+docker push ${nexusIp}:${nexusDockerHostPort}/freeipa-server:4.6.4
 
