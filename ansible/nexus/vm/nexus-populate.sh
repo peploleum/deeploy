@@ -34,6 +34,8 @@ docker pull ${nexusIp}:${nexusDockerPort}/redis:4.0.14
 docker pull ${nexusIp}:${nexusDockerPort}/mariadb:10.2.23
 docker pull ${nexusIp}:${nexusDockerPort}/postgres:9.6.12
 
+docker pull ${nexusIp}:${nexusDockerPort}/jboss/keycloak:4.8.3.Final
+
 docker login ${nexusIp}:${nexusDockerHostPort}
 
 ## Janusgraph (pas de repos docker officiel)
