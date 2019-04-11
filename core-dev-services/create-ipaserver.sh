@@ -11,7 +11,7 @@ VBoxManage storageattach ipaserver --storagectl "IDE Controller" --port 1 --devi
 
 VBoxManage modifyvm ipaserver --vrde on
 
-VBoxManage --startvm ipaserver --type headless
+VBoxManage startvm ipaserver --type headless
 
 echo "You can connect to the VM with Remote Desktop on the host IP address to finish the installation !"
 
