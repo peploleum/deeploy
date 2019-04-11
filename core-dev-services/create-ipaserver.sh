@@ -2,7 +2,8 @@
 
 VBoxManage createvm --name ipaserver --ostype Ubuntu_64 --register
 
-VBoxManage modifyvm ipaserver --memory 2048 --cpus 2 --acpi on --boot1 dvd --nic1 bridged --bridgeadapter1 eno1
+# Trouble during ipa-server-install if less than 4Go RAM and 4 cpu
+VBoxManage modifyvm ipaserver --memory 4096 --cpus 4 --acpi on --boot1 dvd --nic1 bridged --bridgeadapter1 eno1
 
 VBoxManage createmedium disk --filename ~/ipaserver.vdi --size 20000
 VBoxManage storagectl ipaserver --name "IDE Controller" --add ide
