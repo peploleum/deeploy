@@ -33,6 +33,10 @@ sudo apt-get install -y freeipa-server freeipa-server-dns freeipa-server-trust-a
 
 sudo ipa-server-install -a $4 -p $4 --domain=$3 --realm=$realmName --setup-dns --no-forwarders -U
 
+# FIX krb5 cache access
 sudo chmod -R /var/lib/krb5kdc/
+
+# FIX Fontawesome access
+sudo cp -R /usr/share/fonts/truetype/font-awesome/ /usr/share/fonts/truetype/fontawesome/
 
 
