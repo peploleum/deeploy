@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -x
-if [ $# -lt 6 ]; then
+if [ $# -lt 4 ]; then
   echo "Usage: $0 IPA_SERVER_IP IPA_SERVER_NAME IPA_DOMAIN_NAME IPA_PASSWORD"
   echo
   echo IPA_SERVER_IP must be:
@@ -32,5 +32,7 @@ echo "$1 $2.$3 $2" | sudo tee -a /etc/hosts
 sudo apt-get install -y freeipa-server freeipa-server-dns freeipa-server-trust-ad
 
 sudo ipa-server-install -a $4 -p $4 --domain=$3 --realm=$realmName --setup-dns --no-forwarders -U
+
+sudo chmod -R /var/lib/krb5kdc/
 
 
