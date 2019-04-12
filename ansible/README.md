@@ -8,6 +8,10 @@ See [Kubespray documentation](./kubespray/README.md).
 
 See [Nexus documentation](./nexus/docs/README.md).
 
+## iRedMail
+
+See [iRedMail documentation](./iredmail/README.md).
+
 ## Gitlab [TODO]
 
 See [Gitlab documentation](./gitlab/README.md).
