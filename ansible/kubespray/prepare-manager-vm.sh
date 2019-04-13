@@ -5,7 +5,7 @@
 . ~/ipa.conf
 
 # Install Ansible
-$DEEPLOY_PATH/ansible/install_ansible.sh
+$DEEPLOY_PATH/ansible/install-ansible.sh
 
 # Clone Kubespray project
 git clone $GITHUB_KUBESPRAY ~/kubespray

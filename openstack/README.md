@@ -120,6 +120,14 @@ Create the instance with the create_instance.sh script. Use temp-cloud-init-free
 
         ./create_instance.sh S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance ./freeipa/temp-cloud-init-freeipa.yml freeipa
 
+### Add all templates openstack
+
+This script deploy all VMs.
+
+        sudo chmod +x create_templates.sh
+
+Execute script create_templates.sh in openstack-controller.
+
 ## Connect to the VM
 
 Download the rsa key file from openstack-controller \(~/rsa_key.pem\) on your computer.
@@ -132,11 +140,5 @@ When you create a session on MobaXterm, add this file in "Advanced SSH Settings 
 
 [Openstack webUI](http://192.168.0.10/horizon/identity/)
 
-### Add all templates openstack
 
-This script deploy all VMs.
-
-sudo chmod +x create_templates.sh
-
-Execute script create_templates.sh in openstack-controller.
 

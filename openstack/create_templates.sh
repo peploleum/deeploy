@@ -3,19 +3,19 @@
 . admin-openrc
 
 # Cleanup
-./remove_instance.sh core-services 192.168.0.111
-./remove_instance.sh docker-node-01 192.168.0.131
-./remove_instance.sh docker-node-02 192.168.0.132
-./remove_instance.sh docker-node-03 192.168.0.133
-./remove_instance.sh atos-services 192.168.0.150
-./remove_instance.sh kubernetes-master 192.168.0.120
-./remove_instance.sh kubernetes-node-01 192.168.0.121
-./remove_instance.sh kubernetes-node-02 192.168.0.122
+remove-instance.sh core-services 192.168.0.111
+remove-instance.sh docker-node-01 192.168.0.131
+remove-instance.sh docker-node-02 192.168.0.132
+remove-instance.sh docker-node-03 192.168.0.133
+remove-instance.sh atos-services 192.168.0.150
+remove-instance.sh kubernetes-master 192.168.0.120
+remove-instance.sh kubernetes-node-01 192.168.0.121
+remove-instance.sh kubernetes-node-02 192.168.0.122
 
-./remove_instance.sh kdl-01 192.168.0.171
-./remove_instance.sh kdl-02 192.168.0.172
-./remove_instance.sh kdl-03 192.168.0.173
-./remove_instance.sh kdl-04 192.168.0.174
+remove-instance.sh kdl-01 192.168.0.171
+remove-instance.sh kdl-02 192.168.0.172
+remove-instance.sh kdl-03 192.168.0.173
+remove-instance.sh kdl-04 192.168.0.174
 
 #Réseau de dev-virt -- public
 ./create_instance.sh L Ubuntu_18.04_server dev-virt 10.0.0.11 192.168.0.111 core-services

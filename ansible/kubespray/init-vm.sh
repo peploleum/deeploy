@@ -3,14 +3,14 @@
 # This script init 4 VM to deploy Kubernetes. Please check kubespray.conf file before runnig this script.
 
 # Load variables
-. kubespray.conf 
+. kubespray.conf
 . $DEEPLOY_PATH/openstack/admin-openrc
 
 # Remove Instances
-$DEEPLOY_PATH/openstack/remove_instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
-$DEEPLOY_PATH/openstack/remove_instance.sh $MASTER_NAME $MASTER_PUBLIC_IP
-$DEEPLOY_PATH/openstack/remove_instance.sh $NODE1_NAME $NODE1_PUBLIC_IP
-$DEEPLOY_PATH/openstack/remove_instance.sh $NODE2_NAME $NODE2_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $MASTER_NAME $MASTER_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $NODE1_NAME $NODE1_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $NODE2_NAME $NODE2_PUBLIC_IP
 
 # Remove Kubernetes Security Group
 openstack security group delete kubernetes
@@ -48,7 +48,7 @@ $DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRI
 openstack server add security group $MASTER_NAME kubernetes
 $DEEPLOY_PATH/openstack/create_instance.sh $NODE1_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE1_PRIVATE_IP $NODE1_PUBLIC_IP $NODE1_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
 openstack server add security group $NODE1_NAME kubernetes
-$DEEPLOY_PATH/openstack/create_instance.sh $NODE2_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE2_PRIVATE_IP $NODE2_PUBLIC_IP $NODE2_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml 
+$DEEPLOY_PATH/openstack/create_instance.sh $NODE2_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $NODE2_PRIVATE_IP $NODE2_PUBLIC_IP $NODE2_NAME $DEEPLOY_PATH/ansible/kubespray/cloud-config-k8s.yml
 openstack server add security group $NODE2_NAME kubernetes
 
 # Set security group

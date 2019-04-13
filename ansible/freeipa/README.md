@@ -1,12 +1,37 @@
-# KUBESPRAY
+# FreeIPA
 
-This recipe describes how to install kubernetes with Ansible on 3 VM in an openstack network.
+This recipe describes how to install FreeIPA with Ansible on a CentOS VM.
+
+This is a fork of [ansible-freeipa](https://github.com/freeipa/ansible-freeipa) repository.
+
+## Prepare FreeIPA VM
+
+Create a CentOS7.1810 VM with at least 4Gb RAM and 20Gb disk.
+
+Update and prepare hostname with FQDN and hosts :
+
+    sudo yum update -y
+    sudo hostnamectl set-hostname myhostname.example.com
+    echo "myIP myhostname.example.com myhostname" | sudo tee -a /etc/hosts
+
+## Prepare Manager
+
+Create a Ubuntu 18.04 server VM.
+
+Update and install ansible
+
+    sudo apt update -y
+    sudo apt upgrade -y
+    git clone https://github.com/peploleum/deeploy.git
+    cd deeploy/ansible
+    ./install
+    
 
 First, you need to check 'kubespray.conf' and modify it if needed.
 
 Then, create the VM with :
     
-    ./init-vm.sh
+    ./init_vm.sh
 
 It creates 4 VM :
 
@@ -24,11 +49,11 @@ Connect on k8s-ansible and prepare the VM to deploy Kubernetes :
 
 Check 'kubespray.conf' or copy the file create at the first step then launch :
 
-    ./prepare-manager-vm.sh
+    ./prepare_manager_vm.sh
 
 Once it's done, you can launch ansible deployment with this script :
     
-    ./run-k8s-install.sh
+    ./run_k8s_install.sh
 
 Wait some minutes. If all it's ok you'll have this kind of return :
 
@@ -45,7 +70,7 @@ Now, we are going to finalize the dashboard credential. Connect on kubernetes-ma
     cd ~
     git clone https://github.com/peploleum/deeploy
     cd deeploy/ansible/kubespray/
-    ./create-dashboard-access.sh
+    ./create_dashboard_access.sh
 
 This script create kubecfg.p12 and token.txt. To test dashboard :
 
@@ -59,7 +84,7 @@ If everything is OK, remove the ansible VM. Connect on openstack-controller :
     cd ~/deeploy/ansible/kubespray
     . kubespray.conf
     cd ~/deeploy/openstack
-    ./remove-instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
+    ./remove_instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
 
 That's all folks!
 
