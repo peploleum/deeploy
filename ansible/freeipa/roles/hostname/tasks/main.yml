@@ -1,0 +1,20 @@
+---
+- name: Assign inventory name to hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+  when:
+    - override_system_hostname
+
+- name: Assign inventory name to hostname
+  command: "hostnamectl set-hostname {{ inventory_hostname }}"
+  register: hostname_changed
+  when:
+    - override_system_hostname
+
+- name: Add IP address in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ ansible_host }} {{ inventory_hostname }} {{ inventory_hostname_short }}"
+    state: present
+  when:
+    - override_system_hostname

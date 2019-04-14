@@ -4,5 +4,7 @@
   become: true
 
   roles:
+  - role: hostname
+    state: present
   - role: ipaserver
     state: present
