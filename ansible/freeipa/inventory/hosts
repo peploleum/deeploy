@@ -19,7 +19,7 @@ ipaadmin_password=adminadmin
 ipaserver_setup_dns=yes
 ipaserver_forwarders=['8.8.8.8','8.8.4.4']
 ipaserver_reverse_zones=['0.168.192.in-addr.arpa.']
-ipaserver_setup_adtrust=yes
+ipaserver_setup_adtrust=no
 ipaclient_mkhomedir=yes
 
 #ipaclient_use_otp=yes
