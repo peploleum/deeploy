@@ -37,7 +37,7 @@ FreeIPA deployment :
 
 * Add specific requirements
 
-      sudo -H pip install -r requirements.txt
+      sudo apt-get install python-gssapi
     
 * If you're not in openstack environment, prepare rsa key for ssh access. Always press `ENTER` when prompt.
       
