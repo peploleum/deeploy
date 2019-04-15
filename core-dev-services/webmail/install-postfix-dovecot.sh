@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 3 ]; then
-  echo "Usage: $0 DOMAIN_NAME IPA_PRINCIPAL IPA_PASSWORD"
+if [ $# -lt 4 ]; then
+  echo "Usage: $0 MAIL_SERVER_IP DOMAIN_NAME IPA_PRINCIPAL IPA_PASSWORD"
+  echo
+  echo MAIL_SERVER_IP must meet the following:
+  echo "  • valid IPv4"
   echo
   echo DOMAIN_NAME must meet the following:
   echo "  • domain name"
@@ -13,27 +16,29 @@ if [ $# -lt 3 ]; then
   echo "  • admin password"
   echo
   echo  echo "Examples:"
-  echo "  • $0 peploleum.com admin adminadmin"
+  echo "  • $0 10.0.0.26 peploleum.com admin adminadmin"
   exit 1
 fi
 
 shortName=$(hostname -s)
 
+# Prepare FreeIPA
+echo $4 | kinit $3
+ipa group-add mailusers --no-members
+ipa dnsrecord-add $2 $shortName --a-ip-address=$1 --a-create-reverse
+ipa dnsrecord-add $2 @ --mx-rec="0 $shortName.$2."
+
 sudo yum -y install postfix
 sudo chkconfig postfix on
 
-sudo sed -i -e "s/#myhostname = host.domain.tld/myhostname = $shortName.$1/g" /etc/postfix/main.cf
-sudo sed -i -e "s/#mydomain = domain.tld/mydomain = $1/g" /etc/postfix/main.cf
+sudo sed -i -e "s/#myhostname = host.domain.tld/myhostname = $shortName.$2/g" /etc/postfix/main.cf
+sudo sed -i -e "s/#mydomain = domain.tld/mydomain = $2/g" /etc/postfix/main.cf
 sudo sed -i 's/#myorigin = $mydomain/myorigin = $mydomain/g' /etc/postfix/main.cf
 sudo sed -i 's/#inet_interfaces = all/inet_interfaces = all/g' /etc/postfix/main.cf
 sudo sed -i 's/inet_interfaces = localhost/#inet_interfaces = localhost/g' /etc/postfix/main.cf
 sudo sed -i 's/mydestination = $myhostname, localhost.$mydomain, localhost/mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain/g' /etc/postfix/main.cf
 
 sudo service postfix restart
-
-# Prepare ipa group
-echo $3 | kinit $2
-ipa group-add mailusers --no-members
 
 sudo mkdir /mail
 sudo chmod 770 /mail
