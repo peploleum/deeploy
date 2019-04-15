@@ -2,7 +2,7 @@
 
 Deploy iRedMail using Ansible
 
-In its current state, iRedMail is deployed using Postges as the backend. 
+In its current state, iRedMail is deployed using Postgres as the backend. 
 
 ## Prepare the host
 

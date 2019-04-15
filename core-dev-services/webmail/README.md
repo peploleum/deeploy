@@ -1,4 +1,6 @@
-# iRedMail
+# IRedMail
 
-GO TO `deeploy/annsible/iredmail`
+> GO TO `deeploy/ansible/iredmail`
+
+[Ansible IRedMail](../../ansible/iredmail/README.md)
 

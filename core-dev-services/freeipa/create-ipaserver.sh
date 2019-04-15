@@ -8,7 +8,7 @@ VBoxManage modifyvm ipaserver --memory 4096 --cpus 4 --acpi on --boot1 dvd --nic
 VBoxManage createmedium disk --filename ~/ipaserver.vdi --size 20000
 VBoxManage storagectl ipaserver --name "IDE Controller" --add ide
 VBoxManage storageattach ipaserver --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium ~/ipaserver.vdi
-VBoxManage storageattach ipaserver --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium ~/ubuntu-18.04.2-live-server-amd64.iso
+VBoxManage storageattach ipaserver --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium ~/CentOS-7-x86_64-DVD-1810.iso
 
 VBoxManage modifyvm ipaserver --vrde on
 

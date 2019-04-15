@@ -52,6 +52,9 @@ echo "running freeipa server with parameters: $1 $2 $3 $4"
 
 esac
 
+# Pull before shutdown DNS resolution
+docker pull peploleum/freeipa-server:latest
+
 # Need to param systemd-resolved to avoid DNS trouble
 # Stop systemd-resolved.service to free DNS port 53
 sudo systemctl stop systemd-resolved.service
