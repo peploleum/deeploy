@@ -25,17 +25,21 @@ sambaGroup=$2
 adminLogin=$3
 adminPassword=$4
 
-sudo apt-get install samba
+sudo apt-get install samba -y
 
 sudo ufw allow 'Samba'
 
 sudo cp /etc/samba/smb.conf{,.backup}
 
+sudo sed -i -e "s/workgroup = WORKGROUP/workgroup = $sambaGroup/g" /etc/samba/smb.conf
+
+sudo systemctl restart nmbd
+
 sudo mkdir /samba
 sudo chgrp sambashare /samba
 
 sudo useradd -M -d /samba/$sharedDir -s /usr/sbin/nologin -G sambashare $adminLogin
-sudo smbpasswd -a $adminLogin -w $adminPassword
+(echo $adminPassword;echo $adminPassword) | sudo smbpasswd -a $adminLogin
 sudo smbpasswd -e $adminLogin
 
 sudo mkdir /samba/$sharedDir
