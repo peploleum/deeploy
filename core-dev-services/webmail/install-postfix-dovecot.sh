@@ -28,6 +28,7 @@ ipa group-add mailusers --no-members
 ipa dnsrecord-add $2 $shortName --a-ip-address=$1 --a-create-reverse
 ipa dnsrecord-add $2 @ --mx-rec="0 $shortName.$2."
 
+# POSTFIX
 sudo yum -y install postfix
 sudo chkconfig postfix on
 
@@ -45,6 +46,7 @@ sudo chmod 770 /mail
 sudo chgrp mailusers /mail
 sudo chcon -t user_home_t /mail
 
+# DOVECOT
 sudo yum -y install dovecot
 # set dovecot to start on boot
 sudo chkconfig dovecot on
@@ -57,3 +59,39 @@ sudo service dovecot restart
 
 sudo chmod 770 /var/mail
 sudo chgrp mailusers /var/mail
+
+# ROUNDCUBE
+sudo yum install -y httpd php php-common php-json php-xml php-mbstring php-imap php-pear-DB php-mysql mysql mariadb-server
+
+sudo sed -i "s/;date.timezone =/date.timezone = Europe\/Paris/g" /etc/php.ini
+# memory_limit=64M,
+# display_errors=Off, log_errors=On, error_log=logs/errors.log,
+# upload_max_filesize=5M, post_max_size=6M,
+# zlib.output_compression=Off, suhosin.session.encrypt=Off, session.auto_start=Off,
+# session.gc_maxlifetime=21600, session.gc_divisor=500, session.gc_probability=1.
+
+# Prepare Roundcube html directory
+sudo tar -zxpvf roundcubemail-1.3.9-complete.tar.gz -C /var/www/html/
+sudo mv /var/www/html/roundcubemail-1.3.9 /var/www/html/roundcube
+sudo cp config.inc.php /var/www/html/roundcube/config/config.inc.php
+sudo chown -R apache:apache /var/www/html/roundcube
+sudo chmod -R 755 /var/www/html/roundcube
+
+sudo sed -i -e "s/!!MAIL_SERVER!!/$shortName.$2/g" /var/www/html/roundcube/config/config.inc.php
+sudo sed -i -e "s/!!DOMAIN_NAME!!/$2/g" /var/www/html/roundcube/config/config.inc.php
+
+# Prepare database
+sudo systemctl start mariadb
+sudo systemctl enable  mariadb
+
+TEMP=`sudo mysql -u root -p << MyScript
+CREATE DATABASE roundcubemail /*!40101 CHARACTER SET utf8 COLLATE utf8_general_ci */;
+GRANT ALL PRIVILEGES ON roundcubemail.* TO roundcube@localhost IDENTIFIED BY 'roundcube';
+FLUSH PRIVILEGES;
+MyScript`
+
+sudo mysql -u roundcube -p roundcube roundcubemail < /var/www/html/roundcube/SQL/mysql.initial.sql
+
+# Start Apache
+sudo systemctl start httpd
+sudo systemctl enable httpd
