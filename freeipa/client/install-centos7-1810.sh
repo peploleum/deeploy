@@ -28,7 +28,7 @@ fi
 
 #install freeipa-client package for ubuntu 18.04 and set hostname according to proper DNS
 sudo yum -y update
-sudo hostnamectl set-hostname $(hostname).$3
+sudo hostnamectl set-hostname $(hostname -s).$3
 sudo yum install -y freeipa-client
 
 #add ipa server hostname and IP address to hosts

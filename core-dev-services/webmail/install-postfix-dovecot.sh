@@ -84,13 +84,13 @@ sudo sed -i -e "s/!!DOMAIN_NAME!!/$2/g" /var/www/html/roundcube/config/config.in
 sudo systemctl start mariadb
 sudo systemctl enable  mariadb
 
-TEMP=`sudo mysql -u root -p << MyScript
+TEMP=`sudo mysql -uroot -p << MyScript
 CREATE DATABASE roundcubemail /*!40101 CHARACTER SET utf8 COLLATE utf8_general_ci */;
 GRANT ALL PRIVILEGES ON roundcubemail.* TO roundcube@localhost IDENTIFIED BY 'roundcube';
 FLUSH PRIVILEGES;
 MyScript`
 
-sudo mysql -u roundcube -p roundcube roundcubemail < /var/www/html/roundcube/SQL/mysql.initial.sql
+sudo mysql -uroundcube -proundcube roundcubemail < /var/www/html/roundcube/SQL/mysql.initial.sql
 
 # Start Apache
 sudo systemctl start httpd

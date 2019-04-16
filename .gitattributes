@@ -2,3 +2,5 @@
 *.sh eol=lf
 *.jar binary
 *.tar.bz2 binary
+*.tar.gz binary
+*.pyc binary

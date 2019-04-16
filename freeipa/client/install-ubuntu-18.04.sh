@@ -29,7 +29,7 @@ fi
 #install freeipa-client package for ubuntu 18.04 and set hostname according to proper DNS
 sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo hostnamectl set-hostname $(hostname).$3
+sudo hostnamectl set-hostname $(hostname -s).$3
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y freeipa-client
 
 #add ipa server hostname and IP address to hosts
