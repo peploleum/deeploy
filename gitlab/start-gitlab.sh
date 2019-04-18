@@ -10,6 +10,6 @@ if [ $# -lt 1 ]; then
   echo "  • $0 ipaserver.peploleum.com"
   exit 1
 fi
-GITLAB_HOST_FQDN=$1
+export GITLAB_HOST_FQDN=$1
 
 docker-compose -f gitlab.yml up -d
