@@ -36,3 +36,20 @@ Edit `/etc/export` and add the directory to the NFS. Add this line :
   6. Select Reconnect at login to reconnect automatically
   7. Click Finish
 
+### On Linux
+
+Install NFS client
+
+* `sudo yum install nfs-utils` (Red Hat or CentOS)
+* `sudo apt-get install nfs-common` (Ubuntu)
+
+Create a mount point
+
+* `sudo mkdir /mnt/shared`
+
+Mount the directory
+
+* `sudo mount -o hard,nolock ip_dest:/shared /mnt/shared`
+
+
+  
