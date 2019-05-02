@@ -1,0 +1,14 @@
+---
+
+- hosts: squid-vm
+  gather_facts: false
+  roles:
+    - { role: bootstrap}
+
+- hosts: squid-vm
+  gather_facts: true
+  roles:
+    - { role: squid}
+    - { role: squidguard}
+#    - { role: webmin}
+

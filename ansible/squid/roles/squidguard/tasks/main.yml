@@ -1,0 +1,7 @@
+---
+
+- name: install the latest version of SquidGuard
+  yum:
+    name: squidGuard
+    state: latest
+    enablerepo: "epel"

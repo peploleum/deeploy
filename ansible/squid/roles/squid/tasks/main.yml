@@ -1,0 +1,17 @@
+---
+
+- name: install the latest version of Squid
+  yum:
+    name: squid
+    state: latest
+
+- name: Enable service Squid
+  service:
+    name: squid
+    enabled: yes
+
+- name: Start service Squid
+  service:
+    name: squid
+    state: started
+
