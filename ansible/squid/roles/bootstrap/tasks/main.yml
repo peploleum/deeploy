@@ -43,3 +43,10 @@
     gpgkey: https://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
     gpgcheck: yes
 
+- name: Add WEBMIN repository
+  yum_repository:
+    name: webmin
+    description: Webmin Distribution Neutral
+    baseurl: https://download.webmin.com/download/yum
+    gpgkey: http://www.webmin.com/jcameron-key.asc
+    gpgcheck: yes

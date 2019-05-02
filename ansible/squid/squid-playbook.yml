@@ -10,5 +10,5 @@
   roles:
     - { role: squid}
     - { role: squidguard}
-#    - { role: webmin}
+    - { role: webmin}
 
