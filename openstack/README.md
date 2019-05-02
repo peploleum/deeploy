@@ -94,9 +94,9 @@ Create all your customs privates networks using script create_private_network.sh
 
 This script launch a new Virtual Machine.
 
-sudo chmod +x create_instance.sh
+sudo chmod +x create-instance.sh
 
-Execute script create_instance.sh in openstack-controller.
+Execute script create-instance.sh in openstack-controller.
 
         param 1 : Flavor name -- ex : Small
         param 2 : Image name -- ex : Ubuntu-16.04
@@ -105,7 +105,7 @@ Execute script create_instance.sh in openstack-controller.
         param 5 : Public Floating IP -- ex : 192.168.0.113
         param 6 : Instance name -- ex : instance04
 
-example : ./create_instance.sh custom Ubuntu_16.04 sandbox 12.12.12.12 192.168.0.112 sampleServer
+example : ./create-instance.sh custom Ubuntu_16.04 sandbox 12.12.12.12 192.168.0.112 sampleServer
 
 ### Create instance with FreeIPA enrollment :
 
@@ -116,9 +116,9 @@ Init FreeIPA configuration with script freeipa/init-freeipa-conf.sh :
 
 example : ./init-freeipa-conf.sh 10.0.0.1 ipaserver.peploleum.com peploleum.com PEPLOLEUM.COM admin adminadmin
 
-Create the instance with the create_instance.sh script. Use temp-cloud-init-freeipa.yml file as cloud-init boot file.
+Create the instance with the create-instance.sh script. Use temp-cloud-init-freeipa.yml file as cloud-init boot file.
 
-        ./create_instance.sh S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance ./freeipa/temp-cloud-init-freeipa.yml freeipa
+        ./create-instance.sh S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance ./freeipa/temp-cloud-init-freeipa.yml freeipa
 
 ### Add all templates openstack
 
