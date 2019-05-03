@@ -29,6 +29,8 @@ ExecStart=/usr/bin/dockerd' | sudo tee -a /etc/systemd/system/docker.service.d/d
 
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+#docker restarted at system startup
+sudo systemctl enable docker
 
 #install docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
