@@ -1,7 +1,7 @@
 # JIRA
 
  1. Installation de la VM jiraserver
- - Lancement du script de création de la VM
+ - Lancement du script de création de la VM  
  `~/deeploy/core-dev-services/jira/create-jiraserver.sh`
  - Connexion au noeud core-dev-services en bureau à distance
  - Installation Centos :
@@ -11,27 +11,27 @@
 
  2. Configuration réseau de la VM  :
  - Figer l'IP sur le routeur + DHCP
- - Connexion au noeud core-dev-services en bureau à distance
-   `sudo up link set enp0s3 down`
-   `sudo up link set enp0s3 up`
- - Coupure du lien bureau à distance
-   `VBoxManage modifyvm jiraserver --vrde off`
+ - Connexion au noeud core-dev-services en bureau à distance  
+   `sudo up link set enp0s3 down`  
+   `sudo up link set enp0s3 up`  
+ - Coupure du lien bureau à distance  
+   `VBoxManage modifyvm jiraserver --vrde off`  
  
  3. Installations 
- - Installations préalables :
- `sudo yum install git`
- `sudo yum install wget`
- - Récupération des scripts de déploiement
- `git clone https://github.com/peploleum/deeploy.git`
- - Installation de docker
- `~/deeploy/docker/docker-centos-7.6.sh`
- - Démarrage de PostGres
- `docker-compose -f ~/deeploy/core-dev-services/jira/postgres.yml up -d`
- - Configuration de la base pour JIRA
- `docker exec -u postgres -it jira_insight-postgresql_1 sh`
- `psql -U jira -W`
- `CREATE DATABASE jiradb WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;`
- `GRANT ALL PRIVILEGES ON DATABASE jiradb TO jira;`
+ - Installations préalables :  
+ `sudo yum install git`  
+ `sudo yum install wget`  
+ - Récupération des scripts de déploiement  
+ `git clone https://github.com/peploleum/deeploy.git`  
+ - Installation de docker  
+ `~/deeploy/docker/docker-centos-7.6.sh`  
+ - Démarrage de PostGres  
+ `docker-compose -f ~/deeploy/core-dev-services/jira/postgres.yml up -d`  
+ - Configuration de la base pour JIRA  
+ `docker exec -u postgres -it jira_insight-postgresql_1 sh`  
+ `psql -U jira -W`  
+ `CREATE DATABASE jiradb WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;`  
+ `GRANT ALL PRIVILEGES ON DATABASE jiradb TO jira;`  
  
  4. Configuration de JIRA
  - un compte de service jira
