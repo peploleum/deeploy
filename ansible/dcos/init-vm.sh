@@ -42,13 +42,13 @@ sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/dcos/clou
 sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
 
 # Create Instances
-$DEEPLOY_PATH/openstack/create_instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
 openstack server add security group $ANSIBLE_NAME dcos
-$DEEPLOY_PATH/openstack/create_instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
 openstack server add security group $MASTER_NAME dcos
-$DEEPLOY_PATH/openstack/create_instance.sh $BOOTSTRAP_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $BOOTSTRAP_PRIVATE_IP $BOOTSTRAP_PUBLIC_IP $BOOTSTRAP_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $BOOTSTRAP_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $BOOTSTRAP_PRIVATE_IP $BOOTSTRAP_PUBLIC_IP $BOOTSTRAP_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
 openstack server add security group $BOOTSTRAP_NAME dcos
-$DEEPLOY_PATH/openstack/create_instance.sh $AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $AGENT_PRIVATE_IP $AGENT_PUBLIC_IP $AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $AGENT_PRIVATE_IP $AGENT_PUBLIC_IP $AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
 openstack server add security group $AGENT_NAME dcos
 
 # Set security group
