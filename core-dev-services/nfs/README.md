@@ -27,7 +27,15 @@ Edit `/etc/export` and add the directory to the NFS. Add this line :
 ### On Windows
 
 * Enabled [NFS Client Service](https://mapr.com/docs/61/AdministratorGuide/MountingNFSonWindowsClient.html). 
-
+  1. Open Start > Control Panel > Programs.
+  2. Select Turn Windows features on or off.
+  3. Enabled Services for NFS (Client and Admins Tools).
+  4. Click OK.
+  5. Open PowerShell as Administrator 
+  6. Go in this directory
+  7. Launch `regedit.exe /s .\NFS_UID.reg`
+  8. Reboot the computer
+  
 * Map a network drive with the Map Network Drive tool
   1. Open Start > My Computer
   2. Select Tools > Map Network Drive
