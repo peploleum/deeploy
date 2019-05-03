@@ -1,0 +1,48 @@
+#cloud-config
+
+write_files:
+  - content: |
+          -----BEGIN RSA PRIVATE KEY-----
+          MIIEpQIBAAKCAQEA2ItlI8Ia0sLZP54vwwx7C5qHuSOQeRGJxXxZvLRqa3v2nEdM
+          B2d/HExg8TVA9eTw9KiygC6LBhpLFeAV0sEBT8O9kgNxyb+FYUw0vXa1CUmW6saA
+          GVIx6Me6HMBeLUyIjvpbMPuzbm5E2aSiqE4EPyUB1qQsUN6sG8cVx2hedj1cfVa8
+          xwBq/RyXOPDNp2SUD2CcVFvKHu+SYnO+Zg6imauaz+jJs+ipJFFTd5Fof05OUvKy
+          HN1KF0bnG/kZUygjzNLVhAIDpiKT+q0b631Jg06g/mwxN1b5l2NRwiPI7+EzfrZ2
+          Ng91dAPteoyWzrLPUxzjdzxvm3oZJWb+f+9iQQIDAQABAoIBAAo5Gn9DrKyCkmsU
+          dsDImA6GLx4odauhjlWKd1oXUmbcpVnfa9F1q2SUnocEspppQo7qX/L5P4r8NstD
+          lwQqJHu1i/+WtgqGRi+/v0WqkwVrOfq/gFCxtrV8qGavFkMhN9k4LJH1cBUok4uK
+          4Dr94+lvP9T4TzdKK+nrzjVp0fvW94iNS4FkwoSVOmItyEfyZwr/TsmJo0ncIT9L
+          gsh6TyhYZtv0k2FvVo9ocwan0Wz8LAYggIWB7Y+jyyovvV89mrZGTZOXu9XDZ8j6
+          Anw+3Nd1oYE2UVOjQO94vklAqNV8UabdmSwe2K7FUJTo/gDDWjkeXdUhgCR1E/HQ
+          QWr54oECgYEA8CFig8SJTa438XpExiQtvCHPwuHO8dQhIbAfLO77bRu/WdzzBNlV
+          eR6lbCauLwqGrFr6KLKPyZUln3DrCcLvxclY11nNQqa1m8KWmDJ3iqQS/tawfG5/
+          hex6heTaeLEepbRIg80BVPeoqOl/KfAPmXEthYFInq9dEoTFrKCjxYkCgYEA5tr5
+          rchb+5q0aY7/4/TX8MzFfYkFP0NoaXaHXVbhmDrwdOF3OwG8D9tj4hg5Gkd4nU93
+          kq5xp26oFLOVys6xAdmw8e2ICdnsl+CQrzkovNwMuOwCUn3+9FouUZLoKypPczc2
+          gef6Xj34XQoOAvtRtkHdlPE1aC0L8rInlsayQPkCgYEArHWNp00Tv3KMQyWpFxUM
+          s70k1bYPRqcvVF6FRWQttuLivstszeK4/FACRnZRSv+oUUjVuTzk/8XaS3RxmYUj
+          Z02APMoGHQRWEhPizFQSfsPv0I6oGfXSKID6Tgda0KuEc0XTfrVRa5Ci1Q09gwUi
+          bvVV2DhNy4nuskohHiYQ+OECgYEAjPijBzAWm2o5SUx9jmJxiyZAYwxNG/i5xc0P
+          lDv9vswfEgCsomfIw5YhRGuuUxHZ4ZYpWnUUCj5UfW+8xP+6r3qTxuhZ7koZZBVJ
+          xPaOneVyD2pvcJhoHCcFqeKfy9wmcCEDNAjIpswI4ifFrqRxnW5TNSSmjFsVtLp9
+          2mCzcWECgYEA6wA/LbwdqbYGchCAjZO+qXT9Eu7hN9aORTdS785e5FWtOfO76NxH
+          SF7kpphun2Tdl/CHTsn99Hgq18Yd/ol8sFMSvsi49h+Gewetm/Yf9A+H/UWDt00M
+          HnNp77r1PhiqTcFRxd7p8VkOV1mw1AEdF03o9jrk2vNxUqei2PcXAKk=
+          -----END RSA PRIVATE KEY-----
+    path: /home/temp/rsa_key.pem
+    permissions: '0600'
+  - content: |
+          export IPA_SERVER_IP=##IPA_SERVER_IP##
+          export IPA_SERVER_FQDN=##IPA_SERVER_FQDN##
+          export IPA_DOMAIN_NAME=##IPA_DOMAIN_NAME##
+          export IPA_REALM=##IPA_REALM##
+          export IPA_PRINCIPAL=##IPA_PRINCIPAL##
+          export IPA_PASSWORD=##IPA_PASSWORD##
+    path: /home/temp/ipa.conf
+    permissions: '0755'
+
+runcmd:
+  - sudo yum install git -y
+  - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
+  - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
+  - sudo chown centos:centos /home/temp/ -R
