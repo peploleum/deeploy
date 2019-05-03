@@ -134,7 +134,13 @@ Download the rsa key file from openstack-controller \(~/rsa_key.pem\) on your co
 
 When you create a session on MobaXterm, add this file in "Advanced SSH Settings ->  Use private key".
 
+for Ubuntu based VMs:
+
         User : ubuntu
+        
+for Centos based VMs:
+
+        User : centos
 
 ## Links
 
