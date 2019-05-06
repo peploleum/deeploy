@@ -19,4 +19,4 @@ runcmd:
   - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
   - sudo chown centos:centos /home/temp/ -R
   - . /home/temp/ipa.conf
-  - /home/temp/deeploy/freeipa/client/install-centos7-1810.sh $IPA_SERVER_IP $IPA_SERVER_FQDN $IPA_DOMAIN_NAME $IPA_REALM $IPA_PRINCIPAL $IPA_PASSWORD
+  - /home/temp/deeploy/freeipa/client/install-centos7-1810.sh $IPA_SERVER_IP $IPA_SERVER_FQDN $IPA_DOMAIN_NAME $IPA_REALM $IPA_PRINCIPAL $IPA_PASSWORD --force-join
