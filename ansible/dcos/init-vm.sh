@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # This script init 4 VM to deploy DCOS. Please check dcos.conf file before runnig this script.
+# requires openstack and ipa CLI clients
 
 # Load variables
 . dcos.conf
@@ -57,3 +58,9 @@ openstack server remove security group $MASTER_NAME openstack
 openstack server remove security group $BOOTSTRAP_NAME openstack
 openstack server remove security group $AGENT_NAME openstack
 
+# DNS record creation
+
+echo $IPA_PASSWORD | kinit admin
+ipa dnsrecord-add $IPA_DOMAIN_NAME $MASTER_NAME --a-ip-address=$MASTER_PUBLIC_IP --a-create-reverse
+ipa dnsrecord-add $IPA_DOMAIN_NAME $AGENT_NAME --a-ip-address=$AGENT_PUBLIC_IP --a-create-reverse
+ipa dnsrecord-add $IPA_DOMAIN_NAME $BOOTSTRAP_NAME --a-ip-address=$BOOTSTRAP_PUBLIC_IP --a-create-reverse
