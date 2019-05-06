@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Load variables
+cd /home/temp/deeploy/ansible/dcos/
 . dcos.conf
-. ~/ipa.conf
+. /home/temp/ipa.conf
 
 # Install Ansible
 $DEEPLOY_PATH/ansible/install-ansible-centos.sh
@@ -13,7 +14,7 @@ cd ~/dcos
 git checkout $DCOS_ANSIBLE_GITHUB_VERSION
 
 # Copy ``inventory file``
-cp -rfp ~/deeploy/ansible/dcos/ansible/inventory.ini inventory.ini
+cp -rfp /home/temp/deeploy/ansible/dcos/ansible/inventory.ini inventory.ini
 
 # Update Ansible inventory file
 export BOOSTRAP_FQDN=$BOOTSTRAP_NAME.$IPA_DOMAIN_NAME
