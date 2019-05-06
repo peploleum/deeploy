@@ -1,0 +1,13 @@
+---
+# file: oracle-java/defaults/redhat.yml
+#
+# Default variables for Redhat-based Linux distributions.
+#
+
+oracle_java_dir_source: '/usr/local/src'
+oracle_java_download_timeout: 60
+oracle_java_rpm_filename: 'jdk-8u211-linux-x64.rpm'
+oracle_java_home: '/usr/java/default'
+oracle_java_rpm_url: 'https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.rpm'
+oracle_java_rpm_validate_certs: yes
+oracle_java_version: 8

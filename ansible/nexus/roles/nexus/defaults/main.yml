@@ -45,7 +45,7 @@ ldap_connections:
 # example ldap config :
   - ldap_name: 'FreeIPA' # used as a key to update the ldap config
     ldap_protocol: 'ldap' # ldap or ldaps
-    ldap_hostname: '10.0.0.11'
+    ldap_hostname: '192.168.0.50'
     ldap_port: 389
     ldap_auth: 'simple'
     ldap_auth_username: 'uid=nexus,cn=users,cn=accounts,dc=peploleum,dc=com'

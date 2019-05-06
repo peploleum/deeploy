@@ -1,12 +1,8 @@
 ---
 
 - hosts: nexus-vm
-  gather_facts: false
-  roles:
-    - { role: bootstrap}
-
-- hosts: nexus-vm
   gather_facts: true
+  become: true
   roles:
     - { role: java}
     - { role: nexus}
