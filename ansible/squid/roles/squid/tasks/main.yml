@@ -20,3 +20,27 @@
     validate: squid -k parse -f %s
   notify:
     - restart squid
+
+- block:
+  - name: Stopping Squid
+    service:
+      name: squid
+      state: stopped
+
+  - name: Remove cache
+    file:
+      state: "{{ item }}"
+      path: "/var/spool/squid/"
+      owner: squid
+      group: squid
+      mode: 0755
+    with_items:
+      - absent
+      - directory
+
+  - name: Create cache
+    shell: squid -z
+    notify:
+      - restart squid
+
+  when: squid_clean_cache
