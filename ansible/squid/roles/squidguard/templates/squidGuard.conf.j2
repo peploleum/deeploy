@@ -1,0 +1,50 @@
+#
+# CONFIG FILE FOR SQUIDGUARD
+#
+
+dbhome /var/squidGuard/blacklists
+logdir /var/log/squidGuard
+
+#
+# TIME RULES:
+# abbrev for weekdays:
+# s = sun, m = mon, t =tue, w = wed, h = thu, f = fri, a = sat
+
+time workhours {
+        weekly mtwhf 08:00 - 16:30
+        date *-*-01  08:00 - 16:30
+}
+
+#
+# REWRITE RULES:
+#
+
+rew yum {
+        s@://mirror.centos.org/centos/@://{{ squid_nexus_addr }}:8081/repository/yum-centos/@i
+}
+
+#
+# SOURCE ADDRESSES:
+#
+
+src local {
+    # Define what source addresses the proxy must proxy. Here we limit ourselves to local host.
+    ip 127.0.0.1
+}
+
+#
+# DESTINATION CLASSES:
+#
+
+
+dest local {
+}
+
+acl {
+
+        default {
+                pass     local all
+                rewrite  yum
+        }
+}
+

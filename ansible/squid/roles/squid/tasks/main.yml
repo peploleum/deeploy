@@ -10,8 +10,13 @@
     name: squid
     enabled: yes
 
-- name: Start service Squid
-  service:
-    name: squid
-    state: started
-
+- name: Install squid.conf
+  template:
+    src: squid.conf.j2
+    dest: /etc/squid/squid.conf
+    owner: root
+    group: squid
+    mode: 0644
+    validate: squid -k parse -f %s
+  notify:
+    - restart squid
