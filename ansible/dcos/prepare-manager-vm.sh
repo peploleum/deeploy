@@ -23,6 +23,9 @@ export MASTER_FQDN=$MASTER_NAME.$IPA_DOMAIN_NAME
 sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOTSTRAP_FQDN/g" inventory.ini
 sed -i -e "s/##AGENT_FQDN##/$AGENT_FQDN/g" inventory.ini
 sed -i -e "s/##MASTER_FQDN##/$MASTER_FQDN/g" inventory.ini
+sed -i -e "s/##BOOTSTRAP_PUBLIC_IP##/$BOOTSTRAP_PUBLIC_IP/g" inventory.ini
+sed -i -e "s/##MASTER_PUBLIC_IP##/$MASTER_PUBLIC_IP/g" inventory.ini
+sed -i -e "s/##AGENT_PUBLIC_IP##/$AGENT_PUBLIC_IP/g" inventory.ini
 
 # Copy ``vars config file``
 cp -rfp /home/temp/deeploy/ansible/dcos/ansible/dcos.yaml.template group_vars/all/dcos.yaml
