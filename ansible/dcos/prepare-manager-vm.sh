@@ -28,5 +28,5 @@ sed -i -e "s/##MASTER_FQDN##/$MASTER_FQDN/g" inventory.ini
 cp -rfp /home/temp/deeploy/ansible/dcos/ansible/dcos.yaml.template group_vars/all/dcos.yaml
 
 # Update Ansible config file
-sed -i -e "s/##BOOSTRAP_FQDN##/$BOOSTRAP_FQDN/g" group_vars/all/dcos.yaml
+sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOSTRAP_FQDN/g" group_vars/all/dcos.yaml
 sed -i -e "s/##MASTER_PUBLIC_IP##/$MASTER_PUBLIC_IP/g" group_vars/all/dcos.yaml
