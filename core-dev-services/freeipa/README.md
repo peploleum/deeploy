@@ -2,5 +2,5 @@
 
 > GO TO `deeploy/ansible/freeipa`
 
-[Ansible iRedMail](../../ansible/freeipa/README.md)
+[Ansible FreeIPA](../../ansible/freeipa/README.md)
 
