@@ -17,10 +17,10 @@ git checkout $DCOS_ANSIBLE_GITHUB_VERSION
 cp -rfp /home/temp/deeploy/ansible/dcos/ansible/inventory.ini inventory.ini
 
 # Update Ansible inventory file
-export BOOSTRAP_FQDN=$BOOTSTRAP_NAME.$IPA_DOMAIN_NAME
+export BOOTSTRAP_FQDN=$BOOTSTRAP_NAME.$IPA_DOMAIN_NAME
 export AGENT_FQDN=$AGENT_NAME.$IPA_DOMAIN_NAME
 export MASTER_FQDN=$MASTER_NAME.$IPA_DOMAIN_NAME
-sed -i -e "s/##BOOSTRAP_FQDN##/$BOOSTRAP_FQDN/g" inventory.ini
+sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOTSTRAP_FQDN/g" inventory.ini
 sed -i -e "s/##AGENT_FQDN##/$AGENT_FQDN/g" inventory.ini
 sed -i -e "s/##MASTER_FQDN##/$MASTER_FQDN/g" inventory.ini
 
@@ -28,5 +28,5 @@ sed -i -e "s/##MASTER_FQDN##/$MASTER_FQDN/g" inventory.ini
 cp -rfp /home/temp/deeploy/ansible/dcos/ansible/dcos.yaml.template group_vars/all/dcos.yaml
 
 # Update Ansible config file
-sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOSTRAP_FQDN/g" group_vars/all/dcos.yaml
+sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOTSTRAP_FQDN/g" group_vars/all/dcos.yaml
 sed -i -e "s/##MASTER_PUBLIC_IP##/$MASTER_PUBLIC_IP/g" group_vars/all/dcos.yaml
