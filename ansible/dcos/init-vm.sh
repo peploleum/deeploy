@@ -9,7 +9,7 @@
 
 # Remove Instances
 $DEEPLOY_PATH/openstack/remove-instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
-$DEEPLOY_PATH/openstack/remove-instance.sh $BOOTSTRAP_NAME $BOOSTRAP_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $BOOTSTRAP_NAME $BOOTSTRAP_PUBLIC_IP
 $DEEPLOY_PATH/openstack/remove-instance.sh $MASTER_NAME $MASTER_PUBLIC_IP
 $DEEPLOY_PATH/openstack/remove-instance.sh $AGENT_NAME $AGENT_PUBLIC_IP
 
