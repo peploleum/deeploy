@@ -1,11 +1,16 @@
 ---
-- name: install the latest version of Webmin
+- name: Install the latest version of Webmin
   yum:
     name: webmin
     state: latest
 
-- name: install Calamaris
+- name: Install Calamaris
   yum:
     name: calamaris
     state: latest
 
+- name: Open Firewall
+  firewalld:
+    port: 10000/tcp
+    permanent: yes
+    state: enabled

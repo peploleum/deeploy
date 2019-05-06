@@ -7,8 +7,8 @@
 
 - hosts: squid-vm
   gather_facts: true
+  become: true
   roles:
     - { role: squid}
-    - { role: squidguard}
     - { role: webmin}
 

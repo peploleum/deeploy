@@ -21,6 +21,29 @@
   notify:
     - restart squid
 
+- name: Install the latest version of SquidGuard
+  yum:
+    name: squidGuard
+    state: latest
+    enablerepo: "epel"
+
+- name: Install squidGuard.conf
+  template:
+    src: squidGuard.conf.j2
+    dest: /etc/squid/squidGuard.conf
+    owner: root
+    group: squid
+    mode: 0644
+
+- name: Open Firewall for Squid
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - 3128/tcp
+    - 3128/udp
+
 - block:
   - name: Stopping Squid
     service:
@@ -44,3 +67,4 @@
       - restart squid
 
   when: squid_clean_cache
+
