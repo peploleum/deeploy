@@ -40,6 +40,7 @@
     port: "{{ item }}"
     permanent: yes
     state: enabled
+    immediate: yes
   with_items:
     - 3128/tcp
     - 3128/udp
