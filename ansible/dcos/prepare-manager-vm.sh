@@ -6,7 +6,7 @@ cd /home/temp/deeploy/ansible/dcos/
 . /home/temp/ipa.conf
 
 # Install Ansible
-$DEEPLOY_PATH/ansible/install-ansible-centos.sh
+/home/temp/deeploy/ansible/install-ansible-centos.sh
 
 # Clone dcos-ansible project
 git clone $DCOS_ANSIBLE_GITHUB ~/dcos
