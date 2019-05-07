@@ -110,4 +110,4 @@ runcmd:
   # Clone deeploy repo
   - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
   - sudo chown centos:centos /home/temp/ -R
-  - /home/temp/deeploy/openstack/centos-init.sh
+  - /home/temp/deeploy/openstack/cloudinit/centos-init.sh
