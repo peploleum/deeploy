@@ -11,7 +11,8 @@
 $DEEPLOY_PATH/openstack/remove-instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
 $DEEPLOY_PATH/openstack/remove-instance.sh $BOOTSTRAP_NAME $BOOTSTRAP_PUBLIC_IP
 $DEEPLOY_PATH/openstack/remove-instance.sh $MASTER_NAME $MASTER_PUBLIC_IP
-$DEEPLOY_PATH/openstack/remove-instance.sh $AGENT_NAME $AGENT_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $PRIVATE_AGENT_NAME $PRIVATE_AGENT_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $PUBLIC_AGENT_NAME $PUBLIC_AGENT_PUBLIC_IP
 
 # Remove DCOS Security Group
 openstack security group delete dcos
@@ -49,12 +50,15 @@ $DEEPLOY_PATH/openstack/create-instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRI
 openstack server add security group $MASTER_NAME dcos
 $DEEPLOY_PATH/openstack/create-instance.sh $BOOTSTRAP_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $BOOTSTRAP_PRIVATE_IP $BOOTSTRAP_PUBLIC_IP $BOOTSTRAP_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
 openstack server add security group $BOOTSTRAP_NAME dcos
-$DEEPLOY_PATH/openstack/create-instance.sh $AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $AGENT_PRIVATE_IP $AGENT_PUBLIC_IP $AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
-openstack server add security group $AGENT_NAME dcos
+$DEEPLOY_PATH/openstack/create-instance.sh $PRIVATE_AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $PRIVATE_AGENT_PRIVATE_IP $PRIVATE_AGENT_PUBLIC_IP $PRIVATE_AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+openstack server add security group $PRIVATE_AGENT_NAME dcos
+$DEEPLOY_PATH/openstack/create-instance.sh $PUBLIC_AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $PUBLIC_AGENT_PRIVATE_IP $PUBLIC_AGENT_PUBLIC_IP $PUBLIC_AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+openstack server add security group $PUBLIC_AGENT_NAME dcos
 
 # Set security group
 openstack server remove security group $ANSIBLE_NAME openstack
 openstack server remove security group $MASTER_NAME openstack
 openstack server remove security group $BOOTSTRAP_NAME openstack
-openstack server remove security group $AGENT_NAME openstack
+openstack server remove security group $PRIVATE_AGENT_NAME openstack
+openstack server remove security group $PUBLIC_AGENT_NAME openstack
 
