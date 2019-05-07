@@ -41,9 +41,9 @@ SSH Options :
 
 * If you don't want password prompt, create RSA key and copy it on target then use `--user` option without `--ask-pass`
 
-        Create a RSA key ssh-keygen -t rsa
-        Copy your key on the host ssh-copy-id <remote_user>@<remote_host>
-        Use option --user <remote_user>
+  * Create a RSA key `ssh-keygen -t rsa`
+  * Copy your key on the host `ssh-copy-id <remote_user>@<remote_host>`
+  * Use option `--user <remote_user>`
 
 Sudo Options :
 * Declare privilege escalation method
