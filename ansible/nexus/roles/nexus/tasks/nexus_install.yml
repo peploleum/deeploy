@@ -239,6 +239,17 @@
     state: touch
   when: nexus_latest_version.changed and nexus_data_dir_contents.stdout != ""
 
+- name: Open firewall port
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+    with_items:
+      - {{ nexus_default_port }}/tcp
+      - {{ nexus_docker_hosted_port }}/tcp
+      - {{ nexus_docker_group_port }}/tcp
+
 - name: Reload systemd service configuration
   shell: 'systemctl daemon-reload'
 
