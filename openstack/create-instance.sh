@@ -64,7 +64,8 @@ openstack port create --network $3 --fixed-ip subnet=subnet-$3,ip-address=$4 --d
 #Create Instance
 if [ $nb_param = 6 ]; then
 	echo "Create instance $6"
-	openstack server create --flavor $1 --image $2 --key-name $KEY_NAME --port port-$6 $6
+	echo "!!!! WARNING !!!!: Cloud-init Centos is used by default. If you use Ubuntu create your own cloudinit file."
+	openstack server create --flavor $1 --image $2 --key-name $KEY_NAME --user-data ./cloudinit/centos-base.yml --port port-$6 $6
 else
 	echo "Create instance $6 with user data $7"
 	openstack server create --flavor $1 --image $2 --key-name $KEY_NAME --user-data $7 --port port-$6 $6
