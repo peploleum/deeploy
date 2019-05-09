@@ -33,8 +33,6 @@ write_files:
       5alSGnBqsZmvlRnVH5BDUhYsWZMPRQS9rRr4iGW0l+TH+O2VJ8aQ
       =0Zqq
       -----END PGP PUBLIC KEY BLOCK-----
-
-write_files:
   - path: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
     owner: root:root
     permissions: '0444'
