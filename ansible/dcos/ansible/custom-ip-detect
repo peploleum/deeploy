@@ -1,4 +1,0 @@
-#!/bin/sh
-set -o nounset -o errexit
-
-ip addr show dev eth0 primary | awk '/(inet .*\/)/ { print $2 }' | cut -d'/' -f1
