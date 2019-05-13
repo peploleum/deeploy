@@ -13,6 +13,8 @@ dcos:
     # for parameter reference.
     cluster_name: "dcos-cluster"
     security: strict
+    oauth_enabled: 'false'
+    telemetry_enabled: 'false'
     bootstrap_url: http://##BOOTSTRAP_FQDN##:8080
     ip_detect_contents: "#!/bin/sh\nset -o nounset -o errexit\nip addr show dev eth0 primary | awk '/(inet .*\\/)/ { print $2 }' | cut -d'/' -f1"
     exhibitor_storage_backend: static
