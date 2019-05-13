@@ -14,9 +14,10 @@ dcos:
     cluster_name: "dcos-cluster"
     security: strict
     bootstrap_url: http://##BOOTSTRAP_FQDN##:8080
-    ip_detect_contents: custom_detect_ip
+    ip_detect_filename: genconf/custom_detect_ip
+    # ip_detect_contents: custom_detect_ip
     # ip_detect_public_contents: custom_detect_ip
     exhibitor_storage_backend: static
     master_discovery: static
     master_list:
-    - ##MASTER_PUBLIC_IP##
+    - ##MASTER_PRIVATE_IP##
