@@ -1,43 +1,39 @@
-acl localnet src {{ squid_localnet }} 
-
-acl SSL_ports port 443
-acl Safe_ports port 80          # http
-acl Safe_ports port 21          # ftp
-acl Safe_ports port 443         # https
-acl Safe_ports port 70          # gopher
-acl Safe_ports port 210         # wais
-acl Safe_ports port 1025-65535  # unregistered ports
-acl Safe_ports port 280         # http-mgmt
-acl Safe_ports port 488         # gss-http
-acl Safe_ports port 591         # filemaker
-acl Safe_ports port 777         # multiling http
-acl CONNECT method CONNECT
-
-http_access deny !Safe_ports
-http_access deny CONNECT !SSL_ports
-
-http_access allow localhost manager
-http_access deny manager
-
-http_access allow localnet
-http_access allow localhost
-
+# No ACL
+http_access allow all
 http_access deny all
 
-# Squid normally listens to port 3128
-http_port 3128
+# Squid listens to port 3128 (Use ssl-bump for ssl url rewrite)
+http_port 3128 ssl-bump \
+  cert=/etc/squid/ssl_cert/{{ ansible_fqdn }}.pem \
+  generate-host-certificates=on dynamic_cert_mem_cache_size=4MB
 
-# Uncomment and adjust the following to add a disk cache directory.
-cache_dir ufs /var/spool/squid 100 16 256
+sslcrtd_program /usr/lib64/squid/ssl_crtd -s /var/lib/squid/ssl_db -M 4MB
+acl step1 at_step SslBump1
+ssl_bump peek step1
+ssl_bump bump all
+sslproxy_cert_error allow all
+sslproxy_flags DONT_VERIFY_PEER
+
+# Maximum object size (20 Go)
+maximum_object_size 20480 MB
+
+# Uncomment and adjust the following to add a disk cache directory (900 Go).
+cache_dir ufs /var/spool/squid 900000 16 256
 
 # Leave coredumps in the first cache dir
 coredump_dir /var/spool/squid
 
+# No cache for nexus stuff
 acl nexus_addr dst {{ squid_nexus_addr }}/32
 cache deny nexus_addr
 
+# Update squidGuard.conf to add redirection
 url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
 cache_effective_user squid
 cache_effective_group squid
 
+# Modify date in access.log
+logformat squid %tl %6tr %>a %Ss/%03>Hs %<st %rm %ru %[un %Sh/%<a %mt
+
+offline_mode on

@@ -10,6 +10,44 @@
     name: squid
     enabled: yes
 
+- name: Create SSL directory
+  file:
+    path: /etc/squid/ssl_cert
+    state: directory
+    mode: 700
+    owner: squid
+    group: squid
+
+- name: Generate SSL self-signed certificate
+  command: >
+    openssl req -x509 -nodes -sha256 -days 7300 -newkey rsa:2048
+        -subj "/C=FR/ST=Paris/L=Paris/O=Ministère des armées/CN={{ ansible_fqdn }}"
+        -keyout /etc/squid/ssl_cert/{{ ansible_fqdn }}.pem
+        -out /etc/squid/ssl_cert/{{ ansible_fqdn }}.pem
+  args:
+    creates: "/etc/squid/ssl_cert/{{ ansible_fqdn }}.pem"
+
+- name: Validate private key file permissions
+  file:
+    path: "/etc/squid/ssl_cert/{{ ansible_fqdn }}.pem"
+    owner: "root"
+    group: "root"
+    mode: '0440'
+
+- name: Ensure CA file available in der format
+  command: >
+    openssl x509 -in /etc/squid/ssl_cert/{{ ansible_fqdn }}.pem
+        -outform DER
+        -out /etc/squid/ssl_cert/{{ ansible_fqdn }}.der
+  args:
+    creates: "/etc/squid/ssl_cert/{{ ansible_fqdn }}.der"
+
+- name: Create SSL cache directory
+  command: >
+    /usr/lib64/squid/ssl_crtd -c -s /var/lib/squid/ssl_db -M 4MB && chown squid:squid -R /var/lib/squid
+  args:
+    creates: "/var/lib/squid/ssl_db"
+
 - name: Install squid.conf
   template:
     src: squid.conf.j2
