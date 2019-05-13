@@ -43,6 +43,7 @@ write_files:
 
 runcmd:
   - sudo yum install git -y
+  - sudo yum install vim -y
   - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
   - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
   - sudo chown centos:centos /home/temp/ -R
