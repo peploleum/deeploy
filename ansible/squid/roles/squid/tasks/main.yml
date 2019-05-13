@@ -42,6 +42,14 @@
   args:
     creates: "/etc/squid/ssl_cert/{{ ansible_fqdn }}.der"
 
+- name: Create var/lib/squid
+  file:
+    path: /var/lib/squid
+    state: directory
+    mode: 755
+    owner: root
+    group: root
+
 - name: Create SSL cache directory
   command: >
     /usr/lib64/squid/ssl_crtd -c -s /var/lib/squid/ssl_db -M 4MB && chown squid:squid -R /var/lib/squid
@@ -82,6 +90,7 @@
   with_items:
     - 3128/tcp
     - 3128/udp
+  when: squid_param_firewall
 
 - block:
   - name: Stopping Squid
@@ -104,6 +113,5 @@
     shell: squid -z
     notify:
       - restart squid
-
   when: squid_clean_cache
 

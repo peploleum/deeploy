@@ -15,3 +15,4 @@
     permanent: yes
     state: enabled
     immediate: yes
+  when: squid_param_firewall
