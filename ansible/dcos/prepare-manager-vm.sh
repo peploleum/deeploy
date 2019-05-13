@@ -25,7 +25,7 @@ sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOTSTRAP_FQDN/g" inventory.ini
 sed -i -e "s/##PRIVATE_AGENT_FQDN##/$PRIVATE_AGENT_FQDN/g" inventory.ini
 sed -i -e "s/##PUBLIC_AGENT_FQDN##/$PUBLIC_AGENT_FQDN/g" inventory.ini
 sed -i -e "s/##MASTER_FQDN##/$MASTER_FQDN/g" inventory.ini
-sed -i -e "s/##BOOTSTRAP_PUBLIC_IP##/$BOOTSTRAP_PUBLIC_IP/g" inventory.ini
+sed -i -e "s/##BOOTSTRAP_PRIVATE_IP##/$BOOTSTRAP_PRIVATE_IP/g" inventory.ini
 sed -i -e "s/##MASTER_PRIVATE_IP##/$MASTER_PRIVATE_IP/g" inventory.ini
 sed -i -e "s/##PUBLIC_AGENT_PRIVATE_IP##/$PUBLIC_AGENT_PRIVATE_IP/g" inventory.ini
 sed -i -e "s/##PRIVATE_AGENT_PRIVATE_IP##/$PRIVATE_AGENT_PRIVATE_IP/g" inventory.ini
