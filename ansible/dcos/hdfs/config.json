@@ -1,0 +1,26 @@
+{
+  "service": {
+    "name": "spark",
+    "cpus": 1,
+    "mem": 1024,
+    "role": "*",
+    "service_account": "",
+    "service_account_secret": "",
+    "user": "nobody",
+    "docker-image": "",
+    "log-level": "INFO",
+    "virtual_network_enabled": true,
+    "virtual_network_name": "dcos",
+    "virtual_network_plugin_labels": [],
+    "UCR_containerizer": false,
+    "docker_user": "99"
+  },
+  "security": {
+    "kerberos": {
+      "enabled": false,
+      "kdc": {},
+      "krb5conf": ""
+    }
+  },
+  "hdfs": {}
+}
