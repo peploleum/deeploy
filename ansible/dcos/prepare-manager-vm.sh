@@ -38,3 +38,5 @@ cp -rfp /home/temp/deeploy/ansible/dcos/ansible/ansible.cfg ansible.cfg
 # Update Ansible config file
 sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOTSTRAP_FQDN/g" group_vars/all/dcos.yaml
 sed -i -e "s/##MASTER_PRIVATE_IP##/$MASTER_PRIVATE_IP/g" group_vars/all/dcos.yaml
+sed -i -e "s/##DNS_SEARCH##/$IPA_DOMAIN_NAME/g" group_vars/all/dcos.yaml
+sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" group_vars/all/dcos.yaml
