@@ -1,6 +1,30 @@
 #cloud-config
 
 write_files:
+  - encoding: b64
+    path: /etc/pki/ca-trust/source/anchors/proxyserver.der
+    owner: root:root
+    permissions: '0444'
+    content: |2
+      MIID3TCCAsWgAwIBAgIJAMZfZFVH63gMMA0GCSqGSIb3DQEBCwUAMIGEMQswCQYDVQQGEwJGUjEO
+      MAwGA1UECAwFUGFyaXMxDjAMBgNVBAcMBVBhcmlzMR0wGwYDVQQKDBRNaW5pc3RlcmUgZGVzIGFy
+      bWVlczE2MDQGA1UEAwwtcHJveHlzZXJ2ZXIuY2FwZ2VtaW5pLmFydGVtaXMuZGVmZW5zZS5nb3V2
+      LmZyMB4XDTE5MDUxNDE1MDc0NloXDTM5MDUwOTE1MDc0NlowgYQxCzAJBgNVBAYTAkZSMQ4wDAYD
+      VQQIDAVQYXJpczEOMAwGA1UEBwwFUGFyaXMxHTAbBgNVBAoMFE1pbmlzdGVyZSBkZXMgYXJtZWVz
+      MTYwNAYDVQQDDC1wcm94eXNlcnZlci5jYXBnZW1pbmkuYXJ0ZW1pcy5kZWZlbnNlLmdvdXYuZnIw
+      ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCrb1NrJixxxR2poSc+rl9pr8VBzsqdTwZV
+      VAw3XerJLs1tZlDtKlkl3aW5WYOE4eppytVyHGdMV4V39LfM69Q6WnTXa2vJl390C0CH+8gHrqRp
+      W5mTec6lkt6DKjzyTmQQr86S+CrN2kb9Lb3I6L9B7FDiszo++H9g0TWAmvgdVtjzh66ZC9nWQXq6
+      jig9jHbqSky0MM+z9mfQwwkOfxZZYWs1ETIAuW9v+csOVAIJML/6+61vZoC4nURP/1mhApzS9BjJ
+      R6pCmeJVe0UEMmQpg+6W/XksvGlCdXw6VyLIv9w1KXJIL1BfmexPXjN3j/tNFCDyr9yAPcBGAhb/
+      TJMRAgMBAAGjUDBOMB0GA1UdDgQWBBRKLXhFSXGlWWi9zO9TzV8tYIS1yDAfBgNVHSMEGDAWgBRK
+      LXhFSXGlWWi9zO9TzV8tYIS1yDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQB6wonu
+      qBctq6P9uDXmUnskOrUBFDLuNXgtWEh8gZcc3hjdlTjHitkECuQU0VKlEtzQ5HAfAWkEvucnU4Gm
+      glulWYIcpKqcfLJiVhtbLQnMvilvpj6AocESLlbXCGM1EJXX946OjELTAVBEGRD5cAmwj/UmTboe
+      NYNMxXPFHtdZIrcGDXHEefORxwOdHHMIMu14KY24L4JLauyPGLlKEUVK5j6tzdGdR8sFzBuMv/0L
+      Q+wosLEA1qxhkRN75xcOMbXFQ9DOl74BSp8U3QRpMJMSzt66eOSXgwU8TIlzOmm01AEry0jpeTPk
+      jQiu3w3zW/QMdayCTAc/dbExycQlpfha
+write_files:
   - path: /etc/pki/rpm-gpg/RPM-GPG-KEY-Docker
     owner: root:root
     permissions: '0444'
@@ -69,40 +93,40 @@ write_files:
 # Config YUM
 yum_repos:
   base:
-    name: Peploleum CentOS-$releasever - Base
+    name: CentOS-$releasever - Base
     baseurl: http://mirror.centos.org/centos/$releasever/os/$basearch/
     enabled: true
     gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
   updates:
-    name: Peploleum CentOS-$releasever - Updates
+    name: CentOS-$releasever - Updates
     baseurl: http://mirror.centos.org/centos/$releasever/updates/$basearch/
     enabled: true
     gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
   extras:
-    name: Peploleum CentOS-$releasever - Extras
+    name: CentOS-$releasever - Extras
     baseurl: http://mirror.centos.org/centos/$releasever/extras/$basearch/
     enabled: true
     gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
   epel:
-    name: Peploleum CentOS EPEL
+    name: CentOS EPEL
     baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
     enabled: true
     gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
   docker:
-    name: Peploleum CentOS Docker
+    name: CentOS Docker
     baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
     enabled: true
     gpgcheck: true
     gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Docker
 
 runcmd:
+  - sudo update-ca-trust extract
   - sudo sed -i -e 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/fastestmirror.conf
   - sudo find /etc/yum.repos.d -name "CentOS*" -type f -delete
-  - sudo sed -i -e "/\[main\]/a proxy=http://proxyserver.peploleum.com:3128" /etc/yum.conf
   # Install GIT
   - sudo yum install git -y
   # Clone deeploy repo
