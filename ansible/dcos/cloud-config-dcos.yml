@@ -1,22 +1,147 @@
 #cloud-config
 
 write_files:
+  - encoding: b64
+    path: /etc/pki/ca-trust/source/anchors/proxyserver.der
+    owner: root:root
+    permissions: '0444'
+    content: |2
+      MIID3TCCAsWgAwIBAgIJAMZfZFVH63gMMA0GCSqGSIb3DQEBCwUAMIGEMQswCQYDVQQGEwJGUjEO
+      MAwGA1UECAwFUGFyaXMxDjAMBgNVBAcMBVBhcmlzMR0wGwYDVQQKDBRNaW5pc3RlcmUgZGVzIGFy
+      bWVlczE2MDQGA1UEAwwtcHJveHlzZXJ2ZXIuY2FwZ2VtaW5pLmFydGVtaXMuZGVmZW5zZS5nb3V2
+      LmZyMB4XDTE5MDUxNDE1MDc0NloXDTM5MDUwOTE1MDc0NlowgYQxCzAJBgNVBAYTAkZSMQ4wDAYD
+      VQQIDAVQYXJpczEOMAwGA1UEBwwFUGFyaXMxHTAbBgNVBAoMFE1pbmlzdGVyZSBkZXMgYXJtZWVz
+      MTYwNAYDVQQDDC1wcm94eXNlcnZlci5jYXBnZW1pbmkuYXJ0ZW1pcy5kZWZlbnNlLmdvdXYuZnIw
+      ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCrb1NrJixxxR2poSc+rl9pr8VBzsqdTwZV
+      VAw3XerJLs1tZlDtKlkl3aW5WYOE4eppytVyHGdMV4V39LfM69Q6WnTXa2vJl390C0CH+8gHrqRp
+      W5mTec6lkt6DKjzyTmQQr86S+CrN2kb9Lb3I6L9B7FDiszo++H9g0TWAmvgdVtjzh66ZC9nWQXq6
+      jig9jHbqSky0MM+z9mfQwwkOfxZZYWs1ETIAuW9v+csOVAIJML/6+61vZoC4nURP/1mhApzS9BjJ
+      R6pCmeJVe0UEMmQpg+6W/XksvGlCdXw6VyLIv9w1KXJIL1BfmexPXjN3j/tNFCDyr9yAPcBGAhb/
+      TJMRAgMBAAGjUDBOMB0GA1UdDgQWBBRKLXhFSXGlWWi9zO9TzV8tYIS1yDAfBgNVHSMEGDAWgBRK
+      LXhFSXGlWWi9zO9TzV8tYIS1yDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQB6wonu
+      qBctq6P9uDXmUnskOrUBFDLuNXgtWEh8gZcc3hjdlTjHitkECuQU0VKlEtzQ5HAfAWkEvucnU4Gm
+      glulWYIcpKqcfLJiVhtbLQnMvilvpj6AocESLlbXCGM1EJXX946OjELTAVBEGRD5cAmwj/UmTboe
+      NYNMxXPFHtdZIrcGDXHEefORxwOdHHMIMu14KY24L4JLauyPGLlKEUVK5j6tzdGdR8sFzBuMv/0L
+      Q+wosLEA1qxhkRN75xcOMbXFQ9DOl74BSp8U3QRpMJMSzt66eOSXgwU8TIlzOmm01AEry0jpeTPk
+      jQiu3w3zW/QMdayCTAc/dbExycQlpfha
+  - path: /etc/pki/rpm-gpg/RPM-GPG-KEY-Docker
+    owner: root:root
+    permissions: '0444'
+    content: |2
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+      mQINBFit5IEBEADDt86QpYKz5flnCsOyZ/fk3WwBKxfDjwHf/GIflo+4GWAXS7wJ
+      1PSzPsvSDATV10J44i5WQzh99q+lZvFCVRFiNhRmlmcXG+rk1QmDh3fsCCj9Q/yP
+      w8jn3Hx0zDtz8PIB/18ReftYJzUo34COLiHn8WiY20uGCF2pjdPgfxE+K454c4G7
+      gKFqVUFYgPug2CS0quaBB5b0rpFUdzTeI5RCStd27nHCpuSDCvRYAfdv+4Y1yiVh
+      KKdoe3Smj+RnXeVMgDxtH9FJibZ3DK7WnMN2yeob6VqXox+FvKYJCCLkbQgQmE50
+      uVK0uN71A1mQDcTRKQ2q3fFGlMTqJbbzr3LwnCBE6hV0a36t+DABtZTmz5O69xdJ
+      WGdBeePCnWVqtDb/BdEYz7hPKskcZBarygCCe2Xi7sZieoFZuq6ltPoCsdfEdfbO
+      +VBVKJnExqNZCcFUTEnbH4CldWROOzMS8BGUlkGpa59Sl1t0QcmWlw1EbkeMQNrN
+      spdR8lobcdNS9bpAJQqSHRZh3cAM9mA3Yq/bssUS/P2quRXLjJ9mIv3dky9C3udM
+      +q2unvnbNpPtIUly76FJ3s8g8sHeOnmYcKqNGqHq2Q3kMdA2eIbI0MqfOIo2+Xk0
+      rNt3ctq3g+cQiorcN3rdHPsTRSAcp+NCz1QF9TwXYtH1XV24A6QMO0+CZwARAQAB
+      tCtEb2NrZXIgUmVsZWFzZSAoQ0UgcnBtKSA8ZG9ja2VyQGRvY2tlci5jb20+iQI3
+      BBMBCgAhBQJYrep4AhsvBQsJCAcDBRUKCQgLBRYCAwEAAh4BAheAAAoJEMUv62ti
+      Hp816C0P/iP+1uhSa6Qq3TIc5sIFE5JHxOO6y0R97cUdAmCbEqBiJHUPNQDQaaRG
+      VYBm0K013Q1gcJeUJvS32gthmIvhkstw7KTodwOM8Kl11CCqZ07NPFef1b2SaJ7l
+      TYpyUsT9+e343ph+O4C1oUQw6flaAJe+8ATCmI/4KxfhIjD2a/Q1voR5tUIxfexC
+      /LZTx05gyf2mAgEWlRm/cGTStNfqDN1uoKMlV+WFuB1j2oTUuO1/dr8mL+FgZAM3
+      ntWFo9gQCllNV9ahYOON2gkoZoNuPUnHsf4Bj6BQJnIXbAhMk9H2sZzwUi9bgObZ
+      XO8+OrP4D4B9kCAKqqaQqA+O46LzO2vhN74lm/Fy6PumHuviqDBdN+HgtRPMUuao
+      xnuVJSvBu9sPdgT/pR1N9u/KnfAnnLtR6g+fx4mWz+ts/riB/KRHzXd+44jGKZra
+      IhTMfniguMJNsyEOO0AN8Tqcl0eRBxcOArcri7xu8HFvvl+e+ILymu4buusbYEVL
+      GBkYP5YMmScfKn+jnDVN4mWoN1Bq2yMhMGx6PA3hOvzPNsUoYy2BwDxNZyflzuAi
+      g59mgJm2NXtzNbSRJbMamKpQ69mzLWGdFNsRd4aH7PT7uPAURaf7B5BVp3UyjERW
+      5alSGnBqsZmvlRnVH5BDUhYsWZMPRQS9rRr4iGW0l+TH+O2VJ8aQ
+      =0Zqq
+    -----END PGP PUBLIC KEY BLOCK-----
+  - path: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+    owner: root:root
+    permissions: '0444'
+    content: |2
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+      mQINBFKuaIQBEAC1UphXwMqCAarPUH/ZsOFslabeTVO2pDk5YnO96f+rgZB7xArB
+      OSeQk7B90iqSJ85/c72OAn4OXYvT63gfCeXpJs5M7emXkPsNQWWSju99lW+AqSNm
+      jYWhmRlLRGl0OO7gIwj776dIXvcMNFlzSPj00N2xAqjMbjlnV2n2abAE5gq6VpqP
+      vFXVyfrVa/ualogDVmf6h2t4Rdpifq8qTHsHFU3xpCz+T6/dGWKGQ42ZQfTaLnDM
+      jToAsmY0AyevkIbX6iZVtzGvanYpPcWW4X0RDPcpqfFNZk643xI4lsZ+Y2Er9Yu5
+      S/8x0ly+tmmIokaE0wwbdUu740YTZjCesroYWiRg5zuQ2xfKxJoV5E+Eh+tYwGDJ
+      n6HfWhRgnudRRwvuJ45ztYVtKulKw8QQpd2STWrcQQDJaRWmnMooX/PATTjCBExB
+      9dkz38Druvk7IkHMtsIqlkAOQMdsX1d3Tov6BE2XDjIG0zFxLduJGbVwc/6rIc95
+      T055j36Ez0HrjxdpTGOOHxRqMK5m9flFbaxxtDnS7w77WqzW7HjFrD0VeTx2vnjj
+      GqchHEQpfDpFOzb8LTFhgYidyRNUflQY35WLOzLNV+pV3eQ3Jg11UFwelSNLqfQf
+      uFRGc+zcwkNjHh5yPvm9odR1BIfqJ6sKGPGbtPNXo7ERMRypWyRz0zi0twARAQAB
+      tChGZWRvcmEgRVBFTCAoNykgPGVwZWxAZmVkb3JhcHJvamVjdC5vcmc+iQI4BBMB
+      AgAiBQJSrmiEAhsPBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBqL66iNSxk
+      5cfGD/4spqpsTjtDM7qpytKLHKruZtvuWiqt5RfvT9ww9GUUFMZ4ZZGX4nUXg49q
+      ixDLayWR8ddG/s5kyOi3C0uX/6inzaYyRg+Bh70brqKUK14F1BrrPi29eaKfG+Gu
+      MFtXdBG2a7OtPmw3yuKmq9Epv6B0mP6E5KSdvSRSqJWtGcA6wRS/wDzXJENHp5re
+      9Ism3CYydpy0GLRA5wo4fPB5uLdUhLEUDvh2KK//fMjja3o0L+SNz8N0aDZyn5Ax
+      CU9RB3EHcTecFgoy5umRj99BZrebR1NO+4gBrivIfdvD4fJNfNBHXwhSH9ACGCNv
+      HnXVjHQF9iHWApKkRIeh8Fr2n5dtfJEF7SEX8GbX7FbsWo29kXMrVgNqHNyDnfAB
+      VoPubgQdtJZJkVZAkaHrMu8AytwT62Q4eNqmJI1aWbZQNI5jWYqc6RKuCK6/F99q
+      thFT9gJO17+yRuL6Uv2/vgzVR1RGdwVLKwlUjGPAjYflpCQwWMAASxiv9uPyYPHc
+      ErSrbRG0wjIfAR3vus1OSOx3xZHZpXFfmQTsDP7zVROLzV98R3JwFAxJ4/xqeON4
+      vCPFU6OsT3lWQ8w7il5ohY95wmujfr6lk89kEzJdOTzcn7DBbUru33CQMGKZ3Evt
+      RjsC7FDbL017qxS+ZVA/HGkyfiu4cpgV8VUnbql5eAZ+1Ll6Dw==
+      =hdPa
+      -----END PGP PUBLIC KEY BLOCK-----
   - content: |
-          export IPA_SERVER_IP=##IPA_SERVER_IP##
-          export IPA_SERVER_FQDN=##IPA_SERVER_FQDN##
-          export IPA_DOMAIN_NAME=##IPA_DOMAIN_NAME##
-          export IPA_REALM=##IPA_REALM##
-          export IPA_PRINCIPAL=##IPA_PRINCIPAL##
-          export IPA_PASSWORD=##IPA_PASSWORD##
+      export IPA_SERVER_IP=##IPA_SERVER_IP##
+      export IPA_SERVER_FQDN=##IPA_SERVER_FQDN##
+      export IPA_DOMAIN_NAME=##IPA_DOMAIN_NAME##
+      export IPA_REALM=##IPA_REALM##
+      export IPA_PRINCIPAL=##IPA_PRINCIPAL##
+      export IPA_PASSWORD=##IPA_PASSWORD##
     path: /home/temp/ipa.conf
     permissions: '0755'
+  # Config YUM
+yum_repos:
+  base:
+    name: CentOS-$releasever - Base
+    baseurl: http://mirror.centos.org/centos/$releasever/os/$basearch/
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+  updates:
+    name: CentOS-$releasever - Updates
+    baseurl: http://mirror.centos.org/centos/$releasever/updates/$basearch/
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+  extras:
+    name: CentOS-$releasever - Extras
+    baseurl: http://mirror.centos.org/centos/$releasever/extras/$basearch/
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+  epel:
+    name: CentOS EPEL
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+  docker:
+    name: CentOS Docker
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+    enabled: true
+    gpgcheck: true
+    gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Docker
 
 runcmd:
+  - sudo update-ca-trust extract
+  - sudo sed -i -e 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/fastestmirror.conf
+  - sudo find /etc/yum.repos.d -name "CentOS*" -type f -delete
+  # Install GIT
   - sudo yum install git -y
+  # Clone deeploy repo
+  - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
+  - sudo chown centos:centos /home/temp/ -R
+  - /home/temp/deeploy/openstack/cloudinit/centos-init.sh
   - sudo sysctl -w net.ipv4.ip_forward=1
   - sudo sed -i '29i net.ipv4.ip_forward=1' /etc/sysctl.conf
   - sudo echo 192.168.0.10 openstack-controller >> /etc/hosts
-  - git clone https://github.com/peploleum/deeploy.git /home/temp/deeploy/
-  - sudo chown centos:centos /home/temp/ -R
   - . /home/temp/ipa.conf
   - /home/temp/deeploy/freeipa/client/install-centos7-1810.sh $IPA_SERVER_IP $IPA_SERVER_FQDN $IPA_DOMAIN_NAME $IPA_REALM $IPA_PRINCIPAL $IPA_PASSWORD --force-join
