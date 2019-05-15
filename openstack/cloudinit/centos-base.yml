@@ -24,7 +24,6 @@ write_files:
       NYNMxXPFHtdZIrcGDXHEefORxwOdHHMIMu14KY24L4JLauyPGLlKEUVK5j6tzdGdR8sFzBuMv/0L
       Q+wosLEA1qxhkRN75xcOMbXFQ9DOl74BSp8U3QRpMJMSzt66eOSXgwU8TIlzOmm01AEry0jpeTPk
       jQiu3w3zW/QMdayCTAc/dbExycQlpfha
-write_files:
   - path: /etc/pki/rpm-gpg/RPM-GPG-KEY-Docker
     owner: root:root
     permissions: '0444'
