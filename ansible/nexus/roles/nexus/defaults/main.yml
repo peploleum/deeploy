@@ -32,14 +32,14 @@ nexus_default_context_path: '/'
 nexus_admin_password: 'admin123' # Note : admin password change subsequent to first-time install is *not implemented* yet
 nexus_anonymous_access: true
 
-public_hostname: 'nexus-vm'
+public_hostname: 'proxyserver'
 
 nexus_branding_header: ""
 nexus_branding_footer: "Last provisionned {{ ansible_date_time.iso8601 }}"
 
 httpd_setup_enable: false
-httpd_ssl_certificate_file: 'files/nexus-vm.crt'
-httpd_ssl_certificate_key_file: 'files/nexus-vm.key'
+httpd_ssl_certificate_file: 'files/proxyserver.crt'
+httpd_ssl_certificate_key_file: 'files/proxyserver.key'
 
 ldap_connections:
 # example ldap config :
@@ -169,6 +169,8 @@ nexus_repos_yum_proxy:
     remote_url: 'http://mirror.centos.org/centos/'
   - name: yum-centos-docker
     remote_url: 'https://download.docker.com/linux/centos/'
+  - name: yum-centos-epel
+    remote_url: 'https://download.fedoraproject.org/pub/epel/'
 
 nexus_repos_yum_hosted: []
 
