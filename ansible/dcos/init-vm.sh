@@ -29,30 +29,30 @@ else
 fi
 
 # Update conf file
-sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
-sed -i -e "s/##IPA_SERVER_FQDN##/$IPA_SERVER_FQDN/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
-sed -i -e "s/##IPA_DOMAIN_NAME##/$IPA_DOMAIN_NAME/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
-sed -i -e "s/##IPA_REALM##/$IPA_REALM/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
-sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
-sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
+sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
+sed -i -e "s/##IPA_SERVER_FQDN##/$IPA_SERVER_FQDN/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
+sed -i -e "s/##IPA_DOMAIN_NAME##/$IPA_DOMAIN_NAME/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
+sed -i -e "s/##IPA_REALM##/$IPA_REALM/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
+sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
+sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
 
-sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
-sed -i -e "s/##IPA_SERVER_FQDN##/$IPA_SERVER_FQDN/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
-sed -i -e "s/##IPA_DOMAIN_NAME##/$IPA_DOMAIN_NAME/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
-sed -i -e "s/##IPA_REALM##/$IPA_REALM/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
-sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
-sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
+sed -i -e "s/##IPA_SERVER_FQDN##/$IPA_SERVER_FQDN/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
+sed -i -e "s/##IPA_DOMAIN_NAME##/$IPA_DOMAIN_NAME/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
+sed -i -e "s/##IPA_REALM##/$IPA_REALM/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
+sed -i -e "s/##IPA_PRINCIPAL##/$IPA_PRINCIPAL/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
+sed -i -e "s/##IPA_PASSWORD##/$IPA_PASSWORD/g" $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
 
 # Create Instances
-$DEEPLOY_PATH/openstack/create-instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-manager.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $ANSIBLE_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $ANSIBLE_PRIVATE_IP $ANSIBLE_PUBLIC_IP $ANSIBLE_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-manager-new.yml
 openstack server add security group $ANSIBLE_NAME dcos
-$DEEPLOY_PATH/openstack/create-instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $MASTER_FLAVOR  $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME  $MASTER_PRIVATE_IP $MASTER_PUBLIC_IP $MASTER_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
 openstack server add security group $MASTER_NAME dcos
-$DEEPLOY_PATH/openstack/create-instance.sh $BOOTSTRAP_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $BOOTSTRAP_PRIVATE_IP $BOOTSTRAP_PUBLIC_IP $BOOTSTRAP_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $BOOTSTRAP_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $BOOTSTRAP_PRIVATE_IP $BOOTSTRAP_PUBLIC_IP $BOOTSTRAP_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
 openstack server add security group $BOOTSTRAP_NAME dcos
-$DEEPLOY_PATH/openstack/create-instance.sh $PRIVATE_AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $PRIVATE_AGENT_PRIVATE_IP $PRIVATE_AGENT_PUBLIC_IP $PRIVATE_AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $PRIVATE_AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $PRIVATE_AGENT_PRIVATE_IP $PRIVATE_AGENT_PUBLIC_IP $PRIVATE_AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
 openstack server add security group $PRIVATE_AGENT_NAME dcos
-$DEEPLOY_PATH/openstack/create-instance.sh $PUBLIC_AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $PUBLIC_AGENT_PRIVATE_IP $PUBLIC_AGENT_PUBLIC_IP $PUBLIC_AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos.yml
+$DEEPLOY_PATH/openstack/create-instance.sh $PUBLIC_AGENT_FLAVOR $OPENSTACK_IMAGE $PRIVATE_NETWORK_NAME $PUBLIC_AGENT_PRIVATE_IP $PUBLIC_AGENT_PUBLIC_IP $PUBLIC_AGENT_NAME $DEEPLOY_PATH/ansible/dcos/cloud-config-dcos-new.yml
 openstack server add security group $PUBLIC_AGENT_NAME dcos
 
 # Set security group
