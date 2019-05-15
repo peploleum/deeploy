@@ -12,7 +12,7 @@ dcos:
     # Please see https://docs.mesosphere.com/1.12.3/installing/production/advanced-configuration/configuration-reference/
     # for parameter reference.
     cluster_name: "dcos-cluster"
-    security: strict
+    security: permissive
     oauth_enabled: 'false'
     telemetry_enabled: 'false'
     bootstrap_url: http://##BOOTSTRAP_FQDN##:8080
