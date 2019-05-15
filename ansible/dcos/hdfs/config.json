@@ -2,6 +2,9 @@
   "service": {
     "name": "hdfs",
     "user": "nobody",
+    "acceptedResourceRoles":[
+      "slave_public"
+    ],
     "service_account": "",
     "service_account_secret": "",
     "virtual_network_enabled": false,
