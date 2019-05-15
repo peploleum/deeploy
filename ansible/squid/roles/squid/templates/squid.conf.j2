@@ -1,18 +1,30 @@
+visible_hostname {{ ansible_fqdn }}
+
 # No ACL
 http_access allow all
 http_access deny all
 
-# Squid listens to port 3128 (Use ssl-bump for ssl url rewrite)
-http_port 3128 ssl-bump \
+# Squid standard port
+http_port 3130
+
+# Squid transparent http port
+http_port 3128 intercept
+
+# Squid transparent https port with ssl bump
+https_port 3129 intercept ssl-bump \
   cert=/etc/squid/ssl_cert/{{ ansible_fqdn }}.pem \
+  key=/etc/squid/ssl_cert/{{ ansible_fqdn }}.pem \
   generate-host-certificates=on dynamic_cert_mem_cache_size=4MB
 
-sslcrtd_program /usr/lib64/squid/ssl_crtd -s /var/lib/squid/ssl_db -M 4MB
 acl step1 at_step SslBump1
-ssl_bump peek step1
+acl step2 at_step SslBump2
+acl step3 at_step SslBump3
+
+ssl_bump stare all
 ssl_bump bump all
-sslproxy_cert_error allow all
-sslproxy_flags DONT_VERIFY_PEER
+
+sslcrtd_program /usr/lib64/squid/ssl_crtd -s /var/lib/squid/ssl_db -M 4MB
+sslcrtd_children 8 startup=1 idle=1
 
 # Maximum object size (20 Go)
 maximum_object_size 20480 MB
@@ -26,14 +38,12 @@ coredump_dir /var/spool/squid
 # No cache for nexus stuff
 acl nexus_addr dst {{ squid_nexus_addr }}/32
 cache deny nexus_addr
+cache allow all
 
 # Update squidGuard.conf to add redirection
 url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
-cache_effective_user squid
-cache_effective_group squid
-
 # Modify date in access.log
 logformat squid %tl %6tr %>a %Ss/%03>Hs %<st %rm %ru %[un %Sh/%<a %mt
 
-offline_mode on
+#offline_mode on

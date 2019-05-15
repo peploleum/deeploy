@@ -14,14 +14,14 @@
   file:
     path: /etc/squid/ssl_cert
     state: directory
-    mode: 700
-    owner: squid
-    group: squid
+    mode: '0700'
+    owner: "squid"
+    group: "squid"
 
 - name: Generate SSL self-signed certificate
   command: >
     openssl req -x509 -nodes -sha256 -days 7300 -newkey rsa:2048
-        -subj "/C=FR/ST=Paris/L=Paris/O=Ministère des armées/CN={{ ansible_fqdn }}"
+        -subj "/C=FR/ST=Paris/L=Paris/O=Ministere des armees/CN={{ ansible_fqdn }}"
         -keyout /etc/squid/ssl_cert/{{ ansible_fqdn }}.pem
         -out /etc/squid/ssl_cert/{{ ansible_fqdn }}.pem
   args:
@@ -46,9 +46,9 @@
   file:
     path: /var/lib/squid
     state: directory
-    mode: 755
-    owner: root
-    group: root
+    mode: '0755'
+    owner: "root"
+    group: "root"
 
 - name: Create SSL cache directory
   command: >
@@ -89,7 +89,9 @@
     immediate: yes
   with_items:
     - 3128/tcp
-    - 3128/udp
+    - 3129/tcp
+    - 3130/tcp
+    - 3130/udp
   when: squid_param_firewall
 
 - block:
