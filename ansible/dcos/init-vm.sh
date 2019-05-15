@@ -2,7 +2,21 @@
 
 # This script init 4 VM to deploy DCOS. Please check dcos.conf file before runnig this script.
 # requires openstack CLI client
+verb=$1
+case $verb in
+install|drop)
+  ;;
+*)
+  echo "error: unknown verb '$verb'"
+  echo "usage: $0 install|drop"
+  exit 1
+esac
 
+case $verb in
+
+install)
+
+echo "installing"
 # Load variables
 . dcos.conf
 . $DEEPLOY_PATH/openstack/admin-openrc
@@ -62,3 +76,26 @@ openstack server remove security group $BOOTSTRAP_NAME openstack
 openstack server remove security group $PRIVATE_AGENT_NAME openstack
 openstack server remove security group $PUBLIC_AGENT_NAME openstack
 
+
+;;
+
+drop)
+
+echo "dropping"
+
+# Load variables
+. dcos.conf
+. $DEEPLOY_PATH/openstack/admin-openrc
+
+# Remove Instances
+$DEEPLOY_PATH/openstack/remove-instance.sh $ANSIBLE_NAME $ANSIBLE_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $BOOTSTRAP_NAME $BOOTSTRAP_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $MASTER_NAME $MASTER_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $PRIVATE_AGENT_NAME $PRIVATE_AGENT_PUBLIC_IP
+$DEEPLOY_PATH/openstack/remove-instance.sh $PUBLIC_AGENT_NAME $PUBLIC_AGENT_PUBLIC_IP
+
+# Remove DCOS Security Group
+openstack security group delete dcos
+;;
+
+esac
