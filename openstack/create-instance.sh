@@ -31,6 +31,7 @@ if [ $# -lt 6 ] ; then
   echo
   echo "Examples:"
   echo "  • $0 S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance" 
+  echo "  • $0 M Centos_7_18.11 dev-virt 10.0.0.41 192.168.0.141 dcos-cli-01"
   echo "  • $0 S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance my_user_data.txt"
   echo "  • $0 S Ubuntu_18.04_server sandbox 12.12.12.118 192.168.0.218 my_instance my_user_data.txt sg_1 sg_2"
   exit 1
