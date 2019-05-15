@@ -245,10 +245,10 @@
     permanent: yes
     state: enabled
     immediate: yes
-    with_items:
-      - {{ nexus_default_port }}/tcp
-      - {{ nexus_docker_hosted_port }}/tcp
-      - {{ nexus_docker_group_port }}/tcp
+  with_items:
+    - "{{ nexus_default_port }}/tcp"
+    - "{{ nexus_docker_hosted_port }}/tcp"
+    - "{{ nexus_docker_group_port }}/tcp"
 
 - name: Reload systemd service configuration
   shell: 'systemctl daemon-reload'
