@@ -2,7 +2,7 @@
   "service": {
     "name": "spark",
     "cpus": 1,
-    "mem": 1024,
+    "mem": 2048,
     "role": "*",
     "service_account": "",
     "service_account_secret": "",
