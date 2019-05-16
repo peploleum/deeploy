@@ -12,6 +12,7 @@ logdir /var/log/squidGuard
 rew yum {
         s@://mirror.centos.org/centos/@://{{ squid_nexus_addr }}:8081/repository/yum-centos/@i
         s@://download.docker.com/linux/centos/@://{{ squid_nexus_addr }}:8081/repository/yum-centos-docker/@i
+        s@://download.fedoraproject.org/pub/epel/@://{{ squid_nexus_addr }}:8081/repository/yum-centos-epel/@i
 }
 
 #

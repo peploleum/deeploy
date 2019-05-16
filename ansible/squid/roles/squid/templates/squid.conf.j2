@@ -27,7 +27,7 @@ sslcrtd_program /usr/lib64/squid/ssl_crtd -s /var/lib/squid/ssl_db -M 4MB
 sslcrtd_children 8 startup=1 idle=1
 
 # Maximum object size (20 Go)
-maximum_object_size 20480 MB
+maximum_object_size 20 GB
 
 # Uncomment and adjust the following to add a disk cache directory (900 Go).
 cache_dir ufs /var/spool/squid 900000 16 256
@@ -40,10 +40,30 @@ acl nexus_addr dst {{ squid_nexus_addr }}/32
 cache deny nexus_addr
 cache allow all
 
+#  TAG: positive_dns_ttl	time-units
+#	Upper limit on how long Squid will cache positive DNS responses.
+#	Default is 6 hours (360 minutes). This directive must be set
+#	larger than negative_dns_ttl.
+# 175200 hours = 20 ans
+positive_dns_ttl 175200 hours
+
+#  TAG: refresh_pattern
+#	usage: refresh_pattern [-i] regex min percent max [options]
+#	'Min' is the time (in minutes) an object without an explicit
+#	expiry time should be considered fresh.
+#	'Percent' is a percentage of the objects age (time since last
+#	modification age) an object without explicit expiry time
+#	will be considered fresh.
+#	'Max' is an upper limit on how long objects without an explicit
+#	expiry time will be considered fresh.
+refresh_pattern ^http  10512000 50%  10512000 override-expire ignore-reload ignore-no-store ignore-must-revalidate store-stale
+# Due to architecture, only http and https request are received by Squid. Line bellow is just in case of...
+refresh_pattern .      0	20% 	4320
+
 # Update squidGuard.conf to add redirection
 url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 
 # Modify date in access.log
 logformat squid %tl %6tr %>a %Ss/%03>Hs %<st %rm %ru %[un %Sh/%<a %mt
 
-#offline_mode on
+offline_mode on
