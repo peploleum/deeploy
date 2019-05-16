@@ -1,0 +1,10 @@
+---
+repos:
+ - repo: https://github.com/peploleum/deeploy.git
+   sha: v1.10.0
+   hooks:
+     - id: yamllint
+       name: yamllint
+       entry: yamllint -c .yamllint.yml .
+       language: python
+       types: [file, yaml]
