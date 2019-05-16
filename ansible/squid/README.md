@@ -11,6 +11,8 @@ Enable SSH access on the proxy server. Follow [Ansible Stuff](../README.md#run-y
 
 ### Prepare and launch Squid installation
 
+* Disable SELinux : edit `/etc/selinux/config` and replace `SELINUX=enforcing` by `SELINUX=disabled` then **REBOOT**
+
 * Check and update the target IP and variables in `hosts.ini`
 
 * Run the deployment :
