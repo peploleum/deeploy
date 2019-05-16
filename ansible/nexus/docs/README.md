@@ -276,7 +276,7 @@ Now, you can publish with :
 ### Pypi (Python)
 
 Create or update `pip.conf` or `pip.ini` file. Find file here :
-* `~/.config/pip/pip.conf` on Linux
+* `/etc/pip.conf` or `~/.config/pip/pip.conf` on Linux
 * `%HOME/pip/pip.ini` on Windows
 
 ```ini
