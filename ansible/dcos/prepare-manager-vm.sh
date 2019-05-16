@@ -40,3 +40,5 @@ sed -i -e "s/##BOOTSTRAP_FQDN##/$BOOTSTRAP_FQDN/g" group_vars/all/dcos.yaml
 sed -i -e "s/##MASTER_PRIVATE_IP##/$MASTER_PRIVATE_IP/g" group_vars/all/dcos.yaml
 sed -i -e "s/##DNS_SEARCH##/$IPA_DOMAIN_NAME/g" group_vars/all/dcos.yaml
 sed -i -e "s/##IPA_SERVER_IP##/$IPA_SERVER_IP/g" group_vars/all/dcos.yaml
+sed -i -e "s/##PROXY_IP##/$PROXY_IP/g" group_vars/all/dcos.yaml
+sed -i -e "s/##PROXY_PORT##/$PROXY_PORT/g" group_vars/all/dcos.yaml
