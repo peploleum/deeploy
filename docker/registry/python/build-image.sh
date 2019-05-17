@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+. ../docker.conf
 . nexus.conf
 
 export IMAGE=python:3.6.8-alpine3.9
