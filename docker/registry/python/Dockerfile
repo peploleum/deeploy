@@ -1,4 +1,5 @@
-FROM python:3.6.8-alpine3.9
+ARG IMAGE=192.168.0.52:9082/python:3.6.8-alpine3.9
+FROM $IMAGE
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
     amd64) ARCH='x64';; \
