@@ -13,7 +13,7 @@ sed -i -e "s/##NEXUS_PORT##/$NEXUS_PORT/g" pip.conf
 
 echo $SOURCE
 echo $TARGET
-docker build -t $IMAGE --build-arg IMAGE=$SOURCE --build-arg NEXUS_HOST=$NEXUS_HOST --build-arg NEXUS_PORT=$NEXUS_PORT .
+docker build -t $IMAGE --build-arg IMAGE=$SOURCE --build-arg NEXUS_HOST=$NEXUS_HOST --build-arg NEXUS_PORT=$NEXUS_PORT --no-cache .
 docker tag $IMAGE $TARGET
 docker login $DOCKER_PRIVATE_REGISTRY_HOST:$DOCKER_PRIVATE_REGISTRY_PUSH_PORT -u $DOCKER_PRIVATE_REGISTRY_USER -p $DOCKER_PRIVATE_REGISTRY_PASSWORD
 
