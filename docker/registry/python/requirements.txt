@@ -6,7 +6,6 @@ chardet==3.0.4
 idna==2.8
 numpy==1.16.3
 openalpr==1.0.12
-opencv-python==4.1.0.25
 Pillow==6.0.0
 pytesseract==0.2.6
 requests==2.21.0
