@@ -1,0 +1,2 @@
+deb http://##NEXUS_HOST##:8081/repository/apt-debian/ jessie main
+deb http://##NEXUS_HOST##:8081/repository/apt-security-debian/ jessie/updates main

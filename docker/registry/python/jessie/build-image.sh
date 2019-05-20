@@ -11,6 +11,7 @@ export TARGET=$DOCKER_PRIVATE_REGISTRY_HOST:$DOCKER_PRIVATE_REGISTRY_PUSH_PORT/$
 # Update pip.conf file
 sed -i -e "s/##NEXUS_HOST##/$NEXUS_HOST/g" pip.conf
 sed -i -e "s/##NEXUS_PORT##/$NEXUS_PORT/g" pip.conf
+sed -i -e "s/##NEXUS_HOST##/$NEXUS_HOST/g" sources.conf
 
 echo $SOURCE
 echo $TARGET
