@@ -16,8 +16,15 @@ echo $SOURCE
 echo $TARGET
 (docker build -t $IMAGE --build-arg IMAGE=$IMAGE --build-arg NEXUS_HOST=$NEXUS_HOST --build-arg NEXUS_PORT=$NEXUS_PORT --no-cache .)
 echo "$?"
-docker tag $IMAGE $TARGET
-docker login $DOCKER_PRIVATE_REGISTRY_HOST:$DOCKER_PRIVATE_REGISTRY_PUSH_PORT -u $DOCKER_PRIVATE_REGISTRY_USER -p $DOCKER_PRIVATE_REGISTRY_PASSWORD
+if [ "$?" == 0 ] ; then
+	docker tag $IMAGE $TARGET
+  docker login $DOCKER_PRIVATE_REGISTRY_HOST:$DOCKER_PRIVATE_REGISTRY_PUSH_PORT -u $DOCKER_PRIVATE_REGISTRY_USER -p $DOCKER_PRIVATE_REGISTRY_PASSWORD
 
-echo pushing $TARGET
-docker push $TARGET
+  echo pushing $TARGET
+  docker push $TARGET
+else
+		echo "failed to build image"
+		exit
+fi
+
+
