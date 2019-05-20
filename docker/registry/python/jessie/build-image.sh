@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 . ../../docker.conf
-. ../../nexus.conf
+. ../nexus.conf
 
 export IMAGE=python:3.6.8-jessie
 export SOURCE=$DOCKER_PRIVATE_REGISTRY_HOST:$DOCKER_PRIVATE_REGISTRY_PULL_PORT/$IMAGE
