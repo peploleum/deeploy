@@ -24,5 +24,3 @@ else
   echo "failed to build image"
 	exit
 fi
-
-
